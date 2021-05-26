@@ -1,0 +1,2976 @@
+;; Package Index file -- Do not edit manually.
+;;;@@@
+(package-get-update-base-entry (quote
+(mule-ucs
+  (standards-version 1.1
+   version "1.22"
+   author-version "0.84"
+   date "1 22:52:29"
+   build-date "2020-07-04"
+   maintainer "Stephen J. Turnbull <stephen@xemacs.org>"
+   distribution mule
+   priority high
+   category "mule"
+   dump nil
+   description "MULE: Extended coding systems (including Unicode) for XEmacs."
+   filename "mule-ucs-1.22-pkg.tar.gz"
+   md5sum "085e31d36a968ef30057d39f2997ddaa"
+   size 1300831
+   provides (mccl-font mucs-ccl mucs-error mucs-type mucs mule-ucs
+        mule-uni tae tbl-mg trans-util txt-tbl un-data un-define un-supple
+        un-tools un-trbase mule-ucs-unicode unicode unidata utf)
+   requires (mule-base latin-euro-standards)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(latin-euro-standards
+  (standards-version 1.1
+   version "1.12"
+   author-version "1.12"
+   date "020 +1000
+"
+   build-date "2020-07-04"
+   maintainer "Aidan Kehoe <aidan@xemacs.org>"
+   distribution mule
+   priority high
+   category "mule"
+   dump nil
+   description "MULE: Support for the Latin{7,8,9,10} character sets & coding systems."
+   filename "latin-euro-standards-1.12-pkg.tar.gz"
+   md5sum "e0b9cf5ac62d8b49594124b1bb986ec2"
+   size 13225
+   provides (latin-euro-latin10 latin-euro-latin7 latin-euro-latin8
+        latin-euro-latin9 latin-euro-standards)
+   requires (mule-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(latin-unity
+  (standards-version 1.1
+   version "1.24"
+   author-version "1.24"
+   date "2:52:29 20"
+   build-date "2020-07-04"
+   maintainer "Stephen J. Turnbull <stephen@xemacs.org>"
+   distribution mule
+   priority high
+   category "mule"
+   dump nil
+   description "MULE: find single ISO 8859 character set to encode a buffer."
+   filename "latin-unity-1.24-pkg.tar.gz"
+   md5sum "cff2034c511e7c51f20901d051868402"
+   size 104348
+   provides (latin-euro-input latin-latin7-input latin-unity-latin10
+        latin-unity-latin7 latin-unity-latin8 latin-unity-latin9
+        latin-unity-tables latin-unity-utils latin-unity-tables
+        latin-unity-vars latin-unity)
+   requires (mule-base latin-euro-standards mule-ucs leim fsf-compat dired)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(skk
+  (standards-version 1.1
+   version "1.28"
+   author-version "10.62a"
+   date "pr 1 22:52"
+   build-date "2020-07-04"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution mule
+   priority medium
+   category "mule"
+   dump nil
+   description "MULE: Japanese Language Input Method."
+   filename "skk-1.28-pkg.tar.gz"
+   md5sum "05e843942e49e382c44d3d247df60a67"
+   size 1541517
+   provides (skk-auto skk-comp skk-cursor skk-develop skk-foreword
+        skk-gadget skk-isearch skk-kakasi skk-kcode skk-leim skk-look
+        skk-num skk-obsolete skk-server skk-tut skk-vars skk-viper skk vip)
+   requires (viper mule-base elib xemacs-base apel)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(egg-its
+  (standards-version 1.1
+   version "1.30"
+   author-version "N/A"
+   date "r 1 22:52:"
+   build-date "2020-07-04"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution mule
+   priority high
+   category "mule"
+   dump nil
+   description "MULE: Wnn (4.2 and 6) support.  SJ3 support."
+   filename "egg-its-1.30-pkg.tar.gz"
+   md5sum "b879e118f288faed498364d18682bff0"
+   size 262491
+   provides (egg-cwnn-leim egg-jisx0201 egg-jsymbol egg-kwnn-leim
+        egg-leim egg-sj3-client egg-sj3-leim egg-sj3 egg-wnn egg)
+   requires (leim mule-base fsf-compat xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(edict
+  (standards-version 1.1
+   version "1.20"
+   author-version "0.9.9"
+   date "r 1 22:52:"
+   build-date "2020-07-04"
+   maintainer "Stephen J. Turnbull <stephen@xemacs.org>"
+   distribution mule
+   priority high
+   category "mule"
+   dump nil
+   description "MULE: Lisp Interface to EDICT, Kanji Dictionary."
+   filename "edict-1.20-pkg.tar.gz"
+   md5sum "683681b84770d3e52e699fce02c3d23f"
+   size 100548
+   provides (dui-registry dui edict-edit edict-english edict-japanese
+        edict-morphology edict-test edict-update edict ts-mode)
+   requires (mule-base xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(lookup
+  (standards-version 1.1
+   version "1.18"
+   author-version "1.0"
+   date "pr 1 22:52"
+   build-date "2020-07-04"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution mule
+   priority high
+   category "mule"
+   dump nil
+   description "MULE: Dictionary support"
+   filename "lookup-1.18-pkg.tar.gz"
+   md5sum "c600bc09c70316aed6627bc0fdef8319"
+   size 231755
+   provides (evi-mule evi lookup-content lookup-defs lookup-entry
+        lookup-select lookup-package lookup-select lookup-types
+        lookup-utils lookup-vars lookup-vse lookup ndcookie ndeb ndic ndict
+        ndkks ndmisc ndnmz ndspell ndsrd ndtp sdicf stem)
+   requires (mule-base cookie lookup)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(leim
+  (standards-version 1.1
+   version "1.39"
+   author-version "N/A"
+   date " Apr 1 22:"
+   build-date "2020-07-04"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution mule
+   priority medium
+   category "mule"
+   dump nil
+   description "MULE: Quail.  All non-English and non-Japanese language support."
+   filename "leim-1.39-pkg.tar.gz"
+   md5sum "7ac13df3ea07927b698ae4b68a488ea3"
+   size 1811574
+   provides (quail rfc1345 thai-xtis)
+   requires (leim mule-base fsf-compat xemacs-base latin-euro-standards)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(locale
+  (standards-version 1.1
+   version "1.31"
+   author-version "N/A"
+   date "pr 1 22:52"
+   build-date "2020-07-04"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution mule
+   priority high
+   category "mule"
+   dump nil
+   description "MULE: Localized menubars and localized splash screens."
+   filename "locale-1.31-pkg.tar.gz"
+   md5sum "7431d20d63549d2fb98f45fc30b34559"
+   size 75607
+   provides ()
+   requires (mule-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(mule-base
+  (standards-version 1.1
+   version "1.61"
+   author-version "N/A"
+   date "1 22:52:29"
+   build-date "2020-07-04"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution mule
+   priority high
+   category "mule"
+   dump nil
+   description "MULE: Basic Mule support."
+   filename "mule-base-1.61-pkg.tar.gz"
+   md5sum "fe8673e505913e16f827d86342602781"
+   size 433769
+   provides (canna char-table china-util cyril-util ethio-util
+        isearch-ext japan-util kana-keyboard korea-util can-n-egg
+        thai-xtis-util viet-util)
+   requires (fsf-compat xemacs-base apel)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(x-symbol
+  (standards-version 1.1
+   version "1.17"
+   author-version "4.5.1"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "Uwe Brauer <oub@xemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "Semi WYSIWYG for LaTeX, HTML, etc, using additional fonts."
+   filename "x-symbol-1.17-pkg.tar.gz"
+   md5sum "c17d78b62b9b10ff2a7a750f18654a78"
+   size 719452
+   provides (x-symbol-bib x-symbol-emacs x-symbol-hooks x-symbol-image
+        x-symbol-macs x-symbol-mule x-symbol-myuc x-symbol-nomule
+        x-symbol-sgml x-symbol-tex x-symbol-texi x-symbol-vars
+        x-symbol-xmacs x-symbol)
+   requires (x-symbol xemacs-base auctex mail-lib)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(xwem
+  (standards-version 1.1
+   version "1.26"
+   author-version "lg@xwem.org--2005/xwem--main--2.1--versionfix-1"
+   date "angeLog Re"
+   build-date "2020-07-03"
+   maintainer "Zajcev Evgeny <zevlg@yandex.ru>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "X Emacs Window Manager."
+   filename "xwem-1.26-pkg.tar.gz"
+   md5sum "914116473a397b7159977f1dfab7a9e3"
+   size 702583
+   provides (xwem-appcollect xwem-battery xwem-clgen xwem-clients
+        xwem-clswi xwem-compat xwem-desktop xwem-diagram xwem-edmacro
+        xwem-edprops xwem-events xwem-faces xwem-focus xwem-frame
+        xwem-framei xwem-frametrans xwem-gamma xwem-help xwem-holer
+        xwem-icons xwem-interactive xwem-keyboard xwem-keydefs
+        xwem-keymacro xwem-keytt xwem-launcher xwem-load xwem-loaddefs
+        xwem-main xwem-manage xwem-minibuffer xwem-misc xwem-modes
+        xwem-mogu xwem-mouse xwem-netwm xwem-osd xwem-pager xwem-recover
+        xwem-register xwem-report xwem-root xwem-rooter xwem-rooticon
+        xwem-selections xwem-smartmods xwem-sound xwem-special xwem-strokes
+        xwem-struct xwem-tabbing xwem-theme xwem-time xwem-transient
+        xwem-tray xwem-version xwem-vline xwem-weather xwem-win
+        xwem-worklog)
+   requires (xwem xemacs-base xlib strokes edit-utils text-modes time slider elib ilisp mail-lib)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(xslt-process
+  (standards-version 1.0
+   version "1.15"
+   author-version "1.2.1"
+   date "52:29 2020"
+   build-date "2020-07-03"
+   maintainer "Ovidiu Predescu <ovidiu@xemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "XSLT processing support."
+   filename "xslt-process-1.15-pkg.tar.gz"
+   md5sum "8bb5a8706ef4e1dd8ac2d5ac1b023cf8"
+   size 61060
+   provides (xslt-process)
+   requires (jde cc-mode semantic cedet-common debug speedbar edit-utils eterm mail-lib xemacs-base elib eieio sh-script fsf-compat xemacs-devel os-utils)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(xslide
+  (standards-version 1.1
+   version "1.12"
+   author-version "0.2.2"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "XSL editing support."
+   filename "xslide-1.12-pkg.tar.gz"
+   md5sum "9aba14f735e3a2f0ce1d84b1520f357a"
+   size 42310
+   provides (xslide-abbrev xslide-data xslide-font xslide-process
+        xslide)
+   requires (ispell mail-lib xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(w3
+  (standards-version 1.1
+   version "1.42"
+   author-version "4.0pre47"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "A Web browser."
+   filename "w3-1.42-pkg.tar.gz"
+   md5sum "0a370d1c68ba6aef4a9ec68f0b8c238b"
+   size 710487
+   provides (css devices dsssl-flow dsssl images socks ssl url-about
+        url-auth url-cache url-cookie url-dav url-dired url-domsuf
+        url-expand url-file url-ftp url-future url-gw url-handlers
+        url-history url-http url-irc url-ldap url-mailto url-methods
+        url-misc url-news url-nfs url-ns url-parse url-privacy url-proxy
+        url-queue url-util url-vars url w3-cfg w3-compat w3-cus w3-display
+        w3-emulate w3-fast-parse w3-forms w3-hot w3-hotindex w3-imap
+        w3-java w3-keymap w3-latex w3-menu w3-mouse w3-parse w3-print
+        w3-props w3-structure w3-speak w3-style w3-toolbar w3-vars
+        w3-widget w3-xemacs w3-xemac w3)
+   requires (w3 mail-lib xemacs-base ecrypto gnus net-utils sh-script fsf-compat eterm easypg text-modes dired)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(vm
+  (standards-version 1.1
+   version "8.12"
+   author-version "8.0.12-devo"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "Robert Widhopf-Fenk <hack@robf.de>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "An Emacs mailer."
+   filename "vm-8.12-pkg.tar.gz"
+   md5sum "933c661d6dbf5f9ed5f6d1b9d52abf0a"
+   size 1051746
+   provides (tapestry vm-autoload vm-avirtual vm-biff vm-build
+        vm-crypto vm-delete vm-digest vm-edit vm-folder vm-grepmail vm-imap
+        vm-license vm-macro vm-mark vm-menu vm-message-history vm-message
+        vm-mime vm-minibuf vm-misc vm-motion vm-mouse vm-page vm-pcrisis
+        vm-pgg vm-pine vm-pop vm-ps-print vm-reply vm-rfaddons vm-save
+        vm-search vm-serial vm-sort vm-startup vm-summary-faces vm-summary
+        vm-thread vm-toolbar vm-undo vm-user vm-vars vm-vcard vm-version
+        vm-virtual vm-window vm)
+   requires (vm xemacs-base mail-lib gnus pgg ecrypto eterm sh-script net-utils ps-print os-utils bbdb fsf-compat w3 easypg text-modes dired)
+   type regular
+))
+
+
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(viper
+  (standards-version 1.1
+   version "1.70"
+   author-version "3.09"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "Michael Kifer <kifer@cs.sunysb.edu>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "VI emulation support."
+   filename "viper-1.70-pkg.tar.gz"
+   md5sum "4af0404bb5c661980b03e24c12de1c13"
+   size 350602
+   provides (viper-cmd viper-ex viper-init viper-keym viper-macs
+        viper-mous viper-util viper)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(view-process
+  (standards-version 1.1
+   version "1.16"
+   author-version "2.4"
+   date "2:52:29 20"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "A Unix process browsing tool."
+   filename "view-process-1.16-pkg.tar.gz"
+   md5sum "77f3f9ec85675ad7b98128ce369ff70d"
+   size 61682
+   provides (view-process-mode view-process-system-specific
+        view-process-xemacs)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(vhdl
+  (standards-version 1.1
+   version "1.25"
+   author-version "3.33.12"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Support for VHDL."
+   filename "vhdl-1.25-pkg.tar.gz"
+   md5sum "20b5dbe05a3ca0d24dea9482b55b7f5d"
+   size 336678
+   provides (vhdl-mode)
+   requires (xemacs-base edit-utils c-support speedbar ps-print os-utils cedet-common)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(vc
+  (standards-version 1.1
+   version "1.51"
+   author-version "N/A"
+   date "ed Apr 1 2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Version Control for Free systems."
+   filename "vc-1.51-pkg.tar.gz"
+   md5sum "17d5c220de5edfccb0f4213900851163"
+   size 244896
+   provides (log-edit mercurial vc-arch vc-cvs vc-git vc-hooks vc-mcvs
+        vc-rcs vc-sccs vc-svn vc-xemacs vc)
+   requires (dired xemacs-base vc mail-lib ediff sh-script pcl-cvs tramp prog-modes elib edebug gnus text-modes ecrypto)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(tramp
+  (standards-version 1.1
+   version "1.58"
+   author-version "2.2.13"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "Michael Albinus <michael.albinus@gmx.de>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Remote shell-based file editing."
+   filename "tramp-1.58-pkg.tar.gz"
+   md5sum "4a4a57e4fc7efefef920b2a205eae0ea"
+   size 412678
+   provides (tramp-adb tramp-cache tramp-cmds tramp-compat tramp-efs
+        tramp-loaddefs tramp-sh tramp-smb tramp-uu tramp trampver)
+   requires (tramp xemacs-base vc efs dired mail-lib gnus ediff sh-script edebug text-modes ecrypto)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(tpu
+  (standards-version 1.1
+   version "1.17"
+   author-version "4.2X"
+   date " Apr 1 22:"
+   build-date "2020-07-03"
+   maintainer "Kevin Oberman <oberman@es.net>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "DEC EDIT/TPU support."
+   filename "tpu-1.17-pkg.tar.gz"
+   md5sum "b2f12043549e60f6a7c7f04be09ddbec"
+   size 61228
+   provides (tpu-edt)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(tm
+  (standards-version 1.1
+   version "1.43"
+   author-version "N/A"
+   date "ed Apr 1 2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Emacs MIME support. Not needed for gnus >= 5.8.0"
+   filename "tm-1.43-pkg.tar.gz"
+   md5sum "3f60fe4967be53b8563fb0ba97523510"
+   size 334963
+   provides (char-util cless gnus-art-mime gnus-charset gnus-mime
+        gnus-sum-mime latex-math-symbol mel-b mel-g mel-q mel-u mel
+        message-mime mime-setup mu-bbdb mu-cite range sc-setup signature
+        texi-util tl-atype tl-list tl-misc tl-num tl-seq tl-str tm-bbdb
+        tm-def tm-edit-mc tm-edit tm-ew-d tm-ew-e tm-file tm-ftp tm-html
+        tm-image tm-latex tm-mail tm-mh-e tm-parse tm-partial tm-pgp
+        tm-play tm-rmail tm-setup tm-tar tm-text tm-view tm-vm tmh-comp)
+   requires (gnus mh-e rmail vm mailcrypt mail-lib apel xemacs-base fsf-compat sh-script net-utils ecrypto w3 easypg text-modes dired)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(time
+  (standards-version 1.1
+   version "1.17"
+   author-version "1.17"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Display time & date on the modeline."
+   filename "time-1.17-pkg.tar.gz"
+   md5sum "e6b71c0803e90cd998e4c2b46c801bdb"
+   size 24087
+   provides (time)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(textools
+  (standards-version 1.1
+   version "1.18"
+   author-version "N/A"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Miscellaneous TeX support."
+   filename "textools-1.18-pkg.tar.gz"
+   md5sum "f58c5c54240ec96dbfc7b36598961972"
+   size 86674
+   provides (bib-mode bibtex refer-to-bibtex)
+   requires (xemacs-base)
+   type single
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(supercite
+  (standards-version 1.1
+   version "1.24"
+   author-version "3.55x3"
+   date "2:52:29 20"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "An Emacs citation tool for News & Mail messages."
+   filename "supercite-1.24-pkg.tar.gz"
+   md5sum "8620a4828d7a8ab1fd2ad6d5a3b35865"
+   size 106783
+   provides (supercite)
+   requires (mail-lib xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(strokes
+  (standards-version 1.1
+   version "1.13"
+   author-version "N/A"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Mouse enhancement utility."
+   filename "strokes-1.13-pkg.tar.gz"
+   md5sum "bc3b36b3147479831cf6d254c81f42f6"
+   size 45492
+   provides (strokes)
+   requires (text-modes edit-utils mail-lib xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(sounds-wav
+  (standards-version 1.1
+   version "1.15"
+   author-version "N/A"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "XEmacs Microsoft sound files."
+   filename "sounds-wav-1.15-pkg.tar.gz"
+   md5sum "88c3614fafb0b1e88d41950619ec219e"
+   size 150245
+   provides ()
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(sounds-au
+  (standards-version 1.1
+   version "1.15"
+   author-version "N/A"
+   date "1 22:52:29"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "XEmacs Sun sound files."
+   filename "sounds-au-1.15-pkg.tar.gz"
+   md5sum "0c12cbdfed8078a17775c12b1f79fbf5"
+   size 127446
+   provides ()
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(sml-mode
+  (standards-version 1.1
+   version "0.15"
+   author-version "3.9.5"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "SML editing support."
+   filename "sml-mode-0.15-pkg.tar.gz"
+   md5sum "99ca8672ad666b9ce832385ba70d89bb"
+   size 85040
+   provides (sml-compat sml-defs sml-mode sml-move sml-proc sml-util)
+   requires (xemacs-base edebug fsf-compat)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(slider
+  (standards-version 1.1
+   version "1.19"
+   author-version "0.3x1"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "User interface tool."
+   filename "slider-1.19-pkg.tar.gz"
+   md5sum "5cc3441a5f57f5d4b643128fd16f4091"
+   size 13763
+   provides (color-selector slider)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(sieve
+  (standards-version 1.1
+   version "1.21"
+   author-version "N/A"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "Simon Josefsson <simon@josefsson.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Manage Sieve email filtering scripts."
+   filename "sieve-1.21-pkg.tar.gz"
+   md5sum "3ee14146b6a9f3156de7eba7d2263234"
+   size 29054
+   provides (sieve-manage sieve-mode sieve)
+   requires (xemacs-base mail-lib cc-mode sasl ecrypto sh-script net-utils)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(sgml
+  (standards-version 1.1
+   version "1.14"
+   author-version "N/A"
+   date " Apr 1 22:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "SGML/Linuxdoc-SGML editing."
+   filename "sgml-1.14-pkg.tar.gz"
+   md5sum "6551da3cc785e3b6550b85596c2128b6"
+   size 28311
+   provides (linuxdoc-sgml sgml-mode)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(scheme
+  (standards-version 1.1
+   version "1.23"
+   author-version "N/A"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "Karl M. Hegbloom <karlheg@bittersweet.inetarena.com>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Front-end support for Inferior Scheme."
+   filename "scheme-1.23-pkg.tar.gz"
+   md5sum "f6cb57a4a6e485d32bda5963e613984d"
+   size 40435
+   provides (cmuscheme cmuscheme48 scheme xscheme)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(sasl
+  (standards-version 1.1
+   version "1.19"
+   author-version "1.14.4"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "Simon Josefsson <simon@josefsson.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Simple Authentication and Security Layer (SASL) library."
+   filename "sasl-1.19-pkg.tar.gz"
+   md5sum "1927843c012ad9e50e5b3f3fa43d2734"
+   size 36604
+   provides (hmac-def hmac-md5 hmac-sha1 ntlm sasl-cram sasl-digest
+        sasl-ntlm sasl-scram-sha-1 sasl-scram-rfc sasl-scram sasl-plain
+        sasl-login sasl-anonymous sasl)
+   requires (ecrypto mail-lib fsf-compat calc)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ruby-modes
+  (standards-version 1.1
+   version "1.08"
+   author-version "1.8.7"
+   date "2:52:29 20"
+   build-date "2020-07-03"
+   maintainer "Hans de Graaff <graaff@xemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Ruby support."
+   filename "ruby-modes-1.08-pkg.tar.gz"
+   md5sum "28bfbf651ba03c25f4367fc1c313bf4e"
+   size 34175
+   provides (inf-ruby ruby-electric ruby-mode rubydb)
+   requires (xemacs-base debug)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(rmail
+  (standards-version 1.1
+   version "1.17"
+   author-version "N/A"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "An obsolete Emacs mailer."
+   filename "rmail-1.17-pkg.tar.gz"
+   md5sum "cf59020a9bbe4cfbd61dcfee5167640d"
+   size 97937
+   provides (rmail-kill rmail-xemacs rmail rmailsort)
+   requires (tm apel mail-lib xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(riece
+  (standards-version 1.1
+   version "1.27"
+   author-version "v9.0.0-21-gcf23226"
+   date " 2020 +100"
+   build-date "2020-07-03"
+   maintainer "Daiki Ueno <ueno@unixuser.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "IRC (Internet Relay Chat) client for Emacs."
+   filename "riece-1.27-pkg.tar.gz"
+   md5sum "5e81cf91270900405a1dfa169d929ed0"
+   size 256601
+   provides (riece-000 riece-200 riece-300 riece-400 riece-500
+        riece-addon-modules riece-addon riece-alias riece-async riece-biff
+        riece-button riece-cache riece-channel riece-coding riece-commands
+        riece-compat riece-complete riece-ctcp riece-ctlseq riece-debug
+        riece-desktop-notify riece-display riece-doctor riece-emacs
+        riece-epg riece-eval-ruby riece-eval riece-filter riece-foolproof
+        riece-globals riece-google riece-guess riece-handle riece-hangman
+        riece-highlight riece-history riece-icon riece-identity
+        riece-ignore riece-irc riece-kakasi riece-keepalive riece-keyword
+        riece-layout riece-log riece-lsdb riece-mcat-japanese riece-mcat
+        riece-menu riece-message riece-mini riece-misc riece-mode
+        riece-naming riece-ndcc riece-options riece-package-info riece-rdcc
+        riece-ruby riece-server riece-shrink-buffer riece-signal
+        riece-skk-kakutei riece-toolbar riece-twitter riece-unread
+        riece-url riece-user riece-version riece-xemacs riece-xface
+        riece-xfaceb riece-yank riece url-riece)
+   requires (xemacs-base mail-lib bbdb)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(reftex
+  (standards-version 1.1
+   version "1.37"
+   author-version "4.21"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "Carsten Dominik <dominik@science.uva.nl>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Emacs support for LaTeX cross-references, citations.."
+   filename "reftex-1.37-pkg.tar.gz"
+   md5sum "19b8e0f655be230a3c683c42a8ebafbc"
+   size 398349
+   provides (reftex-auc reftex-cite reftex-dcr reftex-vcr
+        reftex-global reftex-index reftex-parse reftex-ref reftex-sel
+        reftex-toc reftex-vars reftex)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(re-builder
+  (standards-version 1.1
+   version "1.08"
+   author-version "1.20"
+   date "22:52:29 2"
+   build-date "2020-07-03"
+   maintainer "Aidan Kehoe <aidan@xemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Interactive development tool for regular expressions."
+   filename "re-builder-1.08-pkg.tar.gz"
+   md5sum "045f4668e47741f140dfc92aa85c869b"
+   size 21974
+   provides (re-builder)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(python-modes
+  (standards-version 1.1
+   version "1.17"
+   author-version "5.0.0"
+   date "52:29 2020"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Python support."
+   filename "python-modes-1.17-pkg.tar.gz"
+   md5sum "68e53c10a2a59f42d6ab0c39acac188a"
+   size 103245
+   provides (pydoc python-mode)
+   requires (xemacs-base mail-lib edit-utils fsf-compat text-modes)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(psgml-dtds
+  (standards-version 1.1
+   version "1.06"
+   author-version "N/A"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Deprecated collection of DTDs for psgml."
+   filename "psgml-dtds-1.06-pkg.tar.gz"
+   md5sum "66b452e76d39c956e2b57ba4d75b346f"
+   size 318842
+   provides ()
+   requires (xemacs-base psgml edit-utils mail-lib fsf-compat eterm sh-script)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(psgml
+  (standards-version 1.1
+   version "1.50"
+   author-version "1.3.2"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Validated HTML/SGML editing."
+   filename "psgml-1.50-pkg.tar.gz"
+   md5sum "577c8e154b5e15856e02f91c04b108b2"
+   size 315205
+   provides (iso-sgml psgml-api psgml-charent psgml-debug psgml-dtd
+        psgml-edit psgml-fs psgml-html psgml-ids psgml-info psgml-parse
+        psgml-sysdep psgml-xemacs psgml sgml-mode)
+   requires (xemacs-base edit-utils edebug xemacs-devel mail-lib fsf-compat eterm sh-script ps-print)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ps-print
+  (standards-version 1.1
+   version "1.15"
+   author-version "6.5.6"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Printing functions and utilities"
+   filename "ps-print-1.15-pkg.tar.gz"
+   md5sum "f830202311c946c889012804d0e10185"
+   size 190621
+   provides (lpr ps-bdf ps-mule ps-print)
+   requires (text-modes xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(prog-modes
+  (standards-version 1.1
+   version "2.33"
+   author-version "N/A"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Support for various programming languages."
+   filename "prog-modes-2.33-pkg.tar.gz"
+   md5sum "0c0d006d7fc0d981a02cd4200d68fa49"
+   size 938911
+   provides (autoconf-mode awk-mode cvs diff-mode eiffel go-mode icon
+        javascript-mode ksh-mode lua-mode m4-mode makefile make-mode
+        mode-compile mode-compile-kill modula2 c-mode p4 php-mode
+        postscript rexx-mode rpm-spec-mode simula-mode sql tcl teco
+        uil-mode verilog-mode)
+   requires (mail-lib xemacs-devel xemacs-base cc-mode fsf-compat edit-utils ediff emerge efs vc speedbar dired ilisp sh-script cedet-common w3 gnus net-utils ecrypto easypg)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(pgg
+  (standards-version 1.1
+   version "1.11"
+   author-version "0.1"
+   date "d Apr 1 22"
+   build-date "2020-07-03"
+   maintainer "Simon Josefsson <simon@josefsson.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Emacs interface to various PGP implementations."
+   filename "pgg-1.11-pkg.tar.gz"
+   md5sum "f483dc82c68758a1e1addd2fa0fdf6ab"
+   size 37788
+   provides (pgg-def pgg-gpg pgg-parse pgg-pgp pgg-pgp5 pgg)
+   requires (xemacs-base fsf-compat edebug ecrypto)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(perl-modes
+  (standards-version 1.1
+   version "1.17"
+   author-version "N/A"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Perl support."
+   filename "perl-modes-1.17-pkg.tar.gz"
+   md5sum "c2b6708b76cb12e0f2e3be6b273d87ea"
+   size 212558
+   provides (cperl-mode perl-mode)
+   requires (xemacs-base ispell ps-print edit-utils fsf-compat)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(pcomplete
+  (standards-version 1.1
+   version "1.09"
+   author-version "1.1.6"
+   date "22:52:29 2"
+   build-date "2020-07-03"
+   maintainer "XEmacs Dev Team <xemacs-beta@xemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Provides programmatic completion."
+   filename "pcomplete-1.09-pkg.tar.gz"
+   md5sum "9664cfb3830f575f23b7e1eb578157ef"
+   size 43166
+   provides (pcmpl-cvs pcmpl-gnu pcmpl-linux pcmpl-rpm pcmpl-unix
+        pcomplete)
+   requires (sh-script xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(pcl-cvs
+  (standards-version 1.1
+   version "1.74"
+   author-version "R-2_9_9"
+   date "22:52:29 2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "CVS frontend."
+   filename "pcl-cvs-1.74-pkg.tar.gz"
+   md5sum "5a1891212cda24cc7a39dac68b1853ed"
+   size 167140
+   provides (cvs-compat cvs-edit cvs-log cvs-status pcl-cvs-defs
+        pcl-cvs-info pcl-cvs-parse pcl-cvs-util pcl-cvs)
+   requires (xemacs-base elib vc dired edebug ediff edit-utils mail-lib prog-modes tramp gnus sh-script text-modes ecrypto)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(pc
+  (standards-version 1.1
+   version "1.31"
+   author-version "N/A"
+   date "ed Apr 1 2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "PC style interface emulation."
+   filename "pc-1.31-pkg.tar.gz"
+   md5sum "9a4a62446381a078b35a0c0d41ab663f"
+   size 19188
+   provides (delbs fusion pc-select pending-del s-region)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(patcher
+  (standards-version 1.1
+   version "1.01"
+   author-version "4.0 pre 1"
+   date "0:49:03 20"
+   build-date "2020-07-03"
+   maintainer "Didier Verna <didier@xemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Automatic maintenance of RCS-based projects."
+   filename "patcher-1.01-pkg.tar.gz"
+   md5sum "78ad452d7c3fc37012a82637d17f47fa"
+   size 160830
+   provides (patcher-change-log patcher-cmtcmd patcher-cutil
+        patcher-diff patcher-face patcher-instance patcher-logmsg
+        patcher-mail patcher-project patcher-source patcher-util patcher)
+   requires (mail-lib)
+   type regular))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(oo-browser
+  (standards-version 1.1
+   version "1.08"
+   author-version "4.08"
+   date "22:52:29 2"
+   build-date "2020-07-03"
+   maintainer "Jake Colman <jake.colman@xemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "OO-Browser: The Multi-Language Object-Oriented Code Browser"
+   filename "oo-browser-1.08-pkg.tar.gz"
+   md5sum "4d9a4051d3b56ba1489dfd3297e3e802"
+   size 519248
+   provides (br-c++-ft br-c++ br-c-ft br-clos-ft br-clos br-compl
+        br-eif-ft br-eif br-env br-ftr br-info br-init br-java-ft br-java
+        br-lib br-menu br-name br-objc-ft br-objc br-python-ft br-python
+        br-site br-smt br-start br-tree br c++-browse clos-brows eif-browse
+        eif-calls eif-ise-er hasht hmouse-br info-browse java-brows
+        objc-brows pyth-brows smt-browse)
+   requires (xemacs-base hyperbole gnus sh-script)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ocaml
+  (standards-version 1.1
+   version "0.11"
+   author-version "3.06"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Objective Caml editing support."
+   filename "ocaml-0.11-pkg.tar.gz"
+   md5sum "36e221ed754c7be2fef4b9383688bacd"
+   size 66436
+   provides (caml-compat caml-font caml-help caml camldebug inf-caml)
+   requires (xemacs-base fsf-compat)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(mmm-mode
+  (standards-version 1.1
+   version "1.09"
+   author-version "0.4.8"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "Marcus Harnisch <marcus.harnisch@gmx.net>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Multiple major modes in a single buffer"
+   filename "mmm-mode-1.09-pkg.tar.gz"
+   md5sum "2c3be1e5023c0b609f9520ebe21c69df"
+   size 209838
+   provides (mmm-auto mmm-class mmm-cmds mmm-compat mmm-cweb mmm-mason
+        mmm-mode mmm-noweb mmm-region mmm-rpm mmm-sample mmm-univ mmm-utils
+        mmm-vars)
+   requires (xemacs-base fsf-compat )
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(misc-games
+  (standards-version 1.1
+   version "1.26"
+   author-version "N/A"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Other amusements and diversions."
+   filename "misc-games-1.26-pkg.tar.gz"
+   md5sum "f9de48abcb41425064e2d9f52d8fc04a"
+   size 171934
+   provides (decipher gomoku hanoi life morse rot13)
+   requires (xemacs-base)
+   type single
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(mine
+  (standards-version 1.1
+   version "1.19"
+   author-version "1.9"
+   date " Apr 1 22:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Minehunt Game."
+   filename "mine-1.19-pkg.tar.gz"
+   md5sum "93865efe796791c6c5cf0ec306660f54"
+   size 69080
+   provides (xmine)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(mh-e
+  (standards-version 1.1
+   version "1.36"
+   author-version "7.4.2"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "Mike Kupfer <mike.kupfer@xemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "The XEmacs Interface to the MH Mail System."
+   filename "mh-e-1.36-pkg.tar.gz"
+   md5sum "b67bced10e66550701ecf26510d1131e"
+   size 608609
+   provides (mh-alias mh-comp mh-customize mh-e mh-funcs mh-gnus
+        mh-identity mh-inc mh-index mh-junk mh-loaddefs mh-mime mh-pick
+        mh-seq mh-speed mh-unit mh-utils mh-xemacs-compat mh-xemacs-icons)
+   requires (gnus mail-lib xemacs-base rmail tm apel sh-script fsf-compat xemacs-devel net-utils eterm os-utils ecrypto cedet-common speedbar easypg w3 text-modes dired)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(mew
+  (standards-version 1.1
+   version "1.23"
+   author-version "1.94.2"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Messaging in an Emacs World."
+   filename "mew-1.23-pkg.tar.gz"
+   md5sum "23c0811f17235d4b4edeefe58b3cde4b"
+   size 747100
+   provides (mew-addrbook mew-attach mew-bq mew-cache mew-complete
+        mew-decode mew-demo mew-draft mew-encode mew-env mew-ext mew-fib
+        mew-func mew-header mew-highlight mew-lang-jp mew-mark mew-message
+        mew-mime mew-minibuf mew-mule mew-mule0 mew-mule2 mew-mule3 mew-os2
+        mew-pgp mew-pick mew-refile mew-scan mew-sort mew-summary
+        mew-syntax mew-temacs mew-unix mew-vars mew-virtual mew-win32
+        mew-xemacs mew)
+   requires (mew w3 efs mail-lib xemacs-base fsf-compat)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(mailcrypt
+  (standards-version 1.1
+   version "2.17"
+   author-version "3.5.8"
+   date "22:52:29 2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Support for messaging encryption with PGP."
+   filename "mailcrypt-2.17-pkg.tar.gz"
+   md5sum "248115c9d53387bd758c80a6f538fd20"
+   size 155727
+   provides (expect mailcrypt)
+   requires (mail-lib fsf-compat xemacs-base cookie gnus mh-e rmail vm)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(jde
+  (standards-version 1.1
+   version "1.55"
+   author-version "2.3.5.1"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Integrated Development Environment for Java."
+   filename "jde-1.55-pkg.tar.gz"
+   md5sum "c2038c60b8eb151eabdf9c099a155189"
+   size 3876634
+   provides (beanshell efc-xemacs efc jde-annotations jde-ant
+        jde-autoload jde-bug jde-checkstyle jde-class jde-compat
+        jde-compile jde-complete jde-custom jde-db jde-dbo jde-dbs jde-ejb
+        jde-gen jde-help jde-imenu jde-import jde-java-font-lock
+        jde-java-grammar jde-javadoc-gen jde-javadoc jde-jdb jde-junit
+        jde-make jde-open-source jde-package jde-parse-class jde-parse
+        jde-plugins jde-project-file jde-run sregex jde-stat
+        jde-tree-widget tree-widget jde-util jde-which-method jde-widgets
+        jde-wiz jde-xemacs jde-xref jde regress)
+   requires (jde cc-mode semantic debug speedbar edit-utils eterm mail-lib xemacs-base xemacs-devel cedet-common eieio elib sh-script fsf-compat os-utils)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ilisp
+  (standards-version 1.1
+   version "1.39"
+   author-version "5.12.0"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "ilisp Maintainers <ilisp@cons.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Front-end for Inferior Lisp."
+   filename "ilisp-1.39-pkg.tar.gz"
+   md5sum "7d7efe71b76cf65f44064c1459e5e382"
+   size 338015
+   provides (bridge comint-ipc completer ilcompat compat-fsf18
+        compat-fsf-19 compat-fsf-20 compat-fsf-21 ilisp-ccl ilisp-chs
+        ilisp-cl-easy-menu ilisp-ext ilisp-lw ilisp-key ilisp-menu
+        ilisp-mnb ilisp-scheme-easy-menu ilisp il-luc19 il-luc19)
+   requires (xemacs-base mail-lib fsf-compat eterm sh-script)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(igrep
+  (standards-version 1.1
+   version "1.19"
+   author-version "2.111"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Enhanced front-end for Grep."
+   filename "igrep-1.19-pkg.tar.gz"
+   md5sum "bb935c342053ed6b4a53c0daf0ddcd7f"
+   size 24412
+   provides (igrep)
+   requires (dired xemacs-base efs)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(idlwave
+  (standards-version 1.1
+   version "1.35"
+   author-version "5.1"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "Carsten Dominik <dominik@astro.uva.nl>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Editing and Shell mode for the Interactive Data Language"
+   filename "idlwave-1.35-pkg.tar.gz"
+   md5sum "ef34921483c9b58cecf31c71e2777310"
+   size 557121
+   provides (idlw-complete-structtag idlw-help idlwave-help idlw-rinfo
+        idlwave-rinfo idlw-shell idlwave-shell idlw-toolbar idlwave-toolbar
+        idlwave)
+   requires (fsf-compat xemacs-base mail-lib)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ibuffer
+  (standards-version 1.1
+   version "1.13"
+   author-version "N/A"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "John Paul Wallington <jpw@shootybangbang.com>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Advanced replacement for buffer-menu"
+   filename "ibuffer-1.13-pkg.tar.gz"
+   md5sum "c3b8c9016b3c6c354bb1d8aa4cee41ce"
+   size 95308
+   provides (ibuf-ext ibuf-macs ibuffer)
+   requires (ibuffer xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(hyperbole
+  (standards-version 1.0
+   version "1.23"
+   author-version "5.0.5"
+   date "22:52:29 2"
+   build-date "2020-07-03"
+   maintainer "Mats Lidell <matsl@xemacs.org>"
+   distribution stable
+   priority high
+   category "standard"
+   dump nil
+   description "Hyperbole: The Everyday Info Manager"
+   filename "hyperbole-1.23-pkg.tar.gz"
+   md5sum "847c469e95049369223f43edee316b71"
+   size 556599
+   provides (hact hactypes hargs hbdata hbmap hbut hgnus hhist
+        hib-doc-id hib-kbd hibtypes hinit hlvar hmail hmh hmoccur
+        hmous-info hmouse-drv hmouse-key hmouse-mod hmouse-tag hpath
+        rmailedit hrmail hsite hsmail hsys-hbase hsys-w3 hsys-wais hsys-www
+        htz hui-em19-b hui-ep-but hui-epV4-b hui-menu hui-mini hui-mouse
+        hui-window hui-xe-but hui hvar hversion hvm hypb hyperbole set
+        wconfig wrolo-logic wrolo-menu wrolo)
+   requires (xemacs-base mail-lib calendar vm text-modes gnus mh-e rmail apel tm sh-script net-utils ecrypto w3 easypg fsf-compat dired)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(hm--html-menus
+  (standards-version 1.1
+   version "1.27"
+   author-version "5.9"
+   date "52:29 2020"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "HTML editing."
+   filename "hm--html-menus-1.27-pkg.tar.gz"
+   md5sum "a3e0094793ee35028f62042c4bdf4aae"
+   size 201596
+   provides (adapt hm--date hm--html-configuration
+        hm--html-drag-and-drop hm--html-indentation hm--html-keys
+        hm--html-menu hm--html-mode hm--html-not-standard hm--html
+        html-view internal-drag-and-drop tmpl-minor-mode)
+   requires (dired xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(haskell-mode
+  (standards-version 1.1
+   version "1.15"
+   author-version "2.1"
+   date "2:52:29 20"
+   build-date "2020-07-03"
+   maintainer "Jerry James <james@xemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Haskell editing support."
+   filename "haskell-mode-1.15-pkg.tar.gz"
+   md5sum "4ce9e1dd4ec6056bca1beee597d1591f"
+   size 113829
+   provides (haskell-decl-scan haskell-doc haskell-font-lock
+        haskell-ghci haskell-hugs haskell-indent haskell-mode
+        haskell-simple-indent inf-haskell)
+   requires (dired mail-lib xemacs-base edit-utils)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(guided-tour
+  (standards-version 1.1
+   version "0.55"
+   author-version "N/A"
+   date "22:52:29 2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "Phil Sung's Guided Tour of Emacs."
+   filename "guided-tour-0.55-pkg.tar.gz"
+   md5sum "aaf6ded5784ee6aa00540437c5eb7247"
+   size 1452157
+   provides (guided-tour)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(gnus
+  (standards-version 1.1
+   version "3.01"
+   author-version "5.130014"
+   date "14 16:46:0"
+   build-date "2020-07-03"
+   maintainer "Steve Youngs <steve@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "The Gnus Newsreader and Mailreader."
+   filename "gnus-3.01-pkg.tar.gz"
+   md5sum "517707247be8c0d06dd5646f2117c153"
+   size 3659715
+   provides (assistant auth-source binhex canlock color compface
+        deuglify ecomplete flow-fill gmm-utils gnus-agent gnus-art
+        gnus-async gnus-bcklg gnus-bookmark gnus-cache gnus-cite gnus-cloud
+        gnus-compat gnus-cus gnus-delay gnus-demon gnus-diary gnus-dired
+        gnus-draft gnus-dup gnus-eform gnus-ems gnus-fun gnus-gravatar
+        gnus-group gnus-html gnus-icalendar gnus-int gnus-kill gnus-logic
+        gnus-mh gnus-ml gnus-mlspl gnus-msg gnus-notifications gnus-picon
+        gnus-range gnus-registry gnus-salt gnus-score gnus-sieve gnus-spec
+        gnus-srvr gnus-start gnus-sum gnus-sync gnus-topic gnus-undo
+        gnus-util gnus-uu gnus-vm gnus-win gnus-xmas gnus gravatar gssapi
+        hashcash html2text ietf-drums imap legacy-gnus-agent mail-parse
+        mail-prsvr mail-source mailcap message messagexmas messcompat
+        mm-archive mm-bodies mm-decode mm-encode mm-extern mm-partial
+        mm-url mm-util mm-uu mm-view mml-sec mml-smime mml mml1991 mml2015
+        nnagent nnbabyl nndiary nndir nndoc nndraft nneething nnfolder
+        nngateway nnheader nnheaderxm nnimap nnir nnmail nnmaildir nnmairix
+        nnmbox nnmh nnml nnnil nnoo nnregistry nnrss nnspool nntp nnvirtual
+        nnweb parse-time plstore qp registry rfc1843 rfc2045 rfc2047
+        rfc2231 rtree score-mode smiley smime-ldap smime spam-report
+        spam-stat spam-wash spam time-date utf7 uudecode yenc)
+   requires (gnus bbdb cedet-common dired easypg ecrypto eudc edit-utils eieio eterm fsf-compat mail-lib mh-e misc-games net-utils os-utils ps-print psgml rmail sasl sh-script sieve text-modes w3 xemacs-base apel)
+   type regular))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(gnats
+  (standards-version 1.1
+   version "1.20"
+   author-version "3.101"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "XEmacs bug reports."
+   filename "gnats-1.20-pkg.tar.gz"
+   md5sum "7ef59f5430d5487fc06060ad9ff99539"
+   size 191449
+   provides (gnats-admin gnats send-pr)
+   requires (mail-lib xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(general-docs
+  (standards-version 1.1
+   version "1.11"
+   author-version "N/A"
+   date "2:52:29 20"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "General XEmacs documentation."
+   filename "general-docs-1.11-pkg.tar.gz"
+   md5sum "61aec8322add50f61b2060b07f3246d3"
+   size 150743
+   provides ()
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(games
+  (standards-version 1.1
+   version "1.24"
+   author-version "2.00"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Tetris, Sokoban, Sudoku, and Snake."
+   filename "games-1.24-pkg.tar.gz"
+   md5sum "a033186d634a764a9819409f18dfd722"
+   size 86496
+   provides (gamegrid snake sokoban sudoku tetris)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(frame-icon
+  (standards-version 1.1
+   version "1.14"
+   author-version "N/A"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Set up mode-specific icons for each frame under XEmacs"
+   filename "frame-icon-1.14-pkg.tar.gz"
+   md5sum "c7b9480a6ae0ddd3af681a4eca4c82e8"
+   size 34591
+   provides (frame-icon)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(fortran-modes
+  (standards-version 1.1
+   version "1.08"
+   author-version "N/A"
+   date ":52:29 202"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Fortran support."
+   filename "fortran-modes-1.08-pkg.tar.gz"
+   md5sum "f9dd21847592fe2a83cafec38d2347e5"
+   size 74336
+   provides (f90 fortran)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(forms
+  (standards-version 1.1
+   version "1.18"
+   author-version "2.37"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Forms editing support (obsolete, use Widget instead)."
+   filename "forms-1.18-pkg.tar.gz"
+   md5sum "e4f2d66cfec3d9880b8248bfb42ad77a"
+   size 51486
+   provides (forms forms-mode)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(footnote
+  (standards-version 1.1
+   version "1.19"
+   author-version "0.18x"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SL Baur <steve@xemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Footnoting in mail message editing modes."
+   filename "footnote-1.19-pkg.tar.gz"
+   md5sum "dd5568a0b57413de691416baea98a6cb"
+   size 24010
+   provides (footnote-cyrillic footnote-greek footnote-han
+        footnote-hebrew footnote-kana footnote)
+   requires (mail-lib xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(eudc
+  (standards-version 1.1
+   version "1.44"
+   author-version "1.32"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "Oscar Figueiredo <oscar@xemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Emacs Unified Directory Client (LDAP, PH)."
+   filename "eudc-1.44-pkg.tar.gz"
+   md5sum "aac0491aa2cfab8f587b87359c62acbb"
+   size 85226
+   provides (eudc-vars eudc eudcb-bbdb eudcb-ldap eudcb-ph)
+   requires (fsf-compat xemacs-base bbdb mail-lib gnus rmail tm apel eterm sh-script net-utils ecrypto)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ess
+  (standards-version 1.1
+   version "1.19"
+   author-version "5.2.7"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "Rodney Sparapani <rodney.sparapani@xemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "ESS: Emacs Speaks Statistics."
+   filename "ess-1.19-pkg.tar.gz"
+   md5sum "928495a328b986ee24a50ad0bb9c8af3"
+   size 528991
+   provides (ess-comp ess-cust ess-emcs ess-font-lock ess-help ess-inf
+        ess-iw32 ess-latex-mode ess-menu ess-mode ess-mous ess-noweb
+        ess-site ess-swv ess-toolbar ess-utils ess essa-r essa-sas essd-arc
+        essd-els essd-omg essd-r essd-s3 essd-s4 essd-sas essd-sp3 essd-sp4
+        essd-sp5 essd-sp6 essd-sp6w essd-sta essd-vst essd-xls essddr
+        essl-bug essl-lsp essl-omg essl-s essl-sas essl-sta make-regexp
+        mouseme msdos noweb-font-lock-mode noweb-mode)
+   requires (xemacs-base mail-lib fsf-compat edit-utils speedbar sh-script eterm)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(eshell
+  (standards-version 1.1
+   version "1.21"
+   author-version "0fc80a3f6bb3bb59f42e9ff83cc8b89bf90fe658"
+   date "at ChangeL"
+   build-date "2020-07-03"
+   maintainer "XEmacs Dev Team <xemacs-beta@xemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Command shell implemented entirely in Emacs Lisp"
+   filename "eshell-1.21-pkg.tar.gz"
+   md5sum "aabd7b68d7f4dd938470077da6393baf"
+   size 289034
+   provides (em-alias em-banner em-basic em-cmpl em-dirs em-glob
+        em-hist em-ls em-pred em-prompt em-rebind em-script em-smart
+        em-term em-unix em-xtra esh-arg esh-cmd esh-ext esh-io esh-maint
+        esh-mode esh-module esh-opt esh-proc esh-test esh-toggle esh-util
+        esh-var eshell)
+   requires (xemacs-base eterm)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(escreen
+  (standards-version 1.1
+   version "1.04"
+   author-version "1.16"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "Jan Rychter <jan@rychter.com>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Multiple editing sessions within a single frame (like screen)."
+   filename "escreen-1.04-pkg.tar.gz"
+   md5sum "a29a6acde6633e71a25fc0998b83e9c6"
+   size 16145
+   provides (escreen)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(erc
+  (standards-version 1.0
+   version "0.27"
+   author-version "Version 5.1.2 Revision: 1.796.2.6"
+   date "   The Gre"
+   build-date "2020-07-03"
+   maintainer "Adrian Aichner <adrian@xemacs.org>"
+   distribution stable
+   priority low
+   category "standard"
+   dump nil
+   description "ERC is an Emacs InternetRelayChat client."
+   filename "erc-0.27-pkg.tar.gz"
+   md5sum "1994fe0046067f3b92eb73ca202e425d"
+   size 596468
+   provides (erc-autoaway erc-autojoin erc-backend erc-bbdb erc-button
+        erc-chess erc-compat erc-complete erc-dcc erc-ezbounce erc-fill
+        erc-goodies erc-ibuffer erc-identd erc-imenu erc-lang erc-list
+        erc-log erc-match erc-members erc-menu erc-nets erc-netsplit
+        erc-nicklist erc-nickserv erc-notify erc-page erc-pcomplete
+        erc-replace erc-ring erc-sound emacspeak-erc erc-speak erc-speedbar
+        erc-spelling erc-stamp erc-track erc-truncate erc-viper erc-xdcc
+        erc)
+   requires (edit-utils fsf-compat gnus pcomplete xemacs-base text-modes ispell viper)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(emerge
+  (standards-version 1.1
+   version "1.14"
+   author-version "N/A"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Another interface over GNU patch."
+   filename "emerge-1.14-pkg.tar.gz"
+   md5sum "297d0c02ed858f2639a36c010c4d4320"
+   size 62341
+   provides (emerge)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(edt
+  (standards-version 1.1
+   version "1.17"
+   author-version "N/A"
+   date "d Apr 1 22"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "DEC EDIT/EDT emulation."
+   filename "edt-1.17-pkg.tar.gz"
+   md5sum "d7a86dd7d000538e4b2864cdd05395c6"
+   size 64972
+   provides (edt)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ediff
+  (standards-version 1.1
+   version "1.85"
+   author-version "2.75"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "Michael Kifer <kifer@cs.sunysb.edu>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Interface over GNU patch."
+   filename "ediff-1.85-pkg.tar.gz"
+   md5sum "4da2d1099009432bbc5edad5fe221866"
+   size 334305
+   provides (ediff-diff ediff-help ediff-hook ediff-init ediff-merg
+        ediff-mult ediff-ptch ediff-tbar ediff-util ediff-vers ediff-wind
+        ediff)
+   requires (pcl-cvs elib dired xemacs-base edebug prog-modes gnus tramp vc sh-script text-modes ecrypto fsf-compat rmail mail-lib)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ecb
+  (standards-version 1.1
+   version "1.26"
+   author-version "2.31"
+   date " Apr 1 22:"
+   build-date "2020-07-03"
+   maintainer "Klaus Berndl <klaus.berndl@sdm.de>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Emacs source code browser."
+   filename "ecb-1.26-pkg.tar.gz"
+   md5sum "ab37ba035d3ffbdc4642872e7809b372"
+   size 973802
+   provides (ecb-examples silentcomp)
+   requires (xemacs-base semantic cedet-common eieio fsf-compat edit-utils jde mail-lib eshell ediff xemacs-devel speedbar c-support os-utils)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(easypg
+  (standards-version 1.1
+   version "1.06"
+   author-version "0.0.16"
+   date "1 22:52:29"
+   build-date "2020-07-03"
+   maintainer "Daiki Ueno <ueno@unixuser.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "GnuPG interface for Emacs."
+   filename "easypg-1.06-pkg.tar.gz"
+   md5sum "f41c5a20b86b77493245b8d87fb4adaa"
+   size 80833
+   provides (epa-dired epa-file epa-mail epa-setup epa epg-config
+        epg-package-info epg)
+   requires (xemacs-base dired mail-lib)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(docbookide
+  (standards-version 1.1
+   version "0.11"
+   author-version "0.1"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "DocBook editing support."
+   filename "docbookide-0.11-pkg.tar.gz"
+   md5sum "83123931aadd94f9c73584ddae675422"
+   size 34171
+   provides (dbide-abbrev dbide-data dbide-font dbide-process
+        docbookide)
+   requires (xemacs-base ispell mail-lib)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(dictionary
+  (standards-version 1.1
+   version "1.19"
+   author-version "1.8"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "Torsten Hilbrich <dictionary@myrkr.in-berlin.de>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Interface to RFC2229 dictionary servers."
+   filename "dictionary-1.19-pkg.tar.gz"
+   md5sum "56ac6644680d195253150b53015c8435"
+   size 42574
+   provides (connection dictionary link)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(crisp
+  (standards-version 1.1
+   version "1.18"
+   author-version "1.34"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Crisp/Brief emulation."
+   filename "crisp-1.18-pkg.tar.gz"
+   md5sum "785b9909fc9f6fcaa1ef92bbd3b9b2f9"
+   size 12061
+   provides (crisp scroll-lock)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(cookie
+  (standards-version 1.1
+   version "1.18"
+   author-version "N/A"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Spook and Yow (Zippy quotes)."
+   filename "cookie-1.18-pkg.tar.gz"
+   md5sum "b82099e681ac9ba0a79639f93b3d03d6"
+   size 36336
+   provides (cookie1 spook yow)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(calendar
+  (standards-version 1.1
+   version "1.42"
+   author-version "N/A"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "Jeff Miller <jeff.miller@xemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Calendar and diary support."
+   filename "calendar-1.42-pkg.tar.gz"
+   md5sum "0554a7faf3dc3ccad9310b5ff08c2f4b"
+   size 457427
+   provides (appt cal-bahai cal-china cal-compat cal-coptic cal-dst
+        cal-french cal-hebrew cal-html cal-islam cal-iso cal-japanese
+        cal-julian cal-mayan cal-move cal-persia cal-tex cal-x cal-xemacs
+        calendar diary-lib holidays icalendar lunar solar timeclock
+        todo-mode)
+   requires (xemacs-base fsf-compat)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(calc
+  (standards-version 1.1
+   version "1.51"
+   author-version "2.2"
+   date " Mar 30 22"
+   build-date "2020-07-03"
+   maintainer "Jay Belanger <belanger@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Emacs calculator"
+   filename "calc-1.51-pkg.tar.gz"
+   md5sum "e970e0fe8c0d5a37b685ecb421df1a4b"
+   size 1749698
+   provides (calc-aent calc-alg calc-arith calc-bin calc-comb
+        calc-cplx calc-embed calc-ext calc-fin calc-forms calc-frac
+        calc-funcs calc-graph calc-help calc-incom calc-keypd calc-lang
+        calc-macs calc-map calc-math calc-menu calc-misc calc-mode calc-mtx
+        calc-nlfit calc-poly calc-prog calc-rewr calc-rules calc-sel
+        calc-stat calc-store calc-stuff calc-trail calc-undo calc-units
+        calc-vec calc-yank calc calcalg2 calcalg3 calccomp calcsel2)
+   requires (calc xemacs-base fsf-compat calendar mail-lib)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(c-support
+  (standards-version 1.1
+   version "1.25"
+   author-version "N/A"
+   date "1 22:52:29"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Basic single-file add-ons for editing C code."
+   filename "c-support-1.25-pkg.tar.gz"
+   md5sum "79796cd1cb7dc76b8c23ce601424f37b"
+   size 80725
+   provides (c-comment-edit cmacexp ctypes hideif hideshow)
+   requires (cc-mode xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(bbdb
+  (standards-version 1.1
+   version "1.35"
+   author-version "2.35"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "Robert Widhopf-Fenk <bbdb@robf.de>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "The Big Brother Data Base"
+   filename "bbdb-1.35-pkg.tar.gz"
+   md5sum "e35c6300640f49b6b3fcb801bd498e84"
+   size 423109
+   provides (bbdb-com bbdb-ftp bbdb-gnus bbdb-gui bbdb-hooks
+        bbdb-merge bbdb-mhe bbdb-migrate bbdb-print bbdb-reportmail
+        bbdb-rmail bbdb-sc bbdb-snarf bbdb-srv bbdb-vm bbdb-w3 bbdb-whois
+        bbdb-xemacs bbdb)
+   requires (vm xemacs-base bbdb mail-lib gnus fsf-compat rmail w3 sh-script net-utils ecrypto easypg mh-e text-modes dired edit-utils tm apel supercite)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(auctex
+  (standards-version 1.1
+   version "2.01"
+   author-version "11.92"
+   date " 18 20:46:"
+   build-date "2020-07-03"
+   maintainer "Steve Youngs <steve@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "A sophisticated TeX environment for Emacs."
+   filename "auctex-2.01-pkg.tar.gz"
+   md5sum "cdb41ff948fa733e18bbbdb080542484"
+   size 4139321
+   provides (bib-cite context-en context-nl context font-latex latex
+        multi-prompt plain-tex preview prv-xemacs tex-bar tex-buf tex-fold
+        tex-font tex-info tex-ispell tex-jp tex-mik tex-site tex-style
+        tex-wizard tex texmathp toolbar-x)
+   requires (xemacs-base edit-utils fsf-compat texinfo reftex auctex mail-lib sh-script textools dired ispell os-utils text-modes w3)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ada
+  (standards-version 1.1
+   version "1.17"
+   author-version "2.27"
+   date " Apr 1 22:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Ada language support."
+   filename "ada-1.17-pkg.tar.gz"
+   md5sum "2f682b13eb03b8c7bd55c5d3f04f4882"
+   size 59746
+   provides (ada-mode ada-stmt)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(cogre
+  (standards-version 1.1
+   version "1.05"
+   author-version "0.5"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Graph editing mode."
+   filename "cogre-1.05-pkg.tar.gz"
+   md5sum "413abe54a20234c5ec6b7c4b67d2007f"
+   size 49494
+   provides (cogre-load cogre-mode cogre-uml cogre picture-hack
+        uml-create wisent-dot-wy wisent-dot)
+   requires (xemacs-base edebug xemacs-devel cedet-common eieio semantic)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(semantic
+  (standards-version 1.1
+   version "1.24"
+   author-version "2.0pre4"
+   date "2:52:29 20"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Semantic bovinator (Yacc/Lex for XEmacs). Includes Senator."
+   filename "semantic-1.24-pkg.tar.gz"
+   md5sum "787ece8b080c8f8e8030946ef851bf63"
+   size 1393237
+   provides (bovine-debug bovine-grammar-macros bovine-grammar
+        erlang-edoc semantic-bovine semantic-c-by semantic-c semantic-el
+        semantic-erlang-by semantic-erlang semantic-java semantic-make-by
+        semantic-make semantic-scm-by semantic-scm semantic-skel
+        document-vars document semantic-adebug-eieio semantic-adebug
+        semantic-alias semantic-analyze semantic-ast semantic-bnf
+        semantic-cb semantic-chart semantic-complete semantic-ctxt
+        semantic-debug semantic-decorate-mode semantic-decorate
+        semantic-dep semantic-doc semantic-ede-grammar semantic-edit
+        semantic-example semantic-find semantic-format semantic-fw
+        semantic-grammar-wy semantic-grammar semantic-html semantic-ia-sb
+        semantic-ia semantic-idle semantic-imenu semantic-lex-spp
+        semantic-lex semantic-load semantic-mru-bookmark semantic-regtest
+        semantic-sb semantic-sort semantic-tag-file semantic-tag-ls
+        semantic-tag semantic-texi semantic-util-modes semantic-util
+        semantic semanticdb-ebrowse semanticdb-el semanticdb-file
+        semanticdb-find semanticdb-search semanticdb-el semanticdb-system
+        semanticdb senator sformat bison-wisent semantic-wisent
+        wisent-awk-wy wisent-calc-wy wisent-calc wisent-cim-wy wisent-comp
+        wisent-debug wisent-expr wisent-grammar-macros wisent-grammar
+        wisent-java-tags-wy wisent-java-tags wisent-java-wy wisent-java
+        wisent-python-wy wisent-python wisent working)
+   requires (ede cedet-common eieio xemacs-base xemacs-devel edit-utils speedbar texinfo fsf-compat cc-mode edebug sgml)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ede
+  (standards-version 1.1
+   version "1.07"
+   author-version "1.0pre4"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Emacs Development Environment."
+   filename "ede-1.07-pkg.tar.gz"
+   md5sum "aa9dfc25f4f13ef42fbb9a9d57fb78a0"
+   size 127534
+  provides (autoconf-compat autoconf-edit ede-dired ede-load ede-pconf
+        ede-pmake ede-proj-archive ede-proj-aux ede-proj-comp ede-proj-elisp
+        ede-proj-info ede-proj-misc ede-proj-obj ede-proj-prog
+        ede-proj-scheme ede-proj-shared ede-proj ede-simple
+        ede-source ede-speedbar ede-cvs ede-util ede project-am)
+   requires (xemacs-base prog-modes edebug eieio dired cedet-common speedbar edit-utils)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(eieio
+  (standards-version 1.1
+   version "1.10"
+   author-version "1.0pre4"
+   date "1 22:52:29"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Enhanced Implementation of Emacs Interpreted Objects"
+   filename "eieio-1.10-pkg.tar.gz"
+   md5sum "9b9a8441decb0cd58d4e7993c65f6835"
+   size 179628
+   provides (call-tree chart eieio-base eieio-comp eieio-custom
+        eieio-doc eieio-load eieio-opt eieio-speedbar eieio-tests eieio
+        linemark lmcompile tree)
+   requires (xemacs-base edebug cedet-common speedbar)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(speedbar
+  (standards-version 1.1
+   version "1.33"
+   author-version "1.0pre4"
+   date "2:52:29 20"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Provides a separate frame with convenient references."
+   filename "speedbar-1.33-pkg.tar.gz"
+   md5sum "42e8fb5effa585c6c575ac5f8c018cc9"
+   size 161599
+   provides (bigclock dframe rpm sb-ant sb-gud sb-html sb-image
+        sb-info sb-rmail sb-texinfo sb-w3 speedbar-load speedbar)
+   requires (xemacs-base edebug cedet-common)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(cedet-common
+  (standards-version 1.1
+   version "1.04"
+   author-version "1.0pre4"
+   date ":29 2020 +"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Common files for CEDET development environment."
+   filename "cedet-common-1.04-pkg.tar.gz"
+   md5sum "9bcfcb080f1377e890eab52ce6073f71"
+   size 76272
+   provides (cedet-autogen cedet-compat cedet-edebug cedet-files
+        cedet-load cedet ezimage fame inversion mode-local pprint sformat
+        working)
+   requires (xemacs-base edebug)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(xemacs-devel
+  (standards-version 1.1
+   version "1.85"
+   author-version "N/A"
+   date "2:52:29 20"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Emacs Lisp developer support."
+   filename "xemacs-devel-1.85-pkg.tar.gz"
+   md5sum "9be159f1515d67820387288e36554a98"
+   size 157508
+   provides (checkdoc docref eldoc elp eval-expr find-func
+        hide-copyleft ielm patch-keywords pp trace)
+   requires (xemacs-base ispell mail-lib rmail tm apel sh-script net-utils eterm ecrypto)
+   type single
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(net-utils
+  (standards-version 1.1
+   version "1.62"
+   author-version "N/A"
+   date "1 22:52:29"
+   build-date "2020-07-03"
+   maintainer "Steve Youngs <steve@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Miscellaneous Networking Utilities."
+   filename "net-utils-1.62-pkg.tar.gz"
+   md5sum "a9022c7bd66c9ed4d48c0e99e99a8971"
+   size 204837
+   provides (ilisp-browse-cltl2 dig dns-mode dns feedmail google-query
+        idna metamail mozmail net-utils proto-stream punycode rcompile
+        shadowfile webjump webster-www xemacsbug xml)
+   requires (mail-lib bbdb xemacs-base efs fsf-compat eterm sh-script)
+   type single
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(efs
+  (standards-version 1.0
+   version "1.38"
+   author-version "1.24"
+   date " Apr 1 22:"
+   build-date "2020-07-03"
+   maintainer "Mike Sperber <sperber@informatik.uni-tuebingen.de>"
+   distribution stable
+   priority medium
+   category "standard"
+   dump nil
+   description "Treat files on remote systems the same as local files."
+   filename "efs-1.38-pkg.tar.gz"
+   md5sum "33e95b90d5e7ac88595a2b581345cb5d"
+   size 401466
+   provides (default-dir efs-auto efs-cms-knet efs-cms efs-coke
+        efs-cp-p efs-cu efs-defun efs-dired efs-unix:dl efs-dos-distinct
+        efs-dump efs-fnh efs-guardian efs-gwp efs-hell efs-ka9q
+        efs-kerberos efs-mpe efs-ms-unix efs-mts efs-mvs efs-netrc
+        efs-netware efs-nos-ve efs-ovwrt efs-pc efs-plan9 efs-report
+        efs-ti-explorer efs-ti-twenex efs-tops-20 efs-vms efs-vos
+        efs-x19\.15 efs)
+   requires (xemacs-base dired)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(edebug
+  (standards-version 1.1
+   version "1.25"
+   author-version "N/A"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "An Emacs Lisp debugger."
+   filename "edebug-1.25-pkg.tar.gz"
+   md5sum "f691aa38cd3775a8b4216cfeb74d2594"
+   size 118262
+   provides (advise-eval-region cl-read cl-specs cust-print
+        edebug-cl-read edebug eval-reg)
+   requires (xemacs-base xemacs-devel)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(xlib
+  (standards-version 1.1
+   version "1.17"
+   author-version "lg@xwem.org--2005/xlib--main--2.1--version-0"
+   date " ChangeLog"
+   build-date "2020-07-03"
+   maintainer "Zajcev Evgeny <zevlg@yandex.ru>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Emacs interface to X server."
+   filename "xlib-1.17-pkg.tar.gz"
+   md5sum "17e810987701d76e0902a3d9cb45784f"
+   size 196849
+   provides (xlib-composer xlib-const xlib-hello xlib-img
+        xlib-keysymdb xlib-math xlib-testing xlib-tray xlib-version
+        xlib-vidmode xlib-xc xlib-xdpms xlib-xinerama xlib-xlib xlib-xpm
+        xlib-xr xlib-xrecord xlib-xshape xlib-xtest xlib-xwin)
+   requires (xlib xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(text-modes
+  (standards-version 1.1
+   version "2.06"
+   author-version "N/A"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "Miscellaneous support for editing text files."
+   filename "text-modes-2.06-pkg.tar.gz"
+   md5sum "5074e853751fe5ba9d71e23df2875ce4"
+   size 583304
+   provides (ansi-color apache-mode autoinsert crontab-edit css-mode
+        desktop-entry-mode filladapt flyspell folding folding-isearch
+        format-spec hexl htmlize image-mode iso-acc iso-ascii iso-cvt
+        iso-insert iso-swed po-compat po-mode rtf-support swedish tabify
+        tpum whitespace-mode whitespace-visual-mode whitespace winmgr-mode
+        xpm-mode xrdb-mode)
+   requires (ispell fsf-compat xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(texinfo
+  (standards-version 1.1
+   version "1.33"
+   author-version "N/A"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "XEmacs TeXinfo support."
+   filename "texinfo-1.33-pkg.tar.gz"
+   md5sum "efa5834185b8dd86e2cd2d5a57ce0570"
+   size 148250
+   provides (informat makeinfo tex-mode texinfmt texinfo texnfo-tex
+        texnfo-upd)
+   requires (text-modes xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(sh-script
+  (standards-version 1.1
+   version "1.27"
+   author-version "2.0f"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Support for editing shell scripts."
+   filename "sh-script-1.27-pkg.tar.gz"
+   md5sum "a19e63a042fcef21e2cf2337cf629d30"
+   size 78810
+   provides (executable sh-script)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(os-utils
+  (standards-version 1.1
+   version "1.45"
+   author-version "N/A"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Miscellaneous O/S utilities."
+   filename "os-utils-1.45-pkg.tar.gz"
+   md5sum "2c75ffef4cacd1ae0356720c49dfe3fc"
+   size 245275
+   provides (archive-mode arc-mode background crypt+pgp-pub crypt++
+        crypt ftelnet inf-lisp jka-compr mchat rlogin ssh tar-mode telnet
+        terminal uncompress)
+   requires (xemacs-base)
+   type single
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ispell
+  (standards-version 1.1
+   version "1.38"
+   author-version "3.6"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Spell-checking with GNU ispell."
+   filename "ispell-1.38-pkg.tar.gz"
+   md5sum "2447c781ccd40570aabdfed65eb2edbb"
+   size 107507
+   provides (ispell)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(eterm
+  (standards-version 1.1
+   version "1.21"
+   author-version "N/A"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Terminal emulation."
+   filename "eterm-1.21-pkg.tar.gz"
+   md5sum "8587164d3f66a419f441acf7ce99e176"
+   size 118166
+   provides (term tgud tshell)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(elib
+  (standards-version 1.1
+   version "1.16"
+   author-version "1.0"
+   date " Apr 1 22:"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "Portable Emacs Lisp utilities library."
+   filename "elib-1.16-pkg.tar.gz"
+   md5sum "06440e8c3e69ff48de6edb5e923c6d19"
+   size 81019
+   provides (avltree bintree cookie dll dll elib-node queue-f queue-m
+        read stack-f stack-m string unique)
+   requires (xemacs-base )
+   type single
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(edit-utils
+  (standards-version 1.1
+   version "2.58"
+   author-version "N/A"
+   date " 11:46:16 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "Miscellaneous editor extensions, you probably need this."
+   filename "edit-utils-2.58-pkg.tar.gz"
+   md5sum "f5610bb9dc4fb9a179f0aa67fdfff3e5"
+   size 1258148
+   provides (abbrevlist after-save-commands align outline allout
+        atomic-extents autorevert avoid backup-dir balloon-help big-menubar
+        blink-cursor blink-paren bookmark buffer-colors compare-w
+        completion crm dabbrev desktop detached-minibuf edit-toolbar
+        fast-lock file-part find-file find-lisp floating-toolbar flow-ctrl
+        foldout func-menu highline hippie-exp icomplete id-select ido
+        info-look iswitchb lazy-lock lazy-shot list-register live-icon
+        makesum man mic-paren paren mode-motion+ narrow-stack outl-mouse
+        outln-18 page-ext blink-paren paren permanent-buffers popper
+        power-macros recent-files redo register-menu register-toolbar
+        reportmail resume rsz-minibuf saveconf savehist saveplace
+        scroll-in-place setnu shell-font tempo toolbar-utils tree-menu
+        uniquify vertical-mode where-was-i-db which-func winring)
+   requires (xemacs-base xemacs-devel fsf-compat dired mail-lib)
+   type single
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(ecrypto
+  (standards-version 1.1
+   version "0.24"
+   author-version "2.0"
+   date "r 1 22:52:"
+   build-date "2020-07-03"
+   maintainer "Simon Josefsson <simon@josefsson.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "Crypto functionality in Emacs Lisp."
+   filename "ecrypto-0.24-pkg.tar.gz"
+   md5sum "3b5572c191f89c6b68b7dc533a7e083b"
+   size 81799
+   provides (ascii-armor encrypt hex-util md4 md5-dl md5-dl md5-el md5
+        md5 paranoid password-cache password rander rc16 rijndael sha1
+        sha1)
+   requires (xemacs-base sh-script)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(dired
+  (standards-version 1.0
+   version "1.23"
+   author-version "7.17"
+   date "pr 1 22:52"
+   build-date "2020-07-03"
+   maintainer "Mike Sperber <sperber@deinprogramm.de>"
+   distribution stable
+   priority medium
+   category "standard"
+   dump nil
+   description "Manage file systems."
+   filename "dired-1.23-pkg.tar.gz"
+   md5sum "f406e43ec4b34e65742e374a1f2f4f69"
+   size 211373
+   provides (diff dired-cmpr dired-diff dired-faces dired-grep
+        dired-help dired-mob dired-rgxp dired-sex dired-shell dired-uu
+        dired-vir dired-xemacs dired-xy dired)
+   requires (xemacs-base prog-modes)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(debug
+  (standards-version 1.1
+   version "1.21"
+   author-version "N/A"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority low
+   category "standard"
+   dump nil
+   description "GUD, gdb, dbx debugging support."
+   filename "debug-1.21-pkg.tar.gz"
+   md5sum "c2dc3bf5d271d193d92a73886d2f6438"
+   size 108828
+   provides (dbx debug-toolbar gdb-highlight gdb gdbsrc gud history)
+   requires (xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(cc-mode
+  (standards-version 1.1
+   version "1.99"
+   author-version "5.32.5"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "Alan Mackenzie <bug-cc-mode@gnu.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "C, C++, Objective-C, Java, CORBA IDL, Pike and AWK language support."
+   filename "cc-mode-1.99-pkg.tar.gz"
+   md5sum "e48719c3ad374ea9b50a1738cc05f6b2"
+   size 808530
+   provides (cc-align cc-awk cc-bytecomp cc-cmds cc-compat cc-defs
+        cc-engine cc-fix cc-fonts cc-fonts cc-guess cc-langs cc-lobotomy
+        cc-menus cc-mode cc-styles cc-subword cc-vars)
+   requires (xemacs-base mail-lib)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(apel
+  (standards-version 1.1
+   version "1.37"
+   author-version "10.7"
+   date "Apr 1 22:5"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "A Portable Emacs Library.  Used by XEmacs MIME support."
+   filename "apel-1.37-pkg.tar.gz"
+   md5sum "569547521b09f13da1d835c5a6b843be"
+   size 129002
+   provides (alist apel-ver atype broken calist emu file-detect
+        filename install inv-xemacs invisible mcharset mcs-20 mcs-ltn1
+        mcs-xm mcs-xmu mule-caesar path-util pccl-20 pccl pces-20 pces-raw
+        pces-xfc pces-xm pces pcustom poe-xemacs poe poem-ltn1 poem-xm poem
+        product pym richtext static std11-parse std11)
+   requires (fsf-compat xemacs-base)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(mail-lib
+  (standards-version 1.1
+   version "1.84"
+   author-version "N/A"
+   date " 1 22:52:2"
+   build-date "2020-07-03"
+   maintainer "Simon Josefsson <simon@josefsson.org>"
+   distribution xemacs
+   priority medium
+   category "standard"
+   dump nil
+   description "Fundamental lisp files for providing email support."
+   filename "mail-lib-1.84-pkg.tar.gz"
+   md5sum "f38b71cea32dae7b076da6f2ea6a7005"
+   size 261363
+   provides (base64 browse-url-xemacs browse-url highlight-headers
+        mail-abbrevs mail-extr mail-utils mailheader netrc pop3 reporter
+        rfc2104 rfc822 rmail rmail-mini rmailout sendmail smtpmail starttls
+        tls)
+   requires (eterm xemacs-base fsf-compat sh-script ecrypto)
+   type regular
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(fsf-compat
+  (standards-version 1.1
+   version "1.25"
+   author-version "N/A"
+   date " 22:52:29 "
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "FSF Emacs compatibility files."
+   filename "fsf-compat-1.25-pkg.tar.gz"
+   md5sum "72df2f8290ea5e48f193b883150f5f86"
+   size 31974
+   provides (button goto-addr overlay thingatpt timer x-popup-menu)
+   requires (xemacs-base)
+   type single
+))
+))
+;;;@@@
+(package-get-update-base-entry (quote
+(xemacs-base
+  (standards-version 1.1
+   version "2.46"
+   author-version "N/A"
+   date "22:52:29 2"
+   build-date "2020-07-03"
+   maintainer "SXEmacs Development Team <sxemacs-devel@sxemacs.org>"
+   distribution xemacs
+   priority high
+   category "standard"
+   dump nil
+   description "Fundamental XEmacs support, you almost certainly need this."
+   filename "xemacs-base-2.46-pkg.tar.gz"
+   md5sum "05dd3470b9902b601c6420a861d44145"
+   size 615377
+   provides (add-log advice-preload advice annotations assoc
+        autoload-operators bytedecl case-table chistory comint-xemacs
+        comint compile debug easy-mmode ebuff-menu echistory edmacro ehelp
+        electric enriched env facemenu ffap field helper imenu iso-syntax
+        macros macros novice outline noutline passwd pp rcfiles regexp-opt
+        regi ring rx shell skeleton sort thing time-stamp timer-funcs
+        timezone tq xbm-button xpm-button)
+   requires ()
+   type regular
+))
+))
+;;;@@@
+;; Package Index file ends here

@@ -1,0 +1,491 @@
+                                                  -*- mode:outline -*-
+
+At the time of this release (SXEmacs 22.1.17), SXEmacs has the
+following idiosyncrasies: 
+
+* File Locations
+================
+
+** User init file (C-h v user-init-file)
+
+SXEmacs looks for user init files in `user-init-directory'.  The
+preferred directory is: ${XDG_CONFIG_HOME}/sxemacs but it can fall
+back to the old ~/.sxemacs directory.
+
+The search order is:
+
+    ${XDG_CONFIG_HOME}/sxemacs
+    ${HOME}/.config/sxemacs	# if $XDG_CONFIG_HOME is not set
+    ${HOME}/.sxemacs		# if other dirs don't exist
+
+You can also force the use of ~/.sxemacs regardless of the existence
+of the XDG dir/var by setting $SXE_USE_LEGACY environment variable to
+a non-nil value.
+
+If you're coming from XEmacs, symlinking your old ~/.xemacs directory
+to a SXEmacs location should be enough to get you up and running:
+
+    $ ln -svfn ${HOME}/.xemacs ${XDG_CONFIG_HOME}/sxemacs
+
+BTW, unlike XEmacs, SXEmacs doesn't attempt to "migrate" your old init
+file or Gnu/Emacs .emacs file.
+
+** Packages Hierarchy
+
+*** System-wide Packages (late-packages)
+
+The default location that SXEmacs searches for packages is
+`$prefix/share/sxemacs/'.  The same as for the user-init-file, a
+symlink is all you need to get up and running.
+
+    $ ln -svfn /usr/local/lib/xemacs /usr/local/share/sxemacs
+
+*** User Packages in ${HOME} (early-packages)
+
+For packages that you keep in your ${HOME}, the preferred location is:
+${XDG_DATA_HOME}/sxemacs.  This is normally ${HOME}/.local/share/sxemacs,
+and SXEmacs will use that if ${XDG_DATA_HOME} is not set.
+
+These packages may also be located in ~/.sxemacs if that is where you
+have your user-init-directory set to.
+
+
+* Build Quirks
+==============
+
+** FFI
+
+*** FFI is not included with your distro
+
+Sadly, some Linux distributions (hello Fedora) don't ship a libffi
+package, and their GCC does NOT include libffi or FFI headers either.
+In this instance you have 2 options...
+
+  1) Get the standalone package of libffi at
+     <http://sourceware.org/libffi/>.
+
+  2) Compile your own GCC from source, making sure you enable the java
+     compiler.  Enabling java in your GCC build is the only way to get
+     libffi built.
+
+Obviously, option #1 there is the easiest and quickest path to
+FFI-enabled SXEmacsen, and it is the option that we recommend.
+
+Oh, and please nag your distro to have FFI included by default.
+
+*** FFI is included in your GCC but you see missing header errors
+
+Often libffi headers aren't completely installed.  If you are getting
+errors in effi.c that seem to be hinged from something like...
+
+  /usr/include/ffi.h:63:23: ffitarget.h: No such file or directory
+
+You need to find `ffitarget.h' and put it in the same directory as
+your `ffi.h'.  Your libffi came with GCC, so you'll find it within
+your GCC directories:
+
+  $ dirname $(gcc -print-libgcc-file-name)
+/usr/lib/gcc-lib/i586-pc-linux-gnu/3.3.1
+
+Using that example, ffitarget.h would be in...
+
+  /usr/lib/gcc-lib/i586-pc-linux-gnu/3.3.1/libffi/
+
+Just copy or symlink the ffitarget.h there to /usr/include
+
+*** FFI on SELinux enabled machines
+
+If you are running with SELinux enabled and configure fails with
+messages like the following in `config.log'...
+
+  error while loading shared libraries: /usr/local/lib/libffi.so.1:
+  cannot restore segment prot after reloc: Permission denied
+
+You need to correct the default security context for `libffi.so'.
+
+  $ chcon -t textrel_shlib_t /usr/local/lib/libffi.so
+
+** PostgreSQL
+
+The autoconf tests for PostgreSQL support have changed.  SXEmacs'
+configure script now uses `pg_config' to determine whether or not to
+enable PostgreSQL.  Because of this you may have to set you $PATH
+environment to include the pgsql bin directory.  It is normally
+`/usr/local/pgsql/bin/'.  Another popular directory on Solaris 9 is
+`/opt/crw/postgresql/bin/'.  Check with your site administrator.
+
+Bash users can do it like this...
+
+  export PATH=/usr/local/pgsql/bin:$PATH
+
+*** Solaris 9 with 64-bit PostgreSQL
+
+There has also been a report that on Solaris 9 you may also need to
+configure with `--with-cflags='-mcpu=ultrasparc -m64''.  Apparently
+GCC on Solaris 9 defaults to building 32-bit, so you lose if you have
+64-bit PostgreSQL.
+
+** 64-bit test suite failure
+
+We have had a couple of reports of the test suite failing on 64-bit
+systems.  The error is like this (or similar)...
+
+Testing /usr/src/sxemacs/modules/ase/ase-heap-tests.el...
+Loading ase_heap v0.0.0 (SXEmacs module: ase-heap)
+Loaded module ase_heap v0.0.0 (SXEmacs module: ase-heap)Fatal error: assertion failed, file alloc.c, line 298, block != (void*)0xCAFEBABEDEADBEEF
+make[3]: *** [check-am] Aborted
+
+At this point we are not too sure exactly what the issue is.  It looks
+like it might be a bug in the malloc or free code of the libc.  We do
+know that not all 64-bit systems are affected, so far, only Fedora
+Core 7, and Gentoo on x86_64.
+
+One user has reported that using `-O1' in CFLAGS prevents it.
+
+But even with this test failure, SXEmacs still runs and operates
+without incident.  In fact, the failure can't be reproduced when
+running the test suite interactively.  With that in mind, it should be
+safe to install if you see this failure.
+
+We'll endeavour to get to the bottom of this one ASAP, if you think
+you can help, let us know.
+
+** m4, libtool, autoconf, automake, and whatnot
+
+SXEmacs tries to cope with any combination of versions of the above
+programs.  However, there is one lower bound, autoconf 2.60, and
+unfortunately this has an impact on the other parts of the build
+tools.
+
+To cut it really short, here is the minimum known-to-work combination:
+- autoconf 2.62, automake 1.9.6, libtool 1.5.22, m4 1.4.6
+
+In general we support (as of April, 2010):
+- autoconf >= 2.62, including current git versions
+- automake 1.9.6, 1.10, 1.10a, 1.11.1, and current git versions
+- libtool 1.5.N with N >= 22, libtool >= 2.1a (current CVS version)
+- m4 1.4.M with M >= 6 plus current git versions
+
+Note that many libtool packages shipped with the distros (OpenSuSE,
+Debian, just to name two) are _broken_.  Make sure you compile
+your own libtool in case you want to rerun autogen.sh or bootstrap
+the build chain, and double check that you use --enable-ltdl-install
+when doing so.
+
+If you are on a platform that has its own _non_gnu libtool (like OS/X
+Leopard) add --program-prefix=g to your gnu libtool configure so it
+installs as glibtool and doesn't clobber your other one.
+
+Sometimes it helps just to copy over the libtool script manually:
+cp -a $(type -p libtool) ${top_builddir}
+
+*** ylwrap fails with sed errors
+
+Some versions of the ylwrap script provided by autotools uses commas
+as separators in sed commands. As such if your build path uses commas
+the ylwrap will fail. 
+
+Sample message (where the build path was /Users/njsf/Projects/SXEmacs/nsx-up/,,mac):
+
+/Users/njsf/Projects/SXEmacs/nsx-up/,,mac/lib-src/make-docfile --modname cl-loop -E cl-loop.doc.c ../../../modules/cl/cl-loop.c
+/bin/sh ../../../ylwrap ../../../modules/cl/cl-loop-parser.y y.tab.c cl-loop-parser.c y.tab.h cl-loop-parser.h y.output
+cl-loop-parser.output -- bison -y  -d
+sed: 1: "s,/Users/njsf/Projects/ ...": bad flag in substitute command: 'm'
+sed: 1: "s,/Users/njsf/Projects/ ...": bad flag in substitute command: 'm'
+
+The workaround is to use a path without commas in it.
+
+
+*** Missing libltdl.la (Solaris 2.8)
+
+We've had a report that missing libtool on Solaris 2.8 isn't detected
+and so the included libtool still isn't used.  If you see an error
+about a missing libltdl.la all you need to do is configure SXEmacs
+with... 
+
+  --with-included-ltdl
+
+** configure
+
+*** configure on FreeBSD, NetBSD, OpenBSD, etc.
+
+Building SXEmacs on *BSD as far as we know requires the GNU Bourne
+Again SHell (bash) versions 3 or 4.
+
+bash is available for all tier 1 architectures as a binary package and 
+and for tier 2/3 as a port.
+
+To run configure successfully...
+
+    CONFIG_SHELL=/path/to/bash $CONFIG_SHELL configure [option, ...]
+
+*** configure on FreeBSD
+
+Turning on the use of libssp and -fstack-protector from configure
+( --with-error-checking=stack ) will result in a broken build. 
+
+Do not, under any circumstances, add -fstack-protector to CFLAGS, even 
+independently of the stack error checking option. 
+
+** bdwgc and gcc and code optimisation
+
+There are some weird optimisation issues with the Boehm-Demers-Weiser
+garbage collector (hereafter BDWGC) and the GCC C compilers of the 2 and
+3 series.  The build will crash like this:
+
+  Loading build-autoloads.el...
+  Loading loadup-el.el...
+  Loading loadup.el...make[3]: *** [auto-autoloads.el] Segmentation fault
+  (core dumped)
+  make[3]: Leaving directory
+
+The C backtrace will look like:
+
+  #0  0xbff9a2f0 in ?? ()
+  #1  0xb7eaf7d6 in GC_invoke_finalizers () at finalize.c:787
+  #2  0xb7eaf8ed in GC_notify_or_invoke_finalizers () at finalize.c:844
+  #3  0xb7eb2c8c in GC_generic_malloc (lb=32, k=0) at malloc.c:190
+
+If this is true for you, you may want to try another optimisation level:
+
+  ./configure CFLAGS="-g -O2"
+
+If this still does not work out either dispense with BDWGC support or
+use a recent C compiler.  ATTOW, all GCC 4.x compilers (including SVN)
+should work.
+
+** ENT
+
+ENT is basically a conglomerate of internally and externally implemented
+arithmetics.  Hence it supports a number of libraries, some of which
+overlap in their functionality, some others do not but then break at the
+compatibility layer.
+
+One of the most likely problems is the GMP vs. MPFR issue.  In past
+times, mpfr (a multiprecision library for floats with exact rounding
+facilities) has been a part of the GMP distribution.  Later on, mpfr got
+separated from it and has been developed independently while the version
+of mpfr which ships with GMP stayed the same.  Now that scenario is
+exactly the problem.
+
+Inattentive distributions (like Fedora) still deliver packages of GMP
+with the old'n'incompatible mpfr library.  SXEmacs will disable the MPFR
+support on such systems by default (at configure time).  However, if you
+install a supported version of mpfr in parallel to the packaged ones on
+such a system SXEmacs autodetection correctly reports that a sane
+version of mpfr is available and enables it.  Nonetheless, the according
+build may fail (or the build may even succeed but calling the binary may
+fail), like this:
+
+number-mpfr.o: In function `ent_lt_BIGFR_T':
+/home/martin/src/edit/sxemacs-main/src/number-mpfr.c:661: undefined
+reference to `mpfr_less_p'
+number-mpfr.o: In function `ent_gt_BIGFR_T':
+/home/martin/src/edit/sxemacs-main/src/number-mpfr.c:671: undefined
+reference to `mpfr_greater_p'
+...
+
+Especially note that we _only_ support the standalone version of MPFR,
+and not the one distributed with GMP.
+
+Solution:
+---------
+Either:
+   Badger your distributor and demand separate packages for GMP and
+   MPFR.
+Or:
+   Remove the GMP package and install your own build -- available at
+   http://swox.com/gmp -- afterwards install your own build of mpfr (the
+   one from http://www.mpfr.org)
+
+Reconfigure and rebuild SXEmacs afterwards.
+
+
+** Build fails because of missing makeinfo
+
+Install the GNU texinfo package on your system. You'll need at least
+version 4.8.
+
+
+** MacOS X warns of a crash during configure
+
+This is normal, as one of the tests made during configure (for the
+realpath call correctness) induces as crash.
+
+If you are developing SXEmacs and will do lots of runs of configure
+and that dialog annoys you, consider issuing:
+
+    # Disable crash reporting
+    sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.ReportCrash.Root.plist
+    # Redo last configure
+    ./config.status --recheck 
+    # Enable crash reporting
+    sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.ReportCrash.Root.plist
+
+Another alternative (not recommended) is to launch
+
+	/Developer/Applications/Utilities/CrashReporterPrefs
+
+and configure the mode to server, but you will loose notifications of
+crashes on all applications.
+
+In order to give SXEmacs developers with good diagnosis information it
+is recommended the mode be Developer.
+
+** OpenIndiana
+
+SXEmacs does build and run on OpenIndiana (151a) but you will need to
+install a few files/packages beforehand.  Namely...
+
+    Common Name             OpenIndiana Package Name
+
+	GCC			gcc-3
+	GNU M4			gnu-m4
+	automake		automake-110
+	autoconf		autoconf
+	libtool			libtool (also install libltdl)
+	pkg-config		gettext
+	math.h			header-math
+	bison			bison
+	gmp			gmp
+	mpfr			mpfr
+
+Yes, you read that right... to get pkg-config you must install the
+"gettext" package. :-)
+
+In that list, `bison', `gmp', and `mpfr' are not critical, but you
+will get extra functionality in your SXEmacs if you have them.
+
+*** automake additional instructions for OpenIndiana
+
+When you install the automake-110 OpenIndiana package it won't set up
+the symlinks to /usr/bin/automake or /usr/bin/aclocal.  Fix that
+with...
+
+	sudo ln -sv automake-1.10 /usr/bin/automake
+	sudo ln -sv aclocal-1.10 /usr/bin/aclocal
+
+*** Running SXEmacs configure on OpenIndiana
+
+There's one more quirk with OpenIndiana when you try to run SXEmacs'
+configure... you MUST set $CONFIG_SHELL
+
+	     CONFIG_SHELL=/bin/bash ../configure [opts]
+
+
+** make does not stop on subdirectory build failure
+
+Due to a bug in the make argument parsing in code generated by
+autoconf it is possible for make not to stop when a subdirectory fails.
+
+This failure occurs for instance when the make command line has a variable
+assignment which has a value with a - and k. Example:
+
+make CFLAGS="-Wall -fpacked -fpedantic" build-report
+
+
+* XEmacs Packages
+=================
+
+As of 22.1.17 things are pretty good in package-land. ;-)  I'm not
+suggesting that there aren't any bugs, just none that we currently
+know of that will burn down your house and kick your dog.
+
+* Problems with running SXEmacs
+===============================
+
+** FFI Related
+
+*** ffi-wand.el refuses to load.
+
+Can't load library `libMagickWand': libgomp.so.1: shared object cannot be
+dlopen()ed
+
+If you get that error when trying to load ffi-wand, it is because you
+have a ImageMagick that is using OpenMP (currently only svn HEAD).  To
+fix this you will need to rebuild ImageMagick, making sure that you
+configure it using --disable-openmp.
+
+See: <https://issues.sxemacs.org/show_bug.cgi?id=104>
+
+** Multimedia Goodness
+
+*** SXEmacs hangs or crashes during (init-asynchronousity).
+
+This is most likely a known effect (we do not want to call it bug,
+since there is no definite location) with certain (g)libc and kernel
+combinations under Linux.  If it crashes analyse the core file, it
+should look like this:
+
+#0  0x4014ebc4 in __sigsuspend (set=0xbffffbb4) at 
+../sysdeps/unix/sysv/linux/sigsuspend.c:48
+#1  0x40101b34 in __pthread_wait_for_restart_signal (self=0x401116e0) at 
+pthread.c:786
+#2  0x40101138 in __pthread_create_2_1 (thread=0x206f8dc, attr=0xbffffc58, 
+start_routine=0x20043ac <console>, arg=0xbffffd88) at restart.h:26
+
+A definite fault-prone setup is using kernel 2.6.x in conjunction with
+glibc-2.1.1.
+
+*** SXEmacs hangs or crashes before it ought to playback sound.
+
+As before, this is most likely a suspicious (g)libc/kernel
+combination.
+
+*** SXEmacs dumps core when using the ALSA audio device
+
+This has been reported to happen with old ALSA libraries (1.0.3 to be
+precise).  At the moment it is uncertain at which version these
+problems disappear (no developer wants to downgrade to a non-working
+ALSA :D).  We highly suggest to use the version 1.0.10 and above, or
+not use ALSA at all.
+
+*** SXEmacs in async mode does not play simultaneous sounds with ALSA
+
+This is due to missing (hardware-)mixing capabilities of your
+soundcard.  There is a user-space plugin called dmix, which can
+effectively circumvent this issue.
+
+*** SXEmacs crashes when using state sentinels with asynchronous sounds
+
+This is a known bug (#13 in our bug database).  At the moment the only
+advise we can give is: do not use sentinels before 22.1.7.
+Also see our bug database at https://issues.sxemacs.org
+
+*** make-media-stream seems to recognise any file as valid audio
+
+This is a known issue with fully-featured ffmpeg builds.  The current
+code in SXEmacs blindly relies on FFmpeg when it reports a file or
+string as valid audio.  There is no way to double-check that at the
+moment.  However, you can perform the additional check yourself if
+you have taglib installed.  Use the included ffi-taglib.el.
+
+
+*** XCreateIC fails at startup
+
+SXEmacs sometimes fails to create the input context with XCreateIC on
+non-C languages.  SXEmacs will include the values of the LANG and
+XMODIFIERS environment variables which influence the behavior of
+XCreateIC.  Failures have been observed with XMODIFIERS=@im=ibus
+
+
+*** Text gets garbled/corrupted with Xorg ATI driver
+
+Some versions of the Xorg ATI driver present display issues where text
+display gets corrupted.  Because of the conservative way SXEmacs
+updates the screen it is more susceptible to these issues than other
+applications.
+
+Some users have reported the problem goes away when using proprietary
+drivers.  CAVEAT EMPTOR: Proprietary drivers have also been reported
+to break other parts of the system, most notabable are bad
+interactions with graphic boot package Plymouth when it asks for
+password for encrypted volumes at boot.
+
+
+* Original XEmacs PROBLEMS File
+===============================
+
+The original XEmacs PROBLEMS file may be found in the SXEmacs 
+source distribution as PROBLEMS.XEmacs - while many issues mentioned
+have since been fixed, it is preserved for posterity. 

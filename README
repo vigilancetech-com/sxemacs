@@ -1,0 +1,40 @@
+This directory tree holds version 22.1 of SXEmacs, the extensible,
+customizable, self-documenting real-time display editor.
+
+See the file `etc/NEWS' for information on new features and other
+user-visible changes since the last version of SXEmacs.
+
+The file `INSTALL' in this directory says how to build SXEmacs.
+
+The file `PROBLEMS' contains information on many common problems that
+occur in building, installing and running SXEmacs.
+
+The file 'README.packages' will guide you in the installation of
+(essential) add on packages.
+
+The file `configure' is a shell script to acclimate SXEmacs to the
+oddities of your processor and operating system.  It will create a
+file named `Makefile' (a script for the `make' program), which helps
+automate the process of building and installing SXEmacs.  See INSTALL
+for more detailed information.
+
+The file `configure.ac' is the input used by the autoconf program to
+construct the `configure' script.
+
+The file `Makefile.in' is a template used by `configure' to create
+`Makefile'.
+
+There are several subdirectories:
+
+`ChangeLog.d' -- ChangeLog files for all the SXEmacs versions.
+    `contrib' -- A few scripts and things to make life as a SXEmacs
+                 developer a little easier.
+        `etc' -- Tutorials, readme's, icons, developer images.
+       `info' -- SXEmacs documentation in Texinfo format.
+    `lib-src' -- Holds the source code for some utility programs for
+                 use by or with SXEmacs, like movemail and etags.
+       `lisp' -- Holds the Emacs Lisp code for SXEmacs.
+         `m4' -- The auxiliary m4 scripts used by the build chain.
+    `modules' -- Source code for the "emodules".
+        `src' -- The rest of the C sources are here.
+      `tests' -- The test suite.

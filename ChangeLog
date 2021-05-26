@@ -1,0 +1,1534 @@
+commit 907aa4ab6bc983f3c112a66451921a1e3b1c87ae
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Sep 2 11:58:29 2020 +1000
+
+    SXEmacs v22.1.17 is released!
+    
+            * autogen.sh: Bump version / codename
+    
+            * INSTALL: Some minor updates and re-wordings.
+    
+            * PROBLEMS (Packages): Update.
+    
+            * etc/NEWS: 22.1.17 news items
+    
+            * info/sppm.texi: Bump versions.
+    
+            * info/sxemacs/sxemacs.texi: Ditto.
+    
+            * lisp/package-get.el (package-get-download-sites): Our packages
+            download site is HTTPS.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ INSTALL                   | 38 +++++++++++--------
+ PROBLEMS                  | 15 ++------
+ autogen.sh                |  4 +-
+ etc/NEWS                  | 93 +++++++++++++++++++++++++++++++++++++++++++++++
+ info/sppm.texi            |  6 +--
+ info/sxemacs/sxemacs.texi |  2 +-
+ lisp/package-get.el       |  4 +-
+ 7 files changed, 127 insertions(+), 35 deletions(-)
+
+commit 03dcbf57d0d19e95eb064eb49499f9a291354dbb
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Aug 31 12:02:48 2020 +1000
+
+    Updates to my about.el bio.
+    
+            * lisp/about.el (sxemacs-hackers): Add Jay.
+            (about-url-alist): Remove my EMchat and Google Plus URLs.
+            Remove sxemacs-shop URL.
+            Update my init files URL.
+            Add SY Writing URL.
+            (about-personal-info): Update my bio and links.
+    
+            * etc/photos/steve.png: Update.
+            * etc/photos/stevem.png: Update.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ etc/photos/steve.png  | Bin 48621 -> 40138 bytes
+ etc/photos/stevem.png | Bin 16719 -> 22168 bytes
+ lisp/about.el         |  55 +++++++++++++++++++++++---------------------------
+ 3 files changed, 25 insertions(+), 30 deletions(-)
+
+commit 3ba3d3038e14527cc05b3269594a66cff245f37a
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jul 4 13:12:57 2020 +1000
+
+    PKG-Related tweaks / improvements
+    
+    Just a couple of small changes related to packaging.  The index file
+    has been renamed (it isn't signed so giving it a 'gpg' extension was
+    just silly). Also, the FTP site hasn't existed for years so removed
+    that from the list of download sites.
+    
+            * etc/Makefile.am (dist_etc_DATA): 'package-index.LATEST.gpg' ->
+            'package-index'
+    
+            * lisp/package-get.el (package-get-base-filename): Rename to
+            'package-index'
+            (package-get-download-sites): Comment out the FTP site.
+    
+            * etc/package-index.LATEST.gpg: Removed.
+    
+            * etc/package-index: New.  Replaces above.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ etc/Makefile.am              |    4 +-
+ etc/package-index            | 2976 ++++++++++++++++++++++++++++++++++++++++++
+ etc/package-index.LATEST.gpg | 2611 ------------------------------------
+ lisp/package-get.el          |    7 +-
+ 4 files changed, 2982 insertions(+), 2616 deletions(-)
+
+commit 32aca671f57d2a42c9a350dd40c50221a08ceae9
+Merge: 2295c58 88bfcd5
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Apr 21 15:28:33 2020 +1000
+
+    Autotools updates and fix FFI detection
+    
+    Our config.{guess,sub} haven't been updated in decades... Until
+    today. This set of changes also brings a fix for FFI detection so now
+    if your libffi has a pkg-config file installed we should be able to
+    find your headers.
+    
+    * ffi-autoconf:
+      Update configgmp.{guess,sub} from GMP v6.2.0
+      Build Fix -- FFI auto-detection via pkg-config
+
+commit 88bfcd504a82b527d0a866cc8126d11d0ef3705c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Apr 21 15:27:44 2020 +1000
+
+    Update configgmp.{guess,sub} from GMP v6.2.0
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configgmp.guess | 715 +++++++++++++++++++++++++++++++++++++++-----------------
+ configgmp.sub   |  54 +++--
+ 2 files changed, 543 insertions(+), 226 deletions(-)
+
+commit 16de74c3a0cabb8219672bb7a9c7fd72f2717572
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Apr 20 21:39:00 2020 +1000
+
+    Build Fix -- FFI auto-detection via pkg-config
+    
+            * m4/sxe-emodffi.m4 (SXE_FFI_TRY_PKGCONFIG): Save the results of
+            SXE_PC_CHECK_CPPFLAGS into FFI_CPPFLAGS _before_ checking for
+            headers.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ m4/sxe-emodffi.m4 | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 2295c58972e4f3c4835c274700891eec100245d5
+Merge: 080c0d4 fca5052
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Apr 19 16:07:56 2020 +1000
+
+    Improvements to #'directory-files, #'directory-files-recur
+    
+    This set of changes also fixes a bug that was causing an invalid
+    byte-code error from #'describe-function.
+    
+    * merges: (Via Nelson Ferreira)
+      Improve directory-files{,-recur} options
+      Remove SYMLINK-IS-FILE argument
+      Provide full pathname in docstrings for loaded modules
+      Address failure to file of alias definition after it changes
+
+commit fca505218b9261467c8dd9f3827eb745ecffa5a4
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Apr 18 18:51:53 2020 -0400
+
+    Improve directory-files{,-recur} options
+    
+            Add the following FILES-ONLY options:
+            - dirs  to return only directories and symlinks to directories
+            - files  to return only files -- but *NOT* symlinks to files
+            - symlinks  to return only symlinks -- but *NOT* real files
+              or directories.
+            Change the following FILES-ONLY options:
+            - t  to return only files and symlinks to files
+            - subdir  to return only subdirectories -- but *NOT* symlinks to
+              directories, nor the current or parent directories
+    
+            This means the behaviour with the following tree:
+                    tmp/
+                    tmp/bar -> foo
+                    tmp/baz/
+                    tmp/baz/baz/
+                    tmp/baz/baz/foo/
+                    tmp/baz/baz/boz -> boz
+                    tmp/baz/fool -> ../baz/
+                    tmp/baz/biz
+                    tmp/baz/booze -> baz/
+                    tmp/baz/boz -> biz
+                    tmp/foz -> baz/
+                    tmp/foo
+    
+            The following will yield:
+            (directory-files "tmp" nil nil nil t)
+            => ("bar" "foo" "foz")
+    
+            (directory-files "tmp" nil nil nil nil)
+            => ("." ".." "bar" "baz" "foo" "foz")
+    
+            (directory-files "tmp" nil nil nil 'files)
+            => ("foo")
+    
+            (directory-files "tmp" nil nil nil 'dirs)
+            ("." ".." "baz")
+    
+            (directory-files "tmp" nil nil nil 'symlinks)
+            => ("bar" "foz")
+    
+            (directory-files "tmp" nil nil nil 'subdir)
+            => ("baz")
+    
+            (directory-files-recur "~/tmp" nil nil nil t 10 nil)
+            => ("bar" "baz/baz/boz" "baz/biz" "baz/boz" "baz/fool" "foo")
+    
+            (directory-files-recur "~/tmp" nil nil nil t 10 t)
+            => ("bar" "baz/baz/boz" "baz/biz" "baz/booze" "baz/boz"
+                "baz/fool" "foo" "foz")
+    
+            (directory-files-recur "~/tmp" nil nil nil nil 10 nil)
+            => ("bar" "baz" "baz/baz" "baz/baz/boz" "baz/baz/foo" "baz/biz"
+                "baz/booze" "baz/boz" "baz/fool" "foo" "foz")
+    
+            (directory-files-recur "~/tmp" nil nil nil nil 10 t)
+            => ("bar" "baz" "baz/baz" "baz/baz/boz" "baz/baz/foo" "baz/biz"
+                "baz/booze" "baz/boz" "baz/fool" "foo" "foz")
+    
+            (directory-files-recur "~/tmp" nil nil nil 'files 10 nil)
+            => ("baz/biz" "foo")
+    
+            (directory-files-recur "~/tmp" nil nil nil 'dirs 10 t)
+            => ("baz" "baz/baz" "baz/baz/foo")
+    
+            (directory-files-recur "~/tmp" nil nil nil 'symlinks 10 nil)
+            => ("bar" "baz/baz/boz" "baz/booze" "baz/boz" "baz/fool" "foz")
+    
+            (directory-files-recur "~/tmp" nil nil nil 'subdir 10 t)
+            => ("baz" "baz/baz" "baz/baz/foo")
+    
+            * dired.c (TRIVIAL_DIRECTORY_ENTRY): Reorder the strcmp arguments.
+            * dired.c: Remove Qsymlink, Qalive_symlink, Qdead_symlink unused
+            symbols.  Add new symbols Qsubdir, Qsymlinks, Qfiles, Qdirs to be
+            used in directory-files.
+            * dired.c (dfr_inner): Determine separately whether a file is a
+            symlink or a directory.  If it is a symlink further determine if
+            the linked file is a directory.  Include the result according to the
+            new options and changed meanings under FILES-ONLY symbol.  Determine
+            recursion separately of whether file is directory.  Always avoid
+            recursion of the current and parent directories.
+            * dired.c (Fdirectory_files): Update DOCSTRING
+            * dired.c (Fdirectory_files_recur): Update DOCSTRING
+            * dired.c (syms_of_dired): Add new symbols Qsubdir, Qsymlinks,
+            Qfiles, Qdirs
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 127 +++++++++++++++++++++++++++---------------------------------
+ 1 file changed, 57 insertions(+), 70 deletions(-)
+
+commit 72051d689e082b392f76ddb1544c3ec392f12679
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Apr 18 14:50:41 2020 -0400
+
+    Remove SYMLINK-IS-FILE argument
+    
+            Realized this argument does not actually make sense in the context
+            of a single directory, nor does bloom-filter.  Removing the arguments.
+    
+            * dired.c (Fdirectory_files): Keep previous setting
+            i.e. symlink_file_p = 0.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
+
+commit fea74fd99271a7cb9859f8e20eba38752a795a54
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Apr 18 14:17:49 2020 -0400
+
+    Provide full pathname in docstrings for loaded modules
+    
+            * lread.c (Fload_internal): Use Ffile_truename to get the full
+            path of the located file and use it in the readevalloop.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/lread.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
+
+commit 142351a4a1fd54ec8b459fa850a28f0b8aa6296b
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Apr 18 11:57:47 2020 -0400
+
+    Address failure to file of alias definition after it changes
+    
+            If the symbol of an alias changes, describe-function would fail with
+               Invalid byte code: "Object file name not stored in doc file"
+    
+            * help.el (describe-function-1): When trying to find the filename
+            of an alias find the filename of the symbol-function not the
+            alias.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/help.el | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit 080c0d4f34f91889ca786505fc38100b3c172922
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Apr 18 20:40:41 2020 +1000
+
+    Turn off PDF support in ffi-wand.
+    
+    Some versions of libWand struggled with PDF so easier just to turn it
+    off here.
+    
+            * lisp/ffi/ffi-wand.el (Wand-file-supported-for-read-p): Don't do
+            PDF.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-wand.el | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+commit 7414a8320d5b36199d69a6e864225c03b6379321
+Merge: bdca50c 09a07de
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Apr 11 22:52:12 2020 +1000
+
+    Couple of small updates from Nelson
+    
+    * merges:
+      Handle not bound allow-remote-paths in file-remote-p
+      Report the pkg-dir not writable
+      Fixup the other developers repos list in SPPM
+
+commit 09a07def47c0529de7113b5ac677f8b52b9627a7
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Apr 10 18:35:40 2020 -0400
+
+    Handle not bound allow-remote-paths in file-remote-p
+    
+            * lisp/files.el(file-remote-p): Use when-boundp instead of
+            declared-boundp, as it will derefence the variable anyway.
+
+ lisp/files.el | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit fb03a07425d0b26b8c328db34702ddf54c91edce
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Apr 10 18:33:18 2020 -0400
+
+    Report the pkg-dir not writable
+    
+            * lisp/package-admin(package-admin-get-install-dir): Add pkg-dir
+            to message asking to use local directory
+
+ lisp/package-admin.el | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 53d3410bdbb624ea2eebebc37a5dfdc9e4d8e21b
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Apr 10 18:27:06 2020 -0400
+
+    Fixup the other developers repos list in SPPM
+
+ info/sppm.texi | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+commit bdca50c3c434b1b518bc7369d6c516c7acef0855
+Merge: 1197b37 dc50ca5
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Apr 4 10:08:50 2020 +1000
+
+    Fix -- #'directory-files{,-recur} MATCH arg handling [From Nelson]
+    
+    With these changes the docs for #'directory-files and its recursive
+    big brother, #'directory-files-recur are no longer telling fibs.  The
+    MATCH arg will indeed accept and use a predicate function.
+    
+    Plus, #'directory-files now has SYMLINK_IS_FILE and BLOOM_FILTER args,
+    same as #'directory-files-recur.
+    
+    * merges:
+      Fix some long lines in dired.c
+      Add match-full option to directory-files{,-recur}
+      Add to directory-files SYMLINK_IS_FILE and BLOOM_FILTER args
+      Fix directory-files{,-recur} detection of symlinks to dirs
+      Use 'subdir as per (directory-files) documentation
+      Remove #if 0 varargs
+      Update directory-files{,-recur} argument checking
+      Remove unused #ifdef USE_MATCH_ARG
+      Allow pathname_matches_p to be called if match is predicate
+
+commit dc50ca5ccf9ded80e1cd8978806b4e546ecb1fc5
+Author: Nelson Ferreira <nferreira9@bloomberg.net>
+Date:   Fri Apr 3 08:35:41 2020 -0400
+
+    Fix some long lines in dired.c
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+commit 78c79a6791615c00944f28b13002affdb4043228
+Author: Nelson Ferreira <nferreira9@bloomberg.net>
+Date:   Fri Apr 3 08:32:45 2020 -0400
+
+    Add match-full option to directory-files{,-recur}
+    
+        This option fixes the oddity that when matching the file either
+        with regex or with predicate one could only use the actual
+        filename, and could not consider the full path.  This add
+        'match-full to the FULL option, and in this case the regex and
+        the predicate will receive the full path not just the filename
+    
+        * src/dired.c(directory-files): Add match-full support
+          (directory-files-recur): Add match-full support
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 36 ++++++++++++++++++++++++++----------
+ 1 file changed, 26 insertions(+), 10 deletions(-)
+
+commit e794190ea12bf6484c1133d0ba2ef29428bd9c72
+Author: Nelson Ferreira <nferreira9@bloomberg.net>
+Date:   Fri Apr 3 08:23:53 2020 -0400
+
+    Add to directory-files SYMLINK_IS_FILE and BLOOM_FILTER args
+    
+        * src/dired.c(Fdirectory_files): There is no good reason to
+        exclude these options existing in directory-files-recur from
+        directory-files
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 36 ++++++++++++++++++++++++++----------
+ 1 file changed, 26 insertions(+), 10 deletions(-)
+
+commit cedd8dcf8f3a1cdbc417d5ca4dce15993f99b5a2
+Author: Nelson Ferreira <nferreira9@bloomberg.net>
+Date:   Fri Apr 3 08:11:49 2020 -0400
+
+    Fix directory-files{,-recur} detection of symlinks to dirs
+    
+        * src/dired.c(dfr_inner): For the systems without d_type in
+          dirent, the code did not try to detect symlinks to directories,
+          preventing 'subdir from working.  Added same logic for that
+          branch as in the case where d_type is present.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 70 ++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 37 insertions(+), 33 deletions(-)
+
+commit 7aacd253610b70bd48d5335d4374c06d72a13657
+Author: Nelson Ferreira <nferreira9@bloomberg.net>
+Date:   Fri Apr 3 08:06:59 2020 -0400
+
+    Use 'subdir as per (directory-files) documentation
+    
+        * lisp/loadup.el(really-early-error-handler): Use 'subdir instead
+          of 'dirs-only
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/loadup.el | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f92b38b100a5e020abeb970d11f6eeeb20021a37
+Author: Nelson Ferreira <nferreira9@bloomberg.net>
+Date:   Fri Apr 3 08:05:47 2020 -0400
+
+    Remove #if 0 varargs
+    
+           * src/dired.c(Fdirectory_files_recur): Remove #if 0 for vargars
+             definition.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+commit 718431a4e91205d76bec12b140e521d4f78abe43
+Author: Nelson Ferreira <nferreira9@bloomberg.net>
+Date:   Thu Apr 2 13:20:06 2020 -0400
+
+    Update directory-files{,-recur} argument checking
+    
+           * dired.c(Fdirectory_files): Ensure directory is a string.
+           (Fdirectory_files_recur): Remove check for match. It is done in
+           directory_files_magic, which also will allow for a predicate.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit 7fe1a4edea46088e7f48203a957f232499dc01be
+Author: Nelson Ferreira <nferreira9@bloomberg.net>
+Date:   Thu Apr 2 13:17:04 2020 -0400
+
+    Remove unused #ifdef USE_MATCH_ARG
+    
+           * src/dired.c: USE_MATCH_ARG is always 1. No sense in keeping
+             the #ifdef
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 7 -------
+ 1 file changed, 7 deletions(-)
+
+commit 4d7f178bcf132aeb19f8d11c526646c2fef53ee7
+Author: Nelson Ferreira <nferreira9@bloomberg.net>
+Date:   Thu Apr 2 11:58:33 2020 -0400
+
+    Allow pathname_matches_p to be called if match is predicate
+    
+          * src/dired.c(dfr_inner): Rely on caller of dfr_inner to
+            guarantee that match is a predicate if the bufp is NULL.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1197b371ddae1b2e0f71c11802ebe3604368e234
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu Apr 2 15:23:20 2020 +1000
+
+    GNU Compat -- Add WHEN and DOC args to #'define-obsolete-(var|fun)-alias
+    
+            * lisp/obsolete.el (define-obsolete-variable-alias): Add optional
+            WHEN and DOC arguments.  They don't do anything, they exist purely
+            for GNU Emacs compatibility.
+            (define-obsolete-function-alias): Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/obsolete.el | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+commit 843517dae8b02b1fa5dfba0564171da52b7e1b2e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Mar 27 21:53:46 2020 +1000
+
+    Fix issue with find-file-magic-files-alist and TRAMP
+    
+    This prevents #'find-file-find-magic from trying to feed #'magic:file a
+    TRAMP filename.  In the past this wasn't an issue because #'magic:file did
+    not report errors from the shell or libmagic, it just silently returned
+    nil.  Not so anymore.
+    
+            * lisp/files.el (find-file-find-magic): Return 'nil' if it is a
+            TRAMP filename.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/files.el | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+commit 65bafef3573fae6492747b80bbb575f04bf8850a
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Mar 23 13:43:59 2020 +1000
+
+    Texinfo 6.7 fixes
+    
+    This makes our docs compatible with texinfo-6.7.  There was one file,
+    sxemacs-faq.texi, that I ended up converting to UTF-8.  Please be
+    aware and take care when editing that one from now on.
+    
+    I did the conversion outside of SXEmacs with iconv and sed, so as to
+    eliminate any risk of corruption.  Here is how...
+    
+    ,----
+    | iconv -f ISO-8859-1 -t UTF-8//TRANSLIT -o utf-sxemacs-faq.texi
+    |   sxemacs-faq.texi &&
+    |
+    | sed -i -e 's/iso-2022-8/utf-8/' -e '3i@documentencoding UTF-8' \
+    |   utf-sxemacs-faq.texi &&
+    | mv -v {utf-,}sxemacs-faq.texi
+    `----
+    
+    I did attempt to find any occurances of chars it couldn't convert, but
+    I'm sure you'll agree that searching for the odd out of place `?' in
+    a large FAQ... well, "needle in a hay-stack" comes to mind.
+    
+            * info/sxemacs-faq.texi: Convert file t UTF-8.
+            Set @documentencoding UTF-8
+            (Q1.3.8): Fix a @ref
+    
+            * info/sppm.texi (Sending a patch from a git repo): Remove
+            @indent from within `@code' sections. It's frowned upon in
+            texinfo 6.7.
+    
+            * info/lispref/ldap.texi (LDAP Variables): Fix file
+            corruption.
+            Reported-by: Andrés Ramírez <rrandresf@gmail.com>
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ info/lispref/ldap.texi |  2 +-
+ info/sppm.texi         | 12 ++++--------
+ info/sxemacs-faq.texi  | 26 +++++++++++++-------------
+ 3 files changed, 18 insertions(+), 22 deletions(-)
+
+commit c273570a7d78e3580eb3476f0521148d8993efa3
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Mar 17 14:08:18 2020 +1000
+
+    Ensure #'magic:find-file-noselect creates unique buffers
+    
+    Having `magic:find-file-magic-alist-enable' features turned on, the
+    following scenario could eventuate...
+    
+      C-x C-f /path/one/to/a/file/called/Wanda
+    
+      C-x C-f /path/two/to/another/file/called/Wanda
+    
+    would result in the *same* buffer being used for *both* files.
+    Imagine the fun, especially when both paths are writable for you.
+    
+    This change fixes that.
+    
+            * lisp/ffi/ffi-magic.el (magic:find-file-noselect): Use
+            #'create-file-buffer, not #'get-buffer-create. Gah! What was I
+            thinking?!
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-magic.el | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 296f6c0cefc2dcb6c11d8adf050ef3143eced75a
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Mar 15 17:20:17 2020 +1000
+
+    Update alist.el -- Use the newer version from APEL.
+    
+    Ever since our inception the copy of alist.el in the APEL package has
+    shadowed the one we have in core.  As the one in APEL is slightly
+    newer, I am replacing the core alist.el with that version.  The one in
+    the APEL package will be marked as "suppressed".
+    
+            * lisp/alist.el: Updated from the copy of this lib in the APEL
+            package.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/alist.el | 134 ++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 59 insertions(+), 75 deletions(-)
+
+commit f3cafa38396ca3172d1eef37fcdd6cabe5b76f47
+Merge: d7f6198 12591ca
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Mar 15 11:30:46 2020 +1000
+
+    Updates from Nelson
+    
+    * merges:
+      Spawn new process with ADDR_NO_RANDOMIZE personality if not already set
+      Add raw_execvp, to use with already converted strings
+      Detect sys/personality
+      Rename __alloc_size to __sxe_alloc_size to avoid clash with clang internals
+
+commit 12591ca7b6251569ff6a8d6c625e57cf089536c4
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Mar 14 19:39:12 2020 -0400
+
+    Spawn new process with ADDR_NO_RANDOMIZE personality if not already set
+
+ src/emacs.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+
+commit 14fbee621d2a792d86c30ec9a2454a1d3021b8bc
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Mar 14 19:29:24 2020 -0400
+
+    Add raw_execvp, to use with already converted strings
+
+ src/sysdep.c  | 11 +++++++++--
+ src/sysfile.h |  2 ++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+commit bc4fc39ae02ddd765ac78903ffdc1000db7d549f
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Mar 14 19:28:35 2020 -0400
+
+    Detect sys/personality
+
+ m4/sxe-libc.m4 | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 94f08edb78d7f018213a17bfde175264e7ea8b6f
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Mar 14 13:10:04 2020 -0400
+
+    Rename __alloc_size to __sxe_alloc_size to avoid clash with clang internals
+
+ src/lisp.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+commit d7f6198f2b9152e0cdddd898c8a4222ed1a90948
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Mar 10 08:11:20 2020 +1000
+
+    Improve #'magic:file interactive use + misc fixes
+    
+    In the scenario where ffi-magic had been enabled for
+    `find-file-magic-files-alist', prefix args could leak through to
+     #'magic:file from outside callers (C-u C-x C-f, for example).  This
+    changeset guards against that.
+    
+    Somewhat related to that, #'magic:file-coding-system-p will return
+    nil if 'coding-system-for-read' had been explicitly set prior.  IOW
+    ffi-magic won't try to set the coding-system if something else is
+    already trying to.
+    
+    The flags completion requires `crm' from the edit-utils package so
+    we error if that isn't installed, pointing the user in the right
+    direction.
+    
+    It is now possible to load ffi-magic more than once without any
+    warnings.
+    
+            * lisp/ffi/ffi-magic.el (ffi-magic-persistent-flags): Set risky
+            via inline autoload cookie.
+            (ffi-magic-no-safety): Ditto.
+            (magic_t): Define only if not already defined.
+            (magic-options): Ditto.
+            (magic:file): Put prefix arg and flags completion _inside_ the
+            #'interactive so we're not affected by prefix args leaking in from
+            outside callers.
+            Error if 'crm' isn't available, mentioning "edit-utils" pkg.
+            (magic:file-coding-system-p): Return nil if
+            `coding-system-for-read' had been explicitly set beforehand.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-magic.el | 119 +++++++++++++++++++++++++++++---------------------
+ 1 file changed, 69 insertions(+), 50 deletions(-)
+
+commit 4e262ada4def6c48fbc5be646d23c7ca19e431d6
+Merge: 537a0b7 f16a5a1
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Feb 29 13:19:40 2020 +1000
+
+    Type fix
+
+commit f16a5a1a1b97e90a0ef3a60da9971e09d4a8d7ea
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Feb 29 13:17:03 2020 +1000
+
+    Typo fix
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ contrib/git-for-steve.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 537a0b719dffc95fe9338bc1c30faf7a5ab71277
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Feb 28 18:34:48 2020 +1000
+
+    Set modes and run appropriate hooks when visiting a file via magic
+    
+    This little change makes a big difference and now it should be quite
+    safe to add `(magic:find-file-magic-files-alist)' into your init.el.
+    
+            * lisp/ffi/ffi-magic.el (magic:find-file-noselect):
+              Call #'after-find-file to ensure modes and hooks are done
+              right.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-magic.el | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 16294576c497d6a20be9a5ac7b45cedc742fe78a
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Feb 28 15:58:24 2020 +1000
+
+    Improve git-for-steve.sh script
+    
+            * .gitattributes: New.
+    
+            * contrib/git-for-steve.sh (set_diff): Try to get the function
+            name onto the diff hunk header. Set the git config to do the
+            magic.
+            (set_fsck): Set 'transfer.fsckObjects' in the config.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ .gitattributes           | 30 +++++++++++++++++++++++
+ contrib/git-for-steve.sh | 62 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 92 insertions(+)
+
+commit 7e5ce553f29e2aa1e724cabe85fae869793efa7f
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Feb 26 15:24:19 2020 +1000
+
+    Make Info-mode usable with UTF-8 info docs.
+    
+    This changeset, which I fully admit, is an ugly hack.  Sorry, not
+    sorry. But it means that UTF-8 info documents are now both readable
+    and navigable.  Finally I can read info docs again!!
+    
+            * lisp/info.el (Info-find-file-node): Add a horrible ugly hack to
+            the horrible ugly hack so that this won't lose when searching a
+            UTF-8 info file.
+            (Info-insert-file-contents): Cater for info files that have a
+            'Local variables' section.
+            Replace the funky chars throughout the file with their octal
+            numeric to keep things cleaner.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/info.el | 57 +++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 35 insertions(+), 22 deletions(-)
+
+commit 10019727dbf4ba9f38ff9013a2dfa943b1bf570c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Feb 25 06:50:08 2020 +1000
+
+    Update sqlite, taglib, and wand for new 'magic:*' defuns.
+    
+    This updates a few things to use the new and improved ffi-magic.
+    
+            * lisp/ffi/ffi-sqlite.el (sqlite-file-p): Use #'magic:file to get
+            the job done.
+    
+            * lisp/ffi/ffi-wand.el (Wand-file-supported-for-read-p):
+            Use #'magic:file-image-p to test file type.
+    
+            * lisp/ffi/ffi-taglib.el (taglib:mimetypes): New, replaces
+            `taglib:extensions'
+            (taglib:extensions): Removed.
+            (taglib:get-tag): Use #'magic:file to test for supported file
+            formats.
+            (taglib:list-all-tags): Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-sqlite.el |  7 ++-----
+ lisp/ffi/ffi-taglib.el | 42 ++++++++++++++++++++++++++++++++----------
+ lisp/ffi/ffi-wand.el   | 16 ++++++----------
+ 3 files changed, 40 insertions(+), 25 deletions(-)
+
+commit 4d040ed7a6b36a92f615e7422100b4a960620b40
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Feb 23 23:33:39 2020 +1000
+
+    A major update / rewrite of ffi-magic.el
+    
+    This changeset brings a good deal of file(1)'s capabilities.  The
+    file(1) options that are now supported in some fashion are:
+    
+      --apple, -d, -E, -e, --extension, -i, --mime-type,
+      --mime-encoding, -k, -L, -p, -r, -s, -v, -z, -Z
+    
+    Missing is: -P, but hopefully I'll nut that out soon.
+    
+    The old #'magic:file-type has been made obsolete and has been replaced
+    with #'magic:file. See its doc for option flags that can be set and
+    example usage.
+    
+    A form of error checking is on by default which comes in two waves:
+    
+      1) Option flags given are parsed through a sanitiser to help prevent
+         causing unknown or unwanted results.  See
+         `ffi-magic-sanitise-flags' and `ffi-magic-no-safety' to turn it
+         off.
+    
+      2) Errors from libmagic and the shell are captured and reported as
+         actual errors in SXEmacs.  This can be turned off if required.
+         See `ffi-magic-persistent-flags'.
+    
+    A few convenience functions have also been added:
+    
+      o #'magic:file-audio-p
+      o #'magic:file-video-p
+      o #'magic:file-image-p
+      o #'magic:file-text-p
+    
+    They all do what you'd imagine they would.
+    
+    There is also the availability of using ffi-magic with
+    `find-file-magic-files-alist' to auto-detect coding system.  Use it at
+    your own risk, YMMV, don't blame me if it kicks your dog and eats your
+    children.  It is not enabled by default because of the mixed results
+    that I've gotten.  For example, see what file(1) says about any .info
+    file you have, or indeed even etags.el or info.el.  A single #o177
+    character in a file will cause it to be reported as binary.
+    
+            * lisp/ffi/ffi-magic.el (ffi-magic-persistent-flags): New.
+            (magic-options, ffi-magic-options-list, magic-list): New.
+            (magic-errno, magic-getflags, magic-setflags): New.
+            (magic-version, magic:version, magic-descriptor): New.
+            (magic:getflags, ffi-magic-no-safety): New.
+            (ffi-magic-sanitise-flags, ffi-magic-flag-value): New.
+            (magic:setflags, magic:cleanup, magic:error): New.
+            (magic:file-audio-p, magic:file-video-p): New.
+            (magic:file-image-p, magic:file-text-p): New.
+            (magic:file-coding-system-p, magic:find-file-noselect): New.
+            (magic:find-file-magic-alist-enable): New.
+            (magic:file-type): Made obsolete, alias to #'magic:file.
+            (magic:file): Now accepts a 2nd FLAGS arg for setting libmagic
+            flags. It is interactively accessible via prefix arg, with
+            completion.
+            Output can optionally be inserted into the current buffer with a
+            2nd prefix arg.
+    
+            * lisp/cl-macs.el (load-time-value): Synced up with XE 21.5's
+            version as their's doesn't cause byte-compiler warnings.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/cl-macs.el       |  24 +--
+ lisp/ffi/ffi-magic.el | 528 +++++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 509 insertions(+), 43 deletions(-)
+
+commit 1ba8ce2e6926d673e0d3917709a3e9b712ff5d8b
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue May 28 22:27:24 2019 +1000
+
+    Amazing the difference a paren can make, including fix my last commit.
+    
+            * m4/sxe-libc.m4 (SXE_CHECK_LIBC_VERSION): Add missing paren.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ m4/sxe-libc.m4 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 067b8373d71290eda3263e8f62b29d1ecfa30034
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue May 28 21:34:27 2019 +1000
+
+    Get glibc version with a distro-agnostic check.
+    
+    This replaces all the distro specific little tests we had to determine the
+    glibc version.  It's guaranteed to work on any version of glibc running on
+    any platform.  It simply calls gnu_get_libc_version().
+    
+            * m4/sxe-libc.m4 (SXE_CHECK_LIBC_VERSION): Simplify for Linux
+            glibc.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ m4/sxe-libc.m4 | 105 +++++++++++++++++++++++++--------------------------------
+ 1 file changed, 45 insertions(+), 60 deletions(-)
+
+commit 000f846876d84adf1a71f72a129b072593893c5b
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun May 26 16:15:34 2019 +1000
+
+    Always use the system malloc (removes gmalloc.c malloc.c).
+    
+    This changeset removes our in-house malloc.c and gmalloc.c and switches to
+    always using the system provided malloc.
+    
+            * src/mem/gmalloc.c: Removed.
+    
+            * src/mem/malloc.c: Removed.
+    
+            * info/internals/internals.texi (Low-Level Modules): Nuke
+            descriptions for gmalloc.c and malloc.c, update description for
+            free-hook.c
+    
+            * src/ui/X11/device-x.c (x_delete_device): 'FREE_CHECKING' is
+            never defined and __free_hook is never used so remove crusty bits
+            of code conditional to it.
+    
+            * src/mem/Makefile.am (EXTRA_libmemalloc_a_SOURCES): Remove
+            gmalloc.c and malloc.c.
+    
+            * src/mem/free-hook.c: Remove all of the old gmalloc debugging
+            stuff.
+    
+            * src/mem/ralloc.c: Use HAVE_GLIBC instead of DOUG_LEA_MALLOC.
+            (Free_Addr_Block): Use void because caddr_t hasn't been a thing
+            for at least a hundred years.
+    
+            * src/regex.c: Use HAVE_GLIBC instead of DOUG_LEA_MALLOC.
+    
+            * src/alloc.c: Use HAVE_GLIBC instead of DOUG_LEA_MALLOC.
+            Ditto for GNU_MALLOC.
+            (malloced_storage_size): Because it's always system malloc, update
+            this to use GNU malloc accounting when on a glibc system.
+    
+            * m4/sxe-summary.m4 (SXE_SUMMARY): It's always system malloc now
+            so no need to say if GNU malloc is used.
+    
+            * src/emacs.c (main): Use HAVE_MALLOC_WARNING instead of
+            _NO_MALLOC_WARNING_
+            Use HAVE_GLIBC instead of DOUG_LEA_MALLOC.
+            (Fdump_emacs): Don't use disable_free_hook().
+    
+            * src/mem/vm-limit.c: Use HAVE_MALLOC_WARNING instead of
+            _NO_MALLOC_WARNING_ and reverse the condition sense.
+    
+            * m4/sxe-libc.m4 (SXE_CHECK_LIBC): Define HAVE_GLIBC.
+    
+            * configure.ac: Removed  --with-dlmalloc, --with-system-malloc
+            Define HAVE_MALLOC_WARNING instead of _NO_MALLOC_WARNING_.
+            Remove check for malloc_set_state() it's not used anywhere.
+            Don't give reasons why or not GNU malloc is used because it's
+            not.
+            Don't define DOUG_LEA_MALLOC.
+            Don't add gmalloc.o or malloc.o to MEMALLOC_OBJS.
+            Define HAVE_LIBMCHECK.
+            Add -lmcheck to MEMALLOC_LIBS.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configure.ac                  |  118 +---
+ info/internals/internals.texi |   16 +-
+ m4/sxe-libc.m4                |    1 +
+ m4/sxe-summary.m4             |    1 -
+ src/alloc.c                   |   40 +-
+ src/emacs.c                   |  116 +---
+ src/mem/Makefile.am           |    3 +-
+ src/mem/free-hook.c           |  378 +------------
+ src/mem/gmalloc.c             | 1250 -----------------------------------------
+ src/mem/malloc.c              |  813 ---------------------------
+ src/mem/ralloc.c              |   12 +-
+ src/mem/vm-limit.c            |    8 +-
+ src/regex.c                   |    2 +-
+ src/ui/X11/device-x.c         |   15 -
+ 14 files changed, 64 insertions(+), 2709 deletions(-)
+
+commit 8bda9b596c482119b1c43d6af218157a13e6c2dc
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat May 18 01:00:07 2019 +1000
+
+    Build fixes for recent libc versions (post glibc 2.19)
+    
+    This fixes two 'undefined reference' errors when building with a recent
+    glibc.  One in effi.c for 'dlsym', and the other in emacs.c for
+    'memory_warnings'.
+    
+            * configure.ac: Fix mmap detection.
+            Include -ldl in FFI_LIBS.
+            Ensure that vm-limit.o is added to the objects when using the
+            system malloc.
+            Default to using the system malloc.
+    
+            * m4/sxe-emodffi.m4 (SXE_CHECK_FFI): Include -ldl in FFI_LIBS.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configure.ac      | 9 ++++++---
+ m4/sxe-emodffi.m4 | 2 +-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
+
+commit 44d2a2cbc9f67ab859f1567acfb7ad9cc439fb55
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Oct 26 15:29:27 2016 +1000
+
+    Make #'require's NOERROR arg do its job properly.
+    
+            * src/fns.c (Frequire): Don't throw an invalid-state error if the
+            'noerror' arg is non-nil.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/fns.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit 855079bb8f2670d2cc5deba18fa86e6310a6e2aa
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Oct 25 12:36:50 2016 +1000
+
+    Add the 'noerror' argument to #'require.
+    
+            * src/fns.c (Frequire): Synched from XE 21.5, adds 'noerror' arg.
+            From: Andrés Ramírez <sunshavi@fastmail.fm>
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/fns.c | 43 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
+
+commit 9d3afcb78773d8cc25f4128831f4d74b775a149d
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Oct 1 22:53:26 2016 +1000
+
+    EMchat is https as well
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/about.el | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c06d9ce5508b3ccad7c563404c5fd72ed5fc2522
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Oct 1 22:32:46 2016 +1000
+
+    All of SXEmacs' http URLs are now https.  WooHoo!
+    
+    I used this shell snippet  to create this changeset...
+    
+    for sub in www git issues downloads; do
+        git grep -l http://$sub.sxemacs|grep -v ChangeLog.d|
+           xargs sed -i "s@\(http\)\(://$sub.sxemacs.org\)@\1s\2@"
+    done
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ BUGS                          |  4 ++--
+ INSTALL                       |  2 +-
+ PROBLEMS                      |  4 ++--
+ configure.ac                  |  2 +-
+ contrib/git-for-steve.sh      | 12 +++++------
+ etc/BETA                      |  4 ++--
+ etc/DISTRIB                   |  8 ++++----
+ etc/MAILINGLISTS              |  2 +-
+ etc/NEWS                      |  8 ++++----
+ etc/sample.init.el            |  2 +-
+ etc/sxemacs.1                 |  6 +++---
+ info/internals/internals.texi |  2 +-
+ info/lispref/ffi.texi         |  2 +-
+ info/sppm.texi                | 46 +++++++++++++++++++++----------------------
+ info/sxemacs-faq.texi         | 14 ++++++-------
+ info/sxemacs/sxemacs.texi     |  2 +-
+ lisp/about.el                 |  2 +-
+ lisp/emod-utils.el            |  2 +-
+ lisp/ffi/ffi-magic.el         |  2 +-
+ lisp/help.el                  |  4 ++--
+ lisp/issue-tracker.el         | 10 +++++-----
+ lisp/startup.el               |  2 +-
+ modules/configure.ac          |  2 +-
+ modules/dbus/dbusbind.c       |  2 +-
+ modules/dbus/dbusbind.h       |  2 +-
+ src/dired.c                   |  2 +-
+ 26 files changed, 75 insertions(+), 75 deletions(-)
+
+commit 8455459fd341cd2f7aea65ff9a3018037a2a29d7
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu Sep 15 11:24:41 2016 +1000
+
+    Fix font-lock-add-keywords (Closes bug 184)
+    
+            * lisp/font-lock.el (font-lock-add-keywords): When compiled, the
+            keywords are the cdr of font-lock-keywords, not the cadr.
+            From: Jonathan Martin <jjm@keelhaul.me.uk>
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/font-lock.el | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8f64b939e390506ecdae812d49218408d65fb86c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 18 22:08:28 2016 +1000
+
+    Take care of fallout from updating/fixing #'eval-after-load
+    
+            * lisp/info.el (Info-file-list-for-emacs): New, just to keep some
+            FSF/pkgs happy.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/info.el | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 8f178e721b917a2f562033f15fe1a594416271fd
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 18 19:53:23 2016 +1000
+
+    Let #'eval-after-load accept symbol for FILE arg
+    
+    While looking into bug 183 I noticed that FSF's #'eval-after-load also
+    accepts a feature (i.e, a symbol) for the FILE arg.  I personally don't
+    think that's a wonderful idea, but I did see that a few things in
+    GNU/Emacs are using it (Tramp, for example).  This change adds rudimentary
+    support in our #'eval-after-load.  Basically, if FILE is a symbol, look up
+    a filename from #'feature-file, or use #'symbol-name if that fails.
+    
+    The doc string was amended accordingly, and a note about the futility of
+    using #'eval-after-load with dumped lisp was also added.
+    
+            * lisp/subr.el (eval-after-load): Also accept symbols for FILE
+            arg.
+            Add a note to doc string about the futility of using this on
+            dumped lisp.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/subr.el | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
+
+commit ae2462c24067ecb048e20779fe688cfd84c4b895
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 18 17:59:37 2016 +1000
+
+    Make #'eval-after-load DTRT for dumped lisp (Closes bug 183)
+    
+            * lisp/subr.el (eval-after-load): Make sure FORM is eval'd
+            immediately if FILE is a dumped lib.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/subr.el | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit fd681d451a445b9daee6ba0e937633a67f72d450
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jun 5 22:13:11 2016 +1000
+
+    Let's not do "Pre-Release" packages.
+    
+    Having "Pre-Release" packages and "Official Release" packages was a good
+    idea back in the early part of 2003 when I added that to XEmacs.  There
+    was an incredible amount of activity happening in the packages in those
+    days and bugs were frequently slipping into the packages releases.  Today,
+    things are different.  The amount of activity in packages, and the number
+    of users/devs we have it should be easily possible to keep everything in
+    check without the need for a separate "testing" package hierarchy.
+    
+    We can always reimplement something along the lines of pre-release
+    packages at a later date if things get out of hand.
+    
+            * lisp/menubar-items.el (default-menubar): Remove "Pre-Release"
+            package menu.
+    
+            * lisp/package-ui.el (package-ui-pre-release-download-menu):
+            Remove.
+    
+            * lisp/package-get.el (package-get-download-sites): Add our FTP,
+            remove everyone else.
+            (package-get-pre-release-download-sites): Remove.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/menubar-items.el |   5 --
+ lisp/package-get.el   | 131 +++-----------------------------------------------
+ lisp/package-ui.el    |  15 ------
+ 3 files changed, 8 insertions(+), 143 deletions(-)
+
+commit 9eb1502d96b1bc6febee972c1374b40038bedf88
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 1 13:18:10 2016 +1000
+
+    Automake/Libtool warning fix/suppression
+    
+    This changeset cleans up all of the warnings that our autogen.sh spits
+    out.  At least on my system with automake 1.15, and libtool 2.4.6.
+    
+    A possibly controversial change here (read: ugly as hell) is that I've
+    symlinked a couple of files from `src' into `lib-src'.  The
+    lib-src/Makefile.am referenced regex.c, regex.h, and alloca.c in 'src'.
+    That caused automake to freak out and warn that we were using source files
+    in subdirectories which would become incompatible in the future.  Automake
+    does have a "subdir-objects" option for this type of thing, but it causes
+    problems elsewhere in our build chain.
+    
+    The symlink "fix" is quick, dirty, and easy, however I'm happy to have it
+    reverted if a neater solution can be found.
+    
+            * m4/sxe-libtool.m4 (_SXE_CHECK_LT2): Pull in `_LT_COMPILER_PIC'
+            to fix a swag of warnings about macros being expanded before being
+            required.
+    
+            * lib-src/Makefile.am (REGEX_C, ALLOCA_C): Point to files in the
+            current directory which are symlinks to the originals in `src'.
+            This prevents a scary warning from automake about files in
+            subdirectories and future incompatibities.  Automake does have a
+            "subdir-objects" option, but because we have a specialised build
+            that causes more problems than it fixes.
+    
+            * configure.ac (AM_INIT_AUTOMAKE): Use `-Wno-override' and
+            `-Wno-portability' to suppress harmless and irrelevant, at least
+            to us, warnings.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ .gitignore          | 1 +
+ configure.ac        | 4 ++--
+ lib-src/Makefile.am | 4 ++--
+ lib-src/alloca.c    | 1 +
+ lib-src/regex.c     | 1 +
+ lib-src/regex.h     | 1 +
+ m4/sxe-libtool.m4   | 1 +
+ 7 files changed, 9 insertions(+), 4 deletions(-)
+
+commit 07a30643a116c71f1aadaa4b3911087e314becaf
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue May 31 14:58:27 2016 +1000
+
+    Display a better version of the truth in the configure summary.
+    
+            * configure.ac: Set $with_module_path to something closer to the
+            truth.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f8daf3651491b02d925b33b18768e7c715b1b574
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue May 31 09:31:51 2016 +1000
+
+    Improve the configure summary output.
+    
+            * m4/sxe-summary.m4 (SXE_SUMMARY): Add short caveat about package
+            paths may be different at runtime.
+    
+            * configure.ac: Set $with_package_path to something closer to the
+            truth.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configure.ac      | 4 ++--
+ m4/sxe-summary.m4 | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 65785a5de3108e1837ea0ad27bf294c837978c49
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun May 29 11:38:48 2016 +1000
+
+    FIX: missing paren
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-curl.el | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a893cff0ab51590058c9dd8a3afc594115dc5276
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun May 29 11:03:24 2016 +1000
+
+    Don't use 'make-temp-file', fixes FFI/PUI.
+    
+            * lisp/ffi/ffi-curl.el (curl:file-exists-p): Use 'make-temp-name'
+            instead of 'make-temp-file' which may not be available.
+            (curl:insert-file-contents-literally): Ditto.
+            (curl:download): #'expand-file-name on the PREFIX arg of
+            'make-temp-name' so it attempts to avoid name collision.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-curl.el | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+commit 751bdf6e4f2b0ddf965dd8108f3838f8e470c4e8
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun May 29 09:50:59 2016 +1000
+
+    Seemless integration of ffi-curl based packages install.
+    
+    With this changeset, PUI uses the same code for retrieving remote package
+    files for both EFS backed PUI and ffi-curl backed PUI.  As a bonus
+    to this, the following forms are now available for use when ffi-curl is
+    loaded...
+    
+      (file-exists-p "http://example.com/filename")
+      (file-readable-p "http://example.com/filename")
+      (insert-file-contents-literally "http://example.com/filename")
+      (copy-file "http://example.com/filename" "/local/file")
+      (expand-file-name "http://example.com/filename")
+      (file-name-directory "http://example.com/filename")
+      (file-name-nondirectory "http://example.com/filename")
+    
+            * lisp/package-get.el (package-get-update-base): Set the
+            MUST-MATCH arg in the call to #'read-file-name to nil when dealing
+            with URI style package sites so it more or less does a
+            #'read-string in those cases.
+            Maybe save index from URI style package sites as well.
+            (package-get): Remove the #'curl:download retrieval.  Package
+            downloading is now seemless regardless of the transport used.
+            (package-get-remote-filename): Immediately return FILENAME when
+            that is a URI style path as well.
+    
+            * lisp/ffi/ffi-curl.el (curl:file-exists-p): New
+            (curl:file-readable-p): New
+            (curl:insert-file-contents-literally): New
+            (curl:copy-file): New
+            (curl:expand-file-name): New
+            (curl:file-name-directory): New
+            (curl:file-name-nondirectory): New
+            (curl:file-handler-regexp): New
+            (curl:file-handler): New
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-curl.el | 177 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ lisp/package-get.el  |  32 ++++------
+ 2 files changed, 190 insertions(+), 19 deletions(-)
+
+commit e1da7033943ef78c20db65b8c50487692c16e109
+Merge: 7e2aadc 1659e16
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat May 21 22:22:43 2016 +1000
+
+    Support http package mirror sites
+    
+    * curlpui:
+      Fix an autoloads problem.
+      Update PUI to use #'curl:download when available.
+
+commit 1659e1697671946487005d3104fe72313b149d54
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat May 21 21:37:43 2016 +1000
+
+    Fix an autoloads problem.
+    
+            * lisp/package-get.el (package-get-have-curl): Autoload it and set
+            its value via requiring ffi-curl instead of a featurep test.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/package-get.el | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+commit 5627b0461b0094ad971c957ca843ffe00cec09df
+Merge: 7e2aadc fc54742
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat May 21 13:04:36 2016 +1000
+
+    Update PUI to use ffi-curl
+    
+    * pui:
+      Update PUI to use #'curl:download when available.
+
+commit 7e2aadc60f8269eee4b8a8b9fb072d0c31141a78
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon May 16 10:08:44 2016 +1000
+
+    Implement a blacklist for problem OpenSSL ciphers.
+    
+    Since OpenSSL v1.0.0 was released, a number of ciphers have caused
+    problems for SXEmacs' ossl, up to and including data corruption.  This
+    changeset prevents these ciphers from being used.
+    
+    See: `ossl-cipher-blacklist'
+    
+    The blacklisted ciphers can still be used if they are first removed from
+    `ossl-cipher-blacklist', but obviously this is not recommended.
+    
+            * src/openssl.c (ossl_check_cipher): New. Returns 0 if cipher is
+            NOT on our blacklist.
+            (Fossl_available_ciphers): Check cipher with ossl_check_cipher().
+            (ossl_cipher_fun): Ditto.
+            (Fossl_bytes_to_key): Ditto.
+            (Fossl_encrypt): Ditto.
+            (Fossl_encrypt_file): Ditto.
+            (Fossl_decrypt): Ditto.
+            (Fossl_decrypt_file): Ditto.
+            (Fossl_seal): Ditto.
+            (Fossl_open): Ditto.
+            (Fossl_pem_write_key): Ditto.
+            (Fossl_pem_key): Ditto.
+            (Fossl_digest_size): Typo fix "cipher" -> "digest".
+            (vars_of_openssl): New var, Vossl_cipher_blacklist. A list of
+            ciphers we don't want to use.
+            (syms_of_openssl): Define all of the blacklisted cipher names.
+    
+            * tests/automated/openssl-tests.el: Run tests on all available
+            ciphers and digests.
+            Make sure use of blacklisted ciphers results in an error.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/openssl.c                    | 110 +++++++++++++++++++++++++++++++++++++--
+ tests/automated/openssl-tests.el |  55 +++-----------------
+ 2 files changed, 115 insertions(+), 50 deletions(-)
+
+commit 0f847ef0829d1cacba92319bf0bb5836d3df08cb
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue May 10 16:15:17 2016 +1000
+
+    Prevent Unexpected errors in OpenSSL Testsuite.
+    
+    For some years now we've been seeing a couple of unexpected errors
+    cropping up in the OpenSSL tests.  It turns out that certain ciphers
+    disagree with how we do things, or perhaps OpenSSL itself is buggy.
+    Either way, what this changeset does is stop those ciphers being used in
+    the testsuite.
+    
+    Yes, this is very much a case of sticking our fingers in our ears and
+    screaming "LA LA LA I'm NOT LISTENING!!".  Expect a real fix in openssl.c
+    to come in the future.  Hopefully sooner, rather than later.
+    
+            * tests/automated/openssl-tests.el: Prevent known-bad ciphers from
+            ruining our testsuite.
+            Open up the tests to also include ciphers smaller than 128bits,
+            and all digests. This effectively increases the number of tests
+            run to more than 200,000.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ tests/automated/openssl-tests.el | 51 +++++++++++++++++++++++++++-------------
+ 1 file changed, 35 insertions(+), 16 deletions(-)
+
+commit b351d2f921b00248e772efce2bdd048dc2318687
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri May 6 21:01:30 2016 +1000
+
+    Last release's ChangeLog
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ ChangeLog.d/ChangeLog-22.1.16 | 4992 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 4992 insertions(+)
+
+commit fc54742579c47d36b0f0358b65737dd72be5c934
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Apr 24 16:01:01 2013 +1000
+
+    Update PUI to use #'curl:download when available.
+    
+    This changeset migrates PUI over to using #'curl:download by default for
+    all remote package installs.  If FFI or libcurl are not available it just
+    reverts back to using EFS.
+    
+    As a consequence, #'pui-bootstrap is no longer needed and has been
+    removed.
+    
+            * lisp/package-get.el (package-get-have-curl): New.
+    
+            * lisp/package-get.el (url-scheme): New string widget.
+    
+            * lisp/package-get.el (package-get-download-sites): Add SXEmacs
+            pkg mirror, protocols, and url-scheme widget.  Remove dead sites.
+    
+            * lisp/package-get.el (package-get-pre-release-download-sites):
+            Ditto.
+    
+            * lisp/package-get.el (package-get-site-release-download-sites):
+            Add url-scheme
+    
+            * lisp/package-get.el (package-get): Add a ffi-curl way of
+            leeching the packages.
+    
+            * lisp/package-get.el (pui-bootstrap): Removed.
+    
+            * info/sxemacs/packages.texi (Installing Packages): Talk about
+            FFI/libcurl for "over the network" package installs.
+    
+            * info/sxemacs/packages.text (Bootstrapping PUI): Removed.
+    
+            * lisp/package-get.el (package-get-remote-filename): Possibly
+            return a URL-style name.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ info/sxemacs/packages.texi |  73 +-----
+ lisp/package-get.el        | 612 ++++++++++++++++++++++++++-------------------
+ 2 files changed, 367 insertions(+), 318 deletions(-)

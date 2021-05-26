@@ -1,0 +1,4992 @@
+commit 8c1f10db4fcec820afc234f1630878f14f4d9d91
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri May 6 18:30:51 2016 +1000
+
+    SXEmacs v22.1.16 is released!
+    
+    What can I say, I got tired of waiting and just, well, released.
+    
+    	* info/sxemacs/sxemacs.texi (Top): Update version.
+    
+    	* info/sppm.texi: Update versioning macros.
+    
+    	* autogen.sh (EXPECTED_TREE_VERSION): 22.1.16
+    	(sxemacs_codename): "Hillman Hunter"
+    
+    	* etc/NEWS: Add the news for v22.1.16
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ autogen.sh                |  4 +--
+ etc/NEWS                  | 68 +++++++++++++++++++++++++++++++++++++++++++++++
+ info/sppm.texi            |  6 ++---
+ info/sxemacs/sxemacs.texi |  2 +-
+ 4 files changed, 74 insertions(+), 6 deletions(-)
+
+commit cf7aad99bd531e127bedd06cdf11bd43756a2c1a
+Merge: 5a1f1d8 f44c1b5
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Mar 15 10:41:53 2016 +1000
+
+    Fix the fix to really close 181
+    
+    * merges:
+      Fix MPFR Flog implementation
+
+commit f44c1b5697e1bb9a20437099a28c843b90af8d15
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Mon Mar 14 19:05:46 2016 -0400
+
+    Fix MPFR Flog implementation
+    
+    	* src/ent/floatfns.c (Flog10): Use RETURN_WHEN_INDEF to check
+    	before dividing by log 10.
+    	(Flog2): Use RETURN_WHEN_INDEF to check before dividing by log 2.
+    	(Flog): Properly add parameters to Flog.  Use
+    	the common RETURN_WHEN_INDEF when Flog return indefinite.
+    	Plus some whitespace fixes.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ent/floatfns.c | 109 ++++++++++++++++++++++++++---------------------------
+ 1 file changed, 54 insertions(+), 55 deletions(-)
+
+commit 5a1f1d89c541ad0189f0a878f43fe4c2badad0ac
+Merge: 68ee3b0 74a0382
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Mar 14 17:58:53 2016 +1000
+
+    Close 181
+    
+    * merges:
+      Fix bug 181: log does not take base into account without mpfr
+
+commit 74a038200aac89b5c4b2591600da306ed8f749b0
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Mar 12 12:33:46 2016 -0500
+
+    Fix bug 181: log does not take base into account without mpfr
+    
+    	* src/ent/floatfns.c (RETURN_WHEN_INDEF): New macro for the common
+    	handling of indefinites in logarithmic functions.
+    	(Flog10): Always define, but throw invalid operation if no
+    	logarithmic primitive is available.
+    	(Flog2): Ditto.
+    	(Flog): Try to use Flog10 or Flog2 if the bases match.  In case of
+    	float operation try to use Flog2 since it is usually more
+    	efficient.
+    
+    	* configure.ac: Check for availability of all the logarithmic
+    	functions.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac       |   2 +-
+ src/ent/floatfns.c | 195 ++++++++++++++++++++++++++++++-----------------------
+ 2 files changed, 111 insertions(+), 86 deletions(-)
+
+commit 68ee3b0ca3ed9c74d0a7455c6c65422458845926
+Merge: ddf559a d6cb8fa
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jan 17 09:16:54 2016 +1000
+
+    Error instead of crashing on OGG/MP3 streams
+    
+    * merges:
+      Debug message fix
+      Fix crash when using ffmpeg to play mp3 and ogg
+
+commit d6cb8fad24fdb64c5c6b7f1b0cfa09853b93c973
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 16 17:18:36 2016 -0500
+
+    Debug message fix
+    
+    	* src/media/media.c (sxe_msf_DBL_down): Minor fix on debug
+    	message, it is DBL not FLT.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/media/media.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 55a8171804431552de01a8e98c585c276e32c054
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 16 17:14:03 2016 -0500
+
+    Fix crash when using ffmpeg to play mp3 and ogg
+    
+    	* src/media/media-ffmpeg.c (media_ffmpeg_analyse_audio): Refactor
+    	detection of sample size using av_get_bytes_per_sample. Error when
+    	format is not supported instead of silently go ahead and possibly
+    	crash later.
+    
+    	* src/media/media.c (sxe_msf_DBL_up): Implement conversion to
+    	internal format from double.
+    	(sxe_msf_DBL_down): Implement from internal format to double.
+    
+    	* src/media/media.h: Declare double encoded samples.
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_FFMPEG_LIBS): Detect
+    	av_get_bytes_per_sample and av_get_sample_fmt_string.
+    	(SXE_MM_CHECK_FFMPEG): Enforce presenc of av_get_bytes_per_sample
+    	and av_get_sample_fmt_string.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ m4/sxe-mm.m4             |  4 ++++
+ src/media/media-ffmpeg.c | 40 ++++++++++++++++++++++++----------------
+ src/media/media.c        | 41 +++++++++++++++++++++++++++++++++++++++++
+ src/media/media.h        |  1 +
+ 4 files changed, 70 insertions(+), 16 deletions(-)
+
+commit ddf559af39db00c49ae1adcc85996cf0e78ae2af
+Merge: 910698c 6502bd0
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jan 10 16:57:31 2016 +1000
+
+    Ffile_basename(), Ffile_dirname() updates, POSIX compliance
+    
+    * merges:
+      Properly determine the name of preceeding directory
+      Expand file name before dirname
+      Use xrealpath
+      Make basename and dirname POSIX compliant
+      Add tests for file-name-directory, etc
+      Add file name joiner
+      Improve documentation
+
+commit 6502bd0abcb90289b58fb1b21ad5a912f15acfd9
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 9 17:54:36 2016 -0500
+
+    Properly determine the name of preceeding directory
+    
+    	* lisp/build-autoloads.el (find-emod-directories): Use basename of
+    	dirname to determine name of preceeding directory.  Now that
+    	basename and dirname are POSIX compliant this works and is much
+    	more bullet proof than the split of dirname by /.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/build-autoloads.el | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8c1dd60e3a0279869dae0b4a79f6347344fc060d
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 9 17:52:44 2016 -0500
+
+    Expand file name before dirname
+    
+    	* lisp/packages.el (package-suppress): Expand file name before
+    	call to file-dirname
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/packages.el | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 6201a9ee8b2970903de1f53c0294c5be504a9961
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 9 17:51:27 2016 -0500
+
+    Use xrealpath
+    
+    	* src/dired.c (dired_realpath): Use xrealpath for safety
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dired.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 673e629352845d8aded6fe98cc368ad738b0d53d
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 9 17:49:05 2016 -0500
+
+    Make basename and dirname POSIX compliant
+    
+    	* src/fileio.c (Ffile_basename): Improve documentation and make
+    	POSIX compliant by returning full string when there is no slashes.
+    
+    	* src/fileio.c (Ffile_dirname): Improve documentation and make
+    	POSIX compliant by using xdirname.
+
+ src/fileio.c | 85 +++++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 56 insertions(+), 29 deletions(-)
+
+commit fd17e50cb86d263fe8aaffffb931726c697731dd
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 9 15:18:26 2016 -0500
+
+    Add tests for file-name-directory, etc
+    
+    	* tests/automated/lisp-tests.el: Add tests for
+    	file-name-directory, file-name-nondirectory, file-dirname,
+    	file-basename, file-name-join.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ tests/automated/lisp-tests.el | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+commit 67b63594e02e901e28f0730259297acc629dcbe0
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 9 15:16:59 2016 -0500
+
+    Add file name joiner
+    
+    	* lisp/files.el (file-name-join): Add file-name-join to safely
+    	join directory and filename components.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/files.el | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+commit fbcdf082dfcbcfcf368088b4e5e990488cffc940
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jan 3 17:19:34 2016 -0500
+
+    Improve documentation
+    
+    	* src/fileio.c (Ffile_name_directory): Add samples to
+    	documentation, so it is clearer what the outcome would be.
+    	(Ffile_name_nondirectory): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/fileio.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+commit 910698ce395ac200b44238477e5278918dcf9782
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jan 3 16:02:01 2016 -0500
+
+    Document text corruption issue with Xorg ATI driver
+    
+    	* PROBLEMS: Document text corruption issue with Xorg ATI driver
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ PROBLEMS | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+commit 0e87679e6dc85cdadb5bd3dd0e6e273a2646c150
+Merge: 281b409 32e915e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Jan 1 10:19:46 2016 +1000
+
+    Ladies and Gentlement, FFmpeg is back!
+    
+    * merges:
+      Final set of changes for a working ffmpeg.
+      More update to newer ffmpeg API
+      Use new virtual IO api
+      Cleanup global video state.
+      Additional usage of the new api
+      Update ffmpeg codec and media constants
+      Fix metadata usage
+      Sync up FFmpeg -- autoconf
+
+commit 32e915e5dc4fea21550f0f97a3d526229182f374
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Dec 31 14:39:54 2015 -0500
+
+    Final set of changes for a working ffmpeg.
+    
+    	There are a couple of edges to polish but "works for me" now.
+    
+    	* src/media/media-ffmpeg.c (media_ffmpeg_read): Use
+    	avcodec_decode_audio3 if available. More work is needed to use
+    	avcodec_decod_audio4 because it uses frames which would need to
+    	then be copied to the output buffer.
+    	(my_get_buffer): Use avcodec_default_get_buffer2.
+    	(my_release_buffer): No longer needed.
+    	(stream_component_open): Properly set the thread count and use
+    	avcodec_open2. Set get_buffer2 to my_get_buffer since we
+    	are using the new interface.
+    	(media_ffmpeg_available_formats): Use av_iformat_next.
+    	(stream_open): Defer setting codec options to a later better
+    	understanding of ffmpeg (keep #if 0 the old).
+    	(new_media_ffmpeg_open): Use only the most recent AVIOContext access
+    	method to set eof_reached. If we get issues reported we'll
+    	revisit.
+    	(new_media_ffmpeg_read): Use avio_eof and the most error field of
+    	AVIOContext instead of furl_feof.  Do not unset the interrupt
+    	callback for now.  We may need to revisit the reset of the
+    	callback later.
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_FFMPEG_LIBS): Properly check for the
+    	avcodec_decode_audio* and define corresponding
+    	HAVE_AVCODEC_AUDIO*.  Also check for av_iformat_next.
+    	(SXE_MM_CHECK_FFMPEG): Check at least one avcodec_decode_audio is
+    	available and av_iformat_next.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ m4/sxe-mm.m4             | 25 ++++++++++++++++-
+ src/media/media-ffmpeg.c | 72 +++++++++++++++++++-----------------------------
+ 2 files changed, 53 insertions(+), 44 deletions(-)
+
+commit c30ddaeba57c7cb8d3ae7c470b80733b1f68b448
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Dec 31 14:15:14 2015 -0500
+
+    More update to newer ffmpeg API
+    
+    	* src/media/media-ffmpeg.h: Add include of avutil/time.h
+    
+    	* src/media/media-ffmpeg.c (AVCODEC_MAX_AUDIO_FRAME_SIZE): Add
+    	define if missing to last known legacy value.
+    	(media_ffmpeg_open): Properly use avcodec_open2
+    	(media_ffmpeg_read): Fix warnings.
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_FFMPEG_HEADERS): Check also avutil/time.h.
+    	(SXE_CHECK_FFMPEG_LIBS): Check for avformat_free_context and avio_feof.
+    	(SXE_MM_CHECK_FFMPEG): Refactor header check for ease of adding
+    	additional ones.  Verify avformat_free_context and avio_feof are
+    	available.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ m4/sxe-mm.m4             | 52 ++++++++++++++++++++++++++++++++++++------------
+ src/media/media-ffmpeg.c | 11 ++++++++--
+ src/media/media-ffmpeg.h |  6 ++++++
+ 3 files changed, 54 insertions(+), 15 deletions(-)
+
+commit b1c8382d301218200f40e9ed7529ed0da098e398
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Dec 31 11:58:19 2015 -0500
+
+    Use new virtual IO api
+    
+    	* src/media/media-ffmpeg.c: Remove the no-longer used
+    	media_ffmpeg_vio_open, media_ffmpeg_vio_close,
+    	media_ffmpeg_vio_write.
+    	(media_ffmpeg_vio_read): Use the new opaque pointer interface of
+    	AVIOContext, which points to our media_data struct directly.
+    	(media_ffmpeg_vio_seek): Ditto.
+    	(media_ffmpeg_open_data): Use the new AVIOContext and allocate one
+    	pointing to media_ffmpeg_vio_read, media_ffmpeg_vio_seek and with
+    	opaque data as our media_data.  Use the context to open the input.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/media/media-ffmpeg.c | 147 ++++++++++++++++-------------------------------
+ 1 file changed, 49 insertions(+), 98 deletions(-)
+
+commit c3994e1fd3538431675c60a8ce53528062ee0911
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Dec 31 11:39:44 2015 -0500
+
+    Cleanup global video state.
+    
+    	* src/media/media-ffmpeg.c: Remove global video state since it is
+    	not used, except to set to NULL.
+    	 (new_media_ffmpeg_read): No need to reset global_video_state, as it is not used.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/media/media-ffmpeg.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+commit 746ff6507e46a840ccfb2373e81b4a5be3021947
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Dec 31 11:37:06 2015 -0500
+
+    Additional usage of the new api
+    
+    	* src/media/media-ffmpeg.c (media_ffmpeg_open_file): Use
+    	avformat_open_input and avformat_find_stream_info,
+    	avformat_close_input.
+    	(stream_open): Use avformat_open_input.
+    	(media_ffmpeg_close): Use avformat_close_input.
+    	(media_ffmpeg_open): Use avio_size, avformat_find_stream_info,
+    	av_dump_format and avoid warning.
+    	(new_media_ffmpeg_read): Use avformat_close_input.
+    
+    	* src/media/media-ffmpeg.h: Include avcodec.h
+    
+    	* m4/sxe-mm.m4 (SXE_MM_CHECK_FFMPEG): Verify availability of all
+    	the included ffmpeg headers. And additional functions,
+    	avio_alloc_context, avio_size, av_dump_format.
+    	(SXE_CHECK_FFMPEG_HEADERS): Check also for avcodec.h
+    	(SXE_CHECK_FFMPEG_LIBS): Check for av_dump_format,
+    	avio_alloc_context, avio_size.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ m4/sxe-mm.m4             | 22 +++++++++++++++++++---
+ src/media/media-ffmpeg.c | 35 +++++++++++++----------------------
+ src/media/media-ffmpeg.h |  8 ++++++++
+ 3 files changed, 40 insertions(+), 25 deletions(-)
+
+commit 168dcabde2e534b7561492b4a3c2f028c76b6005
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 27 17:44:04 2015 -0500
+
+    Update ffmpeg codec and media constants
+    
+    	* src/media/media-ffmpeg.c (media_ffmpeg_analyse_audio): Use
+    	AV_SAMPLE_* instead of SAMPLE_*.
+    	(media_ffmpeg_open): Use AVMEDIA_TYPE_* instead of CODEC_TYPE_*.
+    	(stream_component_open): Ditto.
+    	(stream_component_close): Ditto.
+    	(new_media_ffmpeg_open): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/media/media-ffmpeg.c | 46 +++++++++++++++++++++++-----------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
+
+commit cd6a53c341ec2a70c48073d53be60396de0a14cf
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 27 17:33:42 2015 -0500
+
+    Fix metadata usage
+    
+    	* src/media/media-ffmpeg.h: Add include for dict.h
+    
+    	* src/media/media-ffmpeg.c (media_ffmpeg_streaminfo): Use
+    	AVDictionary.
+    	(dump_stream_info): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/media/media-ffmpeg.c | 112 +++++++++++++++++++++++++++++------------------
+ src/media/media-ffmpeg.h |   7 +++
+ 2 files changed, 77 insertions(+), 42 deletions(-)
+
+commit ebc75b9137ffe75cd6b7fa481eaf850593161b3a
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jul 3 00:05:57 2012 +1000
+
+    Sync up FFmpeg -- autoconf
+    
+    This changeset is the first in a series to sync up our FFmpeg code with a
+    much more modern and up to date FFmpeg.  This one takes care of the
+    autoconf side of things.  It is cherry-picked from an earlier ffmpeg-fix
+    branch, squashing all the configuration related changes.
+    
+    This changeset also introduces new minimum versions of libavformat and
+    libavcodec required by SXEmacs:
+    
+      libavformat -- 55.12.100
+      libavcodec  -- 55.18.102
+    
+    	* configure.ac: Need libs for avcodec as well as avformat. Add
+              in libavutil libs.
+    
+    	* m4/sxe-mm.m4 (SXE_MM_CHECK_FFMPEG): Rework it for modern
+    	ffmpeg. Check for av_dict_get() in libavutil.
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_FFMPEG_HEADERS): Check for avcodec.h
+    	and dict.h as well.
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_FFMPEG_LIBS): Check for libavutil.
+    
+    	* m4/sxe-mm.m4 (SXE_MM_CHECK_FFMPEG):
+
+ configure.ac |   4 +-
+ m4/sxe-mm.m4 | 164 ++++++++++-------------------------------------------------
+ 2 files changed, 30 insertions(+), 138 deletions(-)
+
+commit 281b40928f88db782e9e67ca3d4dede7de1536b8
+Merge: 528ced5 c263f68
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Dec 26 12:12:26 2015 +1000
+
+    A place to keep aliases to built-in constants when needed
+    
+    * merges:
+      Add logged, but missing change from previous commit.
+      Segregate aliases to DEFVAR_CONST
+      Revert "Fix the fix, make pi a normal lisp var (Closes bug #176)"
+
+commit c263f680269e8f4efe8999785fdf8786b072b788
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Dec 26 12:04:53 2015 +1000
+
+    Add logged, but missing change from previous commit.
+    
+    	* lisp/Makefile.am (corelispels): Add const-aliases.el.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/Makefile.am | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+commit 7ffe58c3287caeb19c08ea91c7a2076a1a0f98e5
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Dec 25 16:40:24 2015 -0500
+
+    Segregate aliases to DEFVAR_CONST
+    
+    	* lisp/float-sup.el: Remove alias for pi and e when bigfr is
+    	available. These should now be defined in const-aliases, loaded
+    	by startup.
+    
+    	* lisp/const-aliases.el (pi): Define const as bigfr-pi when bigfr
+    	is available.
+    	(e): Define as euler when bigfr is available.
+    
+    	* lisp/Makefile.am (corelispels): Add const-aliases.el to list of
+    	files.
+    
+    	* lisp/startup.el (load-init-file): Require new const-aliases to
+    	load the consts that cannot be dumped.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/const-aliases.el | 40 ++++++++++++++++++++++++++++++++++++++++
+ lisp/float-sup.el     |  5 +----
+ lisp/startup.el       |  3 +++
+ 3 files changed, 44 insertions(+), 4 deletions(-)
+
+commit d7ffc361167a55f4f608f69f4597072c361daf75
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Dec 25 16:34:17 2015 -0500
+
+    Revert "Fix the fix, make pi a normal lisp var (Closes bug #176)"
+    
+    This reverts commit 528ced5b22b7681234d5228d0a2a02d9a2305312.
+
+ lisp/float-sup.el  |  5 ++++-
+ src/ent/ent-mpfr.c | 14 +++++---------
+ src/ent/ent-mpfr.h |  2 +-
+ 3 files changed, 10 insertions(+), 11 deletions(-)
+
+commit 528ced5b22b7681234d5228d0a2a02d9a2305312
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Dec 23 18:20:22 2015 +1000
+
+    Fix the fix, make pi a normal lisp var (Closes bug #176)
+    
+    This change reverts the previous one, and then goes about closing bug 176
+    in a different way.  Namely, by changing Vpi from being a
+    DEFVAR_CONST_LISP to a DEFVAR_LISP. IOW, a plain ordinary variable.
+    
+    	* src/ent/ent-mpfr.c (vars_of_ent_mpfr): Set Vpi to be a normal
+    	lisp variable instead of a constant so packages like Calc can
+    	let-bind them for their own evil and misguided purposes. :-)
+    	Vbigfr_pi -> Vpi
+    
+    	* src/ent/ent-mpfr.h: Vbigfr_pi -> Vpi
+    
+    	* lisp/float-sup.el: Revert previous change.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/float-sup.el  |  5 +----
+ src/ent/ent-mpfr.c | 14 +++++++++-----
+ src/ent/ent-mpfr.h |  2 +-
+ 3 files changed, 11 insertions(+), 10 deletions(-)
+
+commit 73dac82e98e87f568519ac37d591661063db3f54
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Dec 22 09:35:21 2015 +1000
+
+    Define `pi' in elisp, even with bigfr. (Closes bug #176)
+    
+    An elisp constant defined with #'defconst can be let-bound, or otherwise
+    altered.  But one that is defined in C cannot be.  SXEmacs' pi is
+    sometimes defined in elisp, and sometimes in C, depending on whether it
+    has bigfr or not.  The Calc XEmacs package let-binds pi in a couple of
+    places, resulting in errors when (featurep 'bigfr) => t.
+    
+    With this change, pi is defined in elisp regardless of bigfr.  But it will
+    still use bigfr to obtain the value if it is available.
+    
+    	* lisp/float-sup.el: Define pi in elisp, even if we have bigfr,
+    	and in that case set it to what mpfr gives us.
+    	Same for e.
+    
+    	* src/ent/ent-mpfr.c (init_ent_mpfr): Vpi -> Vbigfr_pi
+    	(vars_of_ent_mpfr): Vpi -> Vbigfr_pi, pi -> bigfr-pi
+    
+    	* src/ent/ent-mpfr.h: Vpi -> Vbigfr_pi
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/float-sup.el  |  5 ++++-
+ src/ent/ent-mpfr.c | 10 +++++-----
+ src/ent/ent-mpfr.h |  2 +-
+ 3 files changed, 10 insertions(+), 7 deletions(-)
+
+commit 9c176f58aa755c41e57153bf0ff69a5fbe0e3f8e
+Merge: 28b6c19 61fbf61
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Dec 21 17:04:30 2015 +1000
+
+    More warning fixes from Nelson
+    
+    * merges:
+      Fixing more TTY/term warning/prototype craziness.
+      More term crazyness warnings fixing.
+
+commit 61fbf61544e71021154d47be583f492656dcd430
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 20 16:56:10 2015 -0500
+
+    Fixing more TTY/term warning/prototype craziness.
+    
+    	* src/ui/TTY/redisplay-tty.c: Include term.h if available.
+    	Define prototypes for tgetent, tgetflag, tgetnum, tgetstr, tputs
+    	if not available.
+    
+    	* configure.ac (CURSES_H_FILE): No default in variable expansion.
+    	(TERMCAP_H_FILE): Ditto.
+    	(TERM_H_FILE): Ditto.
+    	(HAVE_TPARM_PROTOTYPE): Add 'checking' message.
+    	(HAVE_TGETENT_PROTOTYPE): Check if tgetent prototype is available.
+    	(HAVE_TGETFLAG_PROTOTYPE): Check if tgetflag prototype is available.
+    	(HAVE_TGETNUM_PROTOTYPE): Check if tgetnum prototype is available.
+    	(HAVE_TGETSTR_PROTOTYPE): Check if tgetstr prototype is available.
+    	(HAVE_TPUTS_PROTOTYPE): Check if tputs prototype is available
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac               | 108 ++++++++++++++++++++++++++++++++++++++++++---
+ src/ui/TTY/redisplay-tty.c |  28 +++++++-----
+ 2 files changed, 119 insertions(+), 17 deletions(-)
+
+commit 1b59d1cfe7ed5c2742559c44ae8a39d4d5d847af
+Merge: 3594867 28b6c19
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 20 15:06:32 2015 -0500
+
+    Merge branch 'master' into for-steve
+
+commit 35948676b7390a6061db87f0c4d4d27a6bc6d951
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 20 15:04:34 2015 -0500
+
+    More term crazyness warnings fixing.
+    
+    	* configure.ac (CURSES_H_FILE): Only define if we have one.
+    	(TERMCAP_H_FILE): Ditto.
+    	(TERM_H_FILE): Ditto.
+    	(HAVE_TPARM_PROTOTYPE): Detect we tparm prototype is available.
+    
+    	* src/ui/TTY/terminfo.c: Only include TERM_H_FILE is we have it.
+    	Properly decide when to define a tparm prototype, based on when
+    	configure detected it.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac          | 32 ++++++++++++++++++++++++++------
+ src/ui/TTY/terminfo.c |  9 ++++++++-
+ 2 files changed, 34 insertions(+), 7 deletions(-)
+
+commit 28b6c19b50a1ca8ae2529e76a18d00fc173398c3
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Dec 15 22:08:00 2015 +1000
+
+    Ego Patch -- Tweak my info a little.
+    
+    	* lisp/about.el (sxemacs-hackers): Add Aidan from XEmacs'
+    	about.el.
+    	(about-current-release-maintainers): Sort.
+    	(about-url-alist): Add a couple of my URLs
+    	(about-personal-info): Update me a little, use updated URLs
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/about.el | 34 ++++++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 14 deletions(-)
+
+commit fc9b048cf54e7566adf3e7dc73e5f123b3b9ef97
+Merge: 0f6f536 f7e5f0c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Dec 13 14:58:01 2015 +1000
+
+    Compiler warning fixes from Nelson
+    
+    * merges:
+      Add missing declaration for make_bigz
+      More eliminate silly warnings
+      Eliminate silly warnings
+
+commit f7e5f0c2935452194ac6bceb527cc329f7f230f8
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Dec 12 17:29:30 2015 -0500
+
+    Add missing declaration for make_bigz
+    
+    	* src/ent/ent-int.h: Add prototype for make_bigz
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ent/ent-int.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 69c63e4c742c7fc7dc742ec65074c02d3eb21e60
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Dec 12 16:45:27 2015 -0500
+
+    More eliminate silly warnings
+    
+    	* src/search.c (fast_string_match): Use a temporary to avoid
+    	warning about constness.
+    
+    	* src/openssl.c (Fossl_digest_file): Mark set unused but unused
+    	variable.
+    	(Fossl_pem_write_public_key): Ditto.
+    	(Fossl_pem_write_key): Ditto.
+    	(Fossl_ssl_read): Ditto.
+    	(Fossl_ssl_write): Ditto.
+    	(ossl_ssl_prepare_cmeth): Ignore drop of const qualifier. The
+    	alternative of using const for SSL methods everywhere is not
+    	workable if we are to support older OpenSSL versions.
+    	(ossl_ssl_prepare_smeth): Ditto.
+    
+    	* src/alloc.c (make_string_nocopy): Remove unnecessary cast.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/alloc.c   |  2 +-
+ src/openssl.c | 26 +++++++++++++++++++++++++-
+ src/search.c  |  7 +++++--
+ src/symbols.c |  4 ++--
+ 4 files changed, 33 insertions(+), 6 deletions(-)
+
+commit 62616191297ad80082837079694503ec7d65052d
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Dec 12 15:56:06 2015 -0500
+
+    Eliminate silly warnings
+    
+    	* src/ui/TTY/terminfo.c (emacs_tparam): We don't control tparm
+    	prototype where some have const qualifiers others don't. Turning
+    	the warning off is the sensible choice.
+    
+    	* src/ui/glyphs-eimage.c (gif_instantiate): Small cosmetic change.
+    
+    	* src/ui/X11/event-Xt.c (init_event_Xt_late): We don't control the
+    	prototype for XtAppSetTypeConverter where some have const others don't
+    	so turning the warning off is the sensible option...
+    
+    	* src/ui/X11/device-x.c (Fx_get_font_path): Const all around keeps
+    	compilers happy.
+    
+    	* src/events/event-stream.c (asyneq_handle_non_command_event): Use
+    	a void* temporary to sidestep warning.
+    
+    	* src/regex.c (POP_FAILURE_POINT): Don't cast unnecessarily.
+    	(re_match_2_internal): Turn off const cast warning since the code
+    	will always need it one macro expansion or another. Can't win here
+    	without cheating :)
+    
+    	* src/buffer.c (directory_is_current_directory): Cast
+    	to target type, when conversion fails.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/buffer.c              |  2 +-
+ src/events/event-stream.c |  3 ++-
+ src/regex.c               | 14 ++++++++++++--
+ src/ui/TTY/terminfo.c     | 12 +++++++++---
+ src/ui/X11/device-x.c     |  4 ++--
+ src/ui/X11/event-Xt.c     |  3 +++
+ src/ui/glyphs-eimage.c    |  2 +-
+ 7 files changed, 30 insertions(+), 10 deletions(-)
+
+commit 0f6f5360b6de6ddbe9cf6febeb132372c2e113c4
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Dec 12 13:32:24 2015 -0500
+
+    Fix openssl support
+    
+    	Let's detect needed features in configure instead of relying on
+    	defines coming from openssl headers since they have proven not
+    	to be reliable
+    
+    	* m4/sxe-crypto.m4 (SXE_OPENSSL_VERSION): Update versions of
+    	openssl supported.
+    	(SXE_TRY_OPENSSL_BIN_PREFIX): Update headers checked.
+    	(SXE_CHECK_OPENSSL_LOCS): Ditto.
+    	(SXE_CHECK_OPENSSL_FEATURES): Check for types and make openssl not
+    	available if missing.
+    
+    	* src/openssl.h: Update guards on includes
+    	(Lisp_SSL_CONN): Assume types are available as
+    	configure should not include openssl for compilation if they
+    	are not available.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ m4/sxe-crypto.m4 | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ src/openssl.h    | 25 +++++++++++++--
+ 2 files changed, 111 insertions(+), 7 deletions(-)
+
+commit fd2c93018b11b5bcb0aea8fa783f3c58046989bf
+Merge: 6ea51f3 763caa9
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Dec 7 09:26:44 2015 +1000
+
+    Compiler & warning related updates/fixes from Nelson
+    
+    * merges:
+      Typo fix, 'max_align_t' -> 'sxe_max_align_t'
+      Silence warnings about usage of deprecated function when existing alternative is not available.
+      Use proper assert in lwlib
+      Fix typo on include guard for term.h
+      Use proper max in lwlib
+      Add some prototype to silence silly warnings.
+      Turn off warning about deprecated usage of __free_hook.
+      Use min/max from sxe-utils
+      Properly handle return from getcwd.
+      Shut set but unused warnings.
+      Rename our max_align_t to sxe_max_align_t
+      Mark variables set but unused.
+      Fixup assert definitions.
+      Add SXE_SET_UNUSED to shut unused warnings.
+      Cleanup utilities. Introduce sxe-memory.h
+      Address static inline warning in ase.
+      Prevent movemail from proceeding when setuid fails
+
+commit 763caa9fff2c6041ee54193f83a7ad56e94660d3
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Dec 7 09:23:24 2015 +1000
+
+    Typo fix, 'max_align_t' -> 'sxe_max_align_t'
+    
+    	* src/ui/specifier.c (aligned_sizeof_specifier): 'max_align_t' ->
+    	`sxe_max_align_t'
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/ui/specifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5a34287d32d76245d5a28af73386d8c71d67e88f
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 17:24:36 2015 -0500
+
+    Silence warnings about usage of deprecated function when existing alternative is not available.
+    
+    	* src/ui/X11/event-Xt.c (whatever): Add pragma to ignore warning.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ui/X11/event-Xt.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+commit 8a412ac83eb6b8109fd93dde9a79125f9ffbb313
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 16:54:49 2015 -0500
+
+    Use proper assert in lwlib
+    
+    	* src/ui/lwlib/lwlib-internal.h: Include sxe-utils instead of
+    	defining assert.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ui/lwlib/lwlib-internal.h | 15 +--------------
+ 1 file changed, 1 insertion(+), 14 deletions(-)
+
+commit c57ebd5cba75489c97cbe14f241e792619b09d5b
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 16:53:42 2015 -0500
+
+    Fix typo on include guard for term.h
+    
+    	* src/ui/TTY/terminfo.c: Fix typo
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ui/TTY/terminfo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f29f6b1e77808b36722014fe3c1754d1f5ac3562
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 16:52:42 2015 -0500
+
+    Use proper max in lwlib
+    
+    	* src/ui/lwlib/lwlib.c: Undefine max macro to use this type safe
+    	alternative.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ui/lwlib/lwlib.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 182f58aeacc32908883b6b7d8d808c0ca16b5c0a
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 16:50:21 2015 -0500
+
+    Add some prototype to silence silly warnings.
+    
+    	* src/effi.c(ffi_make_callback_x86): Add  prototype.
+    	* src/media/sound-jack.c (demux_internal): Ditto.
+    	* src/mule/file-coding.c (autodetect_real_coding_system): Ditto.
+    	* src/print.c (float_to_string): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/effi.c             | 2 ++
+ src/media/sound-jack.c | 3 +++
+ src/mule/file-coding.c | 6 +++++-
+ src/print.c            | 2 ++
+ 4 files changed, 12 insertions(+), 1 deletion(-)
+
+commit d2cfef1bb74e905f85dab23f3b1dfcf474eb6568
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 16:46:36 2015 -0500
+
+    Turn off warning about deprecated usage of __free_hook.
+    
+    	Since this is to try and avoid crashes on shutdown, it will either
+    	be available and work, or linking will fail, which will be detected
+    	by configure, and thus we will not use it.
+    
+    	* configure.ac: Add HAVE_FREE_HOOK when __free_hook is available.
+    	Also fix detection of __after_morecore_hook.
+    	* src/emacs.c (voodoo_free_hook): Ignore the warning about
+    	deprecated variable.
+    	* src/emacs.c (Fkill_emacs): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 22 +++++++++++++++++++++-
+ src/emacs.c  | 16 ++++++++++++++++
+ 2 files changed, 37 insertions(+), 1 deletion(-)
+
+commit f8b54ac02452cfa17c403a08beed97efa245538c
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 16:10:33 2015 -0500
+
+    Use min/max from sxe-utils
+    
+    	* src/ui/lwlib/xlwmenu.c: Include sxe-utils and remove the current
+    	max macro.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ui/lwlib/xlwmenu.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+commit dc4582098947e7f4768c9a9841da2c47a0803d2d
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 16:05:30 2015 -0500
+
+    Properly handle return from getcwd.
+    
+    	* src/realpath.c (xrealpath): Is getcwd returns NULL, also return
+    	NULL.  If we can't determine the cwd, then any relative path
+    	processing fails.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/realpath.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+commit f76158def792b30973d21fd95aed52e96039532b
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 16:02:46 2015 -0500
+
+    Shut set but unused warnings.
+    
+    	These are in the code for debug/inspection purposes.
+    
+    	* src/ui/lwlib/xlwgauge.c (GaugeExpose): Use SXE_SET_UNUSED.
+    
+    	* src/ui/lwlib/xlwcheckbox.c (DrawCheck):Ditto.
+    
+    	* src/sysdep.c (tty_init_sys_modes_on_device)
+    	(tty_reset_sys_modes_on_device): Ditto.
+    
+    	* src/regex.c (re_match_2_internal): Ditto.
+    
+    	* src/mule/file-coding.c (Fdefine_coding_system_alias): Ditto.
+    
+    	* src/media/sound-oss.c (sound_oss_handle_aj_events): Ditto.
+    
+    	* src/media/sound-jack.c (sound_jack_handle_aj_events)
+    	(sound_jack_process): Ditto.
+    
+    	* src/media/sound-ao.c (sound_ao_handle_aj_events): Ditto.
+    
+    	* src/media/sound-alsa.c (sound_alsa_handle_aj_events): Ditto.
+    
+    	* src/media/media-sndfile.c (media_sndfile_open): Ditto.
+    
+    	* src/media/media-mad.c (media_mad_read): Ditto.
+    
+    	* src/media/media-internal.c (media_internal_analyse_stream): Ditto.
+    
+    	* src/emacs.c (Fdump_emacs): Ditto.
+    
+    	* src/bytecode.c (execute_optimized_program): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/bytecode.c             | 2 ++
+ src/emacs.c                | 1 +
+ src/media/media-internal.c | 2 ++
+ src/media/media-mad.c      | 1 +
+ src/media/media-sndfile.c  | 2 ++
+ src/media/sound-alsa.c     | 2 ++
+ src/media/sound-ao.c       | 2 ++
+ src/media/sound-jack.c     | 5 +++++
+ src/media/sound-oss.c      | 2 ++
+ src/mule/file-coding.c     | 1 +
+ src/regex.c                | 3 +++
+ src/sysdep.c               | 2 ++
+ src/ui/lwlib/xlwcheckbox.c | 3 +++
+ src/ui/lwlib/xlwgauge.c    | 2 ++
+ 14 files changed, 30 insertions(+)
+
+commit 231bc2d28183d7def3772cb9f7410d98be486be8
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 6 13:03:28 2015 -0500
+
+    Rename our max_align_t to sxe_max_align_t
+    
+    	This is needed because newer compilers now ship with this
+    	symbol.
+    
+    	* src/sxe-utils.h: Rename max_align_t to sxe_max_align_t
+    	* src/dumper.c (pdump_get_entry_list): Use sxe_max_align_t
+    	(pdump_scan_by_alignment): Ditto.
+    	(pdump): Ditto.
+    	* src/opaque.c (aligned_sizeof_opaque): Ditto.
+    	* src/opaque.h (Lisp_Opaque): Ditto.
+    	* src/specifier.h (Lisp_Specifier): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/dumper.c    | 20 ++++++++++----------
+ src/lstream.c   |  2 +-
+ src/lstream.h   |  2 +-
+ src/opaque.c    |  2 +-
+ src/opaque.h    |  2 +-
+ src/specifier.h |  2 +-
+ src/sxe-utils.h |  4 ++--
+ 7 files changed, 17 insertions(+), 17 deletions(-)
+
+commit 0afad4edf7ce3639d67d3535d2f12ce632cd6bd8
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 27 17:35:16 2015 -0400
+
+    Mark variables set but unused.
+    
+    	* src/lisp.h (PRIVATE_EXTERNAL_LIST_LOOP_6): Mark elt as unused.
+    	(PRIVATE_EXTERNAL_ALIST_LOOP_8): Set elt_car and elt_cdr as unused.
+    	* src/mule/mule-ccl.c (CCL_WRITE_STRING): Set bytes as unused.
+    	* src/ui/X11/dialog-x.c (dbox_descriptor_to_widget_value): Set
+    	title as unused.
+    	* src/ui/X11/glyphs-x.c (x_widget_instantiate): Set nm as unused.
+    	* src/ui/X11/gui-x.c (button_item_to_widget_value): Set intlen as
+    	unused.
+    	* src/ui/X11/objects-x.c (x_font_instance_properties): Set
+    	name_len as unused.
+    	* src/ui/lwlib/lwlib-Xlw.c (xlw_update_one_widget): Set mw as
+    	unused.
+    	* src/ui/lwlib/xlwtabs.c (TabsResize): Set tab as unused.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/lisp.h               | 4 ++--
+ src/mule/mule-ccl.c      | 1 +
+ src/ui/X11/dialog-x.c    | 2 ++
+ src/ui/X11/glyphs-x.c    | 4 +++-
+ src/ui/X11/gui-x.c       | 4 ++++
+ src/ui/X11/objects-x.c   | 2 ++
+ src/ui/lwlib/lwlib-Xlw.c | 3 +++
+ src/ui/lwlib/xlwtabs.c   | 1 +
+ 8 files changed, 18 insertions(+), 3 deletions(-)
+
+commit 29c4caea228ce22a9bfa76ef833d4473a9be8979
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 27 17:28:23 2015 -0400
+
+    Fixup assert definitions.
+    
+    	* src/sxe-utils.h: Use assert_failed only when compiling emacs
+    	itself.  Also make assert a proper no-op expression, i.e.,
+    	(void)0.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/sxe-utils.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit 301c2aabd99739d5493b83bb71cb28e3dd5e8a48
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 27 17:26:39 2015 -0400
+
+    Add SXE_SET_UNUSED to shut unused warnings.
+    
+    	* src/sxe-utils.h (SXE_SET_UNUSED): Define macro to mark variables
+    	set but unused, aka, dummy vars.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/sxe-utils.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit b84e8f01881114d77ad01ed16e50e561494a3c91
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 27 17:24:04 2015 -0400
+
+    Cleanup utilities. Introduce sxe-memory.h
+    
+    Move all the memory related utilities to sxe-memory.h so that
+    sxe-utils.h can be included in contexts where the memory utils
+    are not welcome.
+    
+    	* src/sxemacs.h: Remove include for sxe-utils.h, lisp.h already
+    	does it.
+    	* src/lisp.h: Include new sxe-memory.h
+    	* src/sxe-utils.h: Remove xnew, xnew_atomic, xnew_array,
+    	xnew_atomic_array, xnew_and_zero, xzero, xnew_array_and_zero,
+    	xrealloc_array, alloca_array, xstrdup
+    	* src/sxe-memory.h: Add definitions removed from sxe-utils.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/lisp.h       |   1 +
+ src/sxe-memory.h | 181 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/sxe-utils.h  | 151 ----------------------------------------------
+ src/sxemacs.h    |   2 +-
+ 4 files changed, 183 insertions(+), 152 deletions(-)
+
+commit aa7b146ed16d513b9f40fb79ca42e91116a70b67
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 27 17:14:52 2015 -0400
+
+    Address static inline warning in ase.
+    
+    	* modules/ase/ase-neighbourhood.h: Use extern_inline.
+    	(ase_neighbourhood_point): Move definition to header.
+    	(ase_neighbourhood_radius): Ditto.
+    	(ase_neighbourhood_rational_measure): Ditto.
+    	(ase_neighbourhood_lebesgue_measure): Ditto.
+    	(_ase_neighbourhood_lebesgue): Inline dependency hoisted.
+    	(_ase_neighbourhood_update_lebesgue): Ditto.
+    	(_ase_neighbourhood_rational): Ditto.
+    	(_ase_neighbourhood_update_rational): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ modules/ase/ase-neighbourhood.c |  60 ------------------------
+ modules/ase/ase-neighbourhood.h | 101 ++++++++++++++++++++++++++++++++--------
+ 2 files changed, 81 insertions(+), 80 deletions(-)
+
+commit d870d2df966097d7d65b767eed35889657682c55
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 27 17:10:45 2015 -0400
+
+    Prevent movemail from proceeding when setuid fails
+    
+    	* lib-src/movemail.c (main): Exit is setuid fails
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lib-src/movemail.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+commit e3d0801a12b2b6ddb4720aaf9d1952b1d823e89e
+Merge: 14fb0b4 6ea51f3
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Sep 26 11:41:17 2015 -0400
+
+    Merge branch 'master' into for-steve
+
+commit 6ea51f307b0121b67ba06111ddedbfb16189ea44
+Merge: 8f74a8d 14fb0b4
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Sep 21 09:21:31 2015 +1000
+
+    Minor package-get cleanup + bldchain tweak
+    
+    * merges:
+      Cleanup invalid mirrors
+      Cleanup mirrors
+      Improve missing header message
+      Improve detection libtool version detection
+
+commit 14fb0b4ba1fdf3d6c6c63f7c22b50aa4f8187921
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 20 12:57:43 2015 -0400
+
+    Cleanup invalid mirrors
+    
+    	* lisp/package-get.el (package-get-pre-release-download-sites):
+    	Remove commented out entries from previous commit.
+    	(package-get-download-sites): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/package-get.el | 77 -----------------------------------------------------
+ 1 file changed, 77 deletions(-)
+
+commit a2141c1d00c00cce549afa078d048f0802fad5a1
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 20 12:54:31 2015 -0400
+
+    Cleanup mirrors
+    
+    	* lisp/package-get.el (package-get-download-sites): Annotate
+    	mirrors with connectivity difficulties or outdated contents.
+    	Comment out mirrors which do not resolve or do not carry XEmacs
+    	packages anymore.
+    	(package-get-pre-release-download-sites): Ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/package-get.el | 149 ++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 98 insertions(+), 51 deletions(-)
+
+commit d1b630cec9bcf428d8f41ad8294674136b1ab90f
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 20 10:52:44 2015 -0400
+
+    Improve missing header message
+    
+    	* configure.ac: Note that we also need Xt headers as newer distros
+    	tend to package Xt headers separately from core X11.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4e3d7030d24968ceec61d1aca0a21feefef88632
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 20 10:51:00 2015 -0400
+
+    Improve detection libtool version detection
+    
+    	* autogen.sh: Use libtoolize for version if libtool is not to be
+    	found.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ autogen.sh | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
+
+commit 8f74a8dd656155dc7716bd1ce168bb086b44cb8b
+Merge: 6a46975 c94647f
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Sep 14 13:43:56 2015 +1000
+
+    TTY + General build chain related updates
+    
+    * merges:
+      Conditional automake init
+      Small configure.ac fix
+      Fix info/Makefile.am for old automake
+      Allow m4 and autostuff to be customized
+      Enforce makeinfo version
+      Improve TTY library detection
+      Improve TTY section of summary
+      Add builtin tty support option
+      Forward compatible info in builddir (when CLEANFILES becomes obsolete)
+      Attempt to provide speed_t
+      Improve term initialization output
+      Provide helper defines
+      Allow for ncurses tinfo as TTY option
+
+commit c94647f78cb6bbefe60926513dfb2d3ca3e0dacc
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 13 18:10:27 2015 -0400
+
+    Conditional automake init
+    
+    	* configure.ac: Hugly hack to add info-in-buildir for automake >=
+    	1.14
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+commit dad5a180f46befe1a1c7af9ca2b0cbbda4de855c
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 13 18:09:30 2015 -0400
+
+    Small configure.ac fix
+    
+    	* configure.ac: Fix typo, and determine SED and AWK early.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 5793c931bb2e06b238d1acfa9736bfe0055c00d1
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 13 18:08:24 2015 -0400
+
+    Fix info/Makefile.am for old automake
+    
+    	* info/Makefile.am: Turns out automake does not deal well with
+    	unknown options. Horrible hack forthcoming in configure.ac.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ info/Makefile.am | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 3bbdbd725c0eedabcb84be9f9738f6c3610614e0
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 13 18:06:21 2015 -0400
+
+    Allow m4 and autostuff to be customized
+    
+    	* autogen.sh: allow for environment variables to control which
+    	git/m4/autoconf/automake binaries are used.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ autogen.sh | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 54 insertions(+), 10 deletions(-)
+
+commit 977c0dd86106aaa81d1d49e9ea8051ce92643260
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 13 15:15:37 2015 -0400
+
+    Enforce makeinfo version
+    
+    	* m4/sxe-bldchain-progs.m4: Verify that makeinfo version is at
+    	least 5.x
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ m4/sxe-bldchain-progs.m4 | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+commit 5c14c1d0f287c56ced4276526f61d90ce2420212
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Sep 8 18:12:21 2015 -0400
+
+    Improve TTY library detection
+    
+    	* configure.ac: Iterate over all "auto" libraries by order of
+    	preference to find out which are linkable.  Add libraries
+    	requested on command line by adding --with-<lib>=yes before the
+    	auto ones.  Then find which libraries are needed to get all of the
+    	required terminal functions.  Check if combination still allows
+    	for all functions to build.  When all else fails if
+    	--with-builtin-tty=yes is passed, use that.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 321 +++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 202 insertions(+), 119 deletions(-)
+
+commit e0048c32e6de7b45bfacc683b81f0725581d883f
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Sep 8 18:09:15 2015 -0400
+
+    Improve TTY section of summary
+    
+    	* m4/sxe-summary.m4 (SXE_SUMMARY): Provide additional warning on
+    	some of the tty options, and support for --with-tinfo and
+    	--with-builtin-tty
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ m4/sxe-summary.m4 | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
+
+commit 3d73783dceefcc22ea86080c5dd40b00f887a324
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Sep 8 18:08:12 2015 -0400
+
+    Add builtin tty support option
+    
+    	* configure.ac: Add disabled by default --with-builtin-tty as last
+    	resort to get a workable build with no other libraries.  A
+    	workable terminal spec will be needed at runtime.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit 97b46b308a60d7638a8ee0207e5176d8b232e712
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Sep 8 14:05:29 2015 -0400
+
+    Forward compatible info in builddir (when CLEANFILES becomes obsolete)
+    
+    	* info/Makefile.am (AUTOMAKE_OPTIONS): Add info-in-builddir
+              automake option for forward compatibility.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ info/Makefile.am | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 36622085bb772d206be2417635260ef4edeb7d89
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Sep 8 14:02:47 2015 -0400
+
+    Attempt to provide speed_t
+    
+    	* ui/TTY/termcap.c: In our termcap-like implementation make sure
+    	we provide speed_t if available.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ui/TTY/termcap.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit b04c7d2fc80d6b6f8c4f67059af51fa59f368872
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Sep 8 14:01:32 2015 -0400
+
+    Improve term initialization output
+    
+    	* src/cmdloop.c (initial_command_loop): Provide better output when
+    	terminal initialization fails. Now it does not look like a corrupt
+    	message.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/cmdloop.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit d1a4d48f4954770121878971e81ee1c024966454
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Sep 8 13:59:22 2015 -0400
+
+    Provide helper defines
+    
+    	* configure.ac: Make sure to define SED and ECHO as some system
+    	autoconf macros use them without defining them (tsk tsk
+    	libtool...)
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit adf025ccf5989bb271d3d1a843febb67609cd2dc
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Sep 8 13:57:40 2015 -0400
+
+    Allow for ncurses tinfo as TTY option
+    
+    	* configure.ac: Add --with-tinfo option
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 6a469751f4562ba7d6104a4db3c05e705801151e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Aug 24 18:14:59 2015 +1000
+
+    Disable "in-tree" builds.
+    
+    	* m4/sxe-srctree.m4 (SXE_CHECK_SRCDIR_HEALTH): Error if $blddir =
+    	$srcdir.
+    
+    	* INSTALL: Add some blurb about in-tree builds no longer being
+    	supported.
+    	Minimum texinfo version is now 5.2.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ INSTALL           | 36 +++++++++++++++++++++++++-----------
+ m4/sxe-srctree.m4 |  3 +++
+ 2 files changed, 28 insertions(+), 11 deletions(-)
+
+commit 74807b005e7c737b3f554847897facafd901710f
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 23 17:40:02 2015 -0400
+
+    Make .info files be generated in builddir
+    
+    	* info/Makefile.am (CLEANFILES): According to automake, info files
+    	are generated in builddir only if marked as user cleaned.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ info/Makefile.am | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+commit 2074af4b1b7854bbaa3c4cd3c57d62dc61a35a1d
+Merge: e01219e 74d5801
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Aug 23 11:13:16 2015 +1000
+
+    Misc build tweaks/updates from Nelson
+    
+    * merges:
+      Document why the duplicate traversal is needed
+      Revert "Remove duplicate subdirs"
+      Make info be generated in buildidr
+      Remove duplicate subdirs
+      Improve liblzma pkg-config detection
+      Improve FFI pkg-config detection
+      Add new pkg-config macro SXE_PC_CHECK_EXISTS
+      Fix pkg-config autoconf macros
+      Automatically paths in site prefix to PKG_CONFIG_PATH
+
+commit 74d58019971b4ec0f9c88d9c95ca00066f46d0bb
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Aug 22 11:39:11 2015 -0400
+
+    Document why the duplicate traversal is needed
+
+ Makefile.am | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit b2f68744f35227b3008371facee6e89958af4a8a
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Aug 22 11:33:41 2015 -0400
+
+    Revert "Remove duplicate subdirs"
+    
+    This reverts commit 9cdb268091bd33e600448864eda49c3c8b365699.
+
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3883e7dad0f8334b72dcf38c39a19a9895ad1c35
+Merge: ba6346f 49ab5fa
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Aug 15 19:12:24 2015 -0400
+
+    Merge branch 'sxe_pc_check' into for-steve
+
+commit ba6346fd1f7ce61955e246d44cb254aa810529c8
+Merge: 57098f2 0a5fe99
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Aug 15 19:11:37 2015 -0400
+
+    Merge branch 'makeinfo_out_of_tree' into for-steve
+
+commit 0a5fe996bfed398bdf5c5f27c2552c361320fd4e
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 9 14:19:35 2015 -0400
+
+    Make info be generated in buildidr
+    
+    	* info/Makefile.am (builddir, srcdir, SUBDIRS): Add settings to
+    	generate info in buildir and reset SUBDIRS in order not to
+    	recurse.
+
+ info/Makefile.am | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 9cdb268091bd33e600448864eda49c3c8b365699
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 9 14:18:20 2015 -0400
+
+    Remove duplicate subdirs
+    
+    	* Makefile.am (sxe_subdirs): Remove duplicate dirs
+
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 49ab5fac4cbf7edaa0ea3b9f4d10552c51837736
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 9 13:37:10 2015 -0400
+
+    Improve liblzma pkg-config detection
+    
+    	* m4/sxe-compress.m4: Also check for liblzma pkg-config modules
+    	which is now commonly used.
+
+ m4/sxe-compress.m4 | 35 +++++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
+
+commit 3059c55db2238cb89dc4523608d5bcd3cfd634d8
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 9 13:35:06 2015 -0400
+
+    Improve FFI pkg-config detection
+    
+    	* m4/sxe-emodffi.m4: Use the SXE_PC macros for pkg-config
+    	detection of libffi.
+
+ m4/sxe-emodffi.m4 | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+commit 749c560c385d1332305e057a186cd50bfa54d5fe
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 9 13:31:32 2015 -0400
+
+    Add new pkg-config macro SXE_PC_CHECK_EXISTS
+    
+    	* m4/sxe-pkgconfig.m4: Add SXE_PC_CHECK_EXISTS which sets
+    	sxe_cv_pc_[shmod]_exists to yes if module is configured via
+    	pkg-config.
+
+ m4/sxe-pkgconfig.m4 | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+commit 7ea779b838ad6a1d28608bcfcaf3b4f0736425e8
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 9 13:28:13 2015 -0400
+
+    Fix pkg-config autoconf macros
+    
+    	* m4/sxe-pkgconfig.m4: Correct quoting of shmod and MOD in
+    	SXE_PC_CHECK_VERSION_ATLEAST, SXE_PC_CHECK_VERSION_ATMOST,
+    	SXE_PC_CHECK_VERSION, SXE_PC_CHECK_LIBS, SXE_PC_CHECK_LDFLAGS,
+    	SXE_PC_CHECK_CPPFLAGS
+
+ m4/sxe-pkgconfig.m4 | 48 ++++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
+
+commit 57098f22777832b4aa91f1d4486886232a957484
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 9 13:23:05 2015 -0400
+
+    Automatically paths in site prefix to PKG_CONFIG_PATH
+    
+    	* ../configure.ac: If there is pkg-config and --with-site-prefixes
+    	was passed to configure, also add those prefixes with
+    	lib/pkgconfig to PKG_CONFIG_PATH.
+
+ configure.ac | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit e01219e73541a41ecd5c8739e59a07b5ffb89752
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Jul 10 22:21:17 2015 +1000
+
+    Handle immediate autoloads (';;;###autoloadimmediate') better.
+    
+    	* lisp/autoload.el (process-one-lisp-autoload): Insert <immediate>
+    	into the section header for immediate autoloads, to make sure the
+    	upstream doesn't think there aren't any autoloads at all.
+    
+    	From: Mike Sperber  <mike@xemacs.org>
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/autoload.el | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 7ce6c3cc03be110d63340d790a9c336125299e9b
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Jul 10 16:21:34 2015 +1000
+
+    Support both "-*-coding:" and "-*- coding:" in magic cookies
+    
+    The code responsible for checking coding sytem magic cookies in files was
+    only searching for "-*-coding:...", however most (most == all in SXEmacs,
+    but in XEmacs and GNU/Emacs most == majority) files that have these
+    cookies seem to use "-*- coding:...".  This changeset means SXEmacs will
+    now honour the coding cookie regardless of it being "-*-coding" or
+    "-*- coding".
+    
+    	* src/mule/file-coding.c (autodetect_real_coding_system): Look for
+    	" coding:" as well as "coding:"
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/mule/file-coding.c | 40 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 38 insertions(+), 2 deletions(-)
+
+commit f4138971962eba6a8dd94d7ddc1028e187aee41b
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jul 6 17:18:18 2015 +1000
+
+    Update the docstrings in the cl emodule.
+    
+    This adds/updates the docstrings for the DEFUNs in the cl emodule.  I've
+    basically just lifted the doctrings from the equivalent functions/macros
+    in cl*.el.
+    
+    	* modules/cl/cl-loop.c (Fcl_loop): Add a docstring.
+    	(Fcl_doX): Typo in docstring.
+    	(Fcl_dotimes): Update docstring.
+    	(Fcl_dolist): Ditto.
+    	(Fcl_do_symbols): Ditto.
+    	(Fcl_loop_sentence): Direct folks to #'cl:loop docstring.
+    
+    	* modules/cl/cl.c (Fcl_pop): Add a docstring.
+    	(Fcl_push): Ditto.
+    	(Fcl_pushnew): Ditto.
+    	(Fcl_eql): Ditto.
+    	(Fcl_list_): Ditto.
+    	(Fcl_tailp): Ditto.
+    	(Fcl_ldiff): Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ modules/cl/cl-loop.c | 301 +++++++++++++++++++++++++++++++++++++++++++++++++--
+ modules/cl/cl.c      |  35 ++++--
+ 2 files changed, 321 insertions(+), 15 deletions(-)
+
+commit 56c8b099ccef8240d76c6f88c3f31d86ae22cfba
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jul 4 12:23:33 2015 +1000
+
+    Partially sync files.el from XEmacs 21.5 for wildcard support.
+    
+    This changeset partially syncs files.el with XEmacs 21.5 (cb65bfaf7110
+    tip) to give #'find-file and friends support for wildcards.
+    
+    With this, you can do things like: `C-x C-f /path/to/*.c' and all .c files
+    in /path/to/ will be opened.  Oh, and it also means that the current
+    ispell XEmacs package will work again.
+    
+    	* lisp/files.el (find-directory-functions): New.
+    	(switch-to-next-buffer): New.
+    	(switch-to-previous-buffer): New.
+    	(switch-to-next-buffer-in-group): New and fixed to not use
+    	obsolete vars.
+    	(switch-to-previous-buffer-in-group): New. and fixed to not use
+    	obsolete vars.
+    	(find-file-create-switch-thunk): New.
+    	(find-file): Synched up with XEmacs 21.5
+    	cb65bfaf7110 tip.
+    	(find-file-wildcards): New.
+    	(find-file-suppress-same-file-warnings): New.
+    	(find-file-noselect): Synched up with XEmacs 21.5 cb65bfaf7110
+    	tip.
+    	(find-file-noselect-1): New.
+    	(insert-file-literally): New.
+    	(find-file-literally): New.
+    	(file-expand-wildcards): New.
+    	(shell-quote-wildcard-pattern): New.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/files.el | 751 ++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 550 insertions(+), 201 deletions(-)
+
+commit 8735e449d5e2c97356dd317eae27cc075e059f55
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Jul 3 21:35:00 2015 +1000
+
+    Run the testsuite with -vanilla to protect from local pollution.
+    
+    This change just makes the testsuite run in a -vanilla SXEmacs instance
+    to keep local settings and packages out of the equation.
+    
+    	* tests/Makefile.am (tests_environment): Use -vanilla.
+    	(check-formats, check-map, check-skiplists, check-%): Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ tests/Makefile.am | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 36ea5e75fe8caa7c5134fbd465af7d6f7697aa84
+Merge: 353afe8 5f6d015
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu Jul 2 17:01:03 2015 +1000
+
+    autogen.sh update from Horst
+    
+    * merges:
+      remove GNUisms that break non-GNU stuff
+
+commit 5f6d015a3bc3ba49d5a47218b88efb39913ee3f6
+Author: Horst G. Burkhardt <mc@680x0.com>
+Date:   Wed Jul 1 12:53:48 2015 +1000
+
+    remove GNUisms that break non-GNU stuff
+    
+    Signed-off-by: Horst G. Burkhardt <mc@680x0.com>
+
+ autogen.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 353afe80cffff2e5e621aab8f9a7ae0f765ff2c4
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jun 28 15:40:19 2015 +1000
+
+    Fix quoting and indexing bug in git-for-steve.sh
+    
+    	* contrib/git-for-steve.sh (set_myremote): Remove quotes from
+    	REMOTES value.  And index counts from zero, not one.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ contrib/git-for-steve.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 6a537a70e3a5c7623a82a20a3caf306d6a2b253e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jun 28 15:25:43 2015 +1000
+
+    Fix bugs in git-for-steve.sh script,
+    
+    This changeset fixes one of those "hard to find" errors you get in shell
+    scripts that turn out to be a single character fix.  Sheesh.  So in the 2
+    days I spent tracking down this bloody 1 char fix I also tidied up the
+    rest of the script and improved the UI a tad.  Also fixed a couple of
+    other bugs that hadn't been discovered yet. :)
+    
+    	* contrib/git-for-steve.sh: Fix/improve quoting throughout.
+    	Some UI improvements.
+    	(set_aliases): Add missing ')'.
+    	(set_keys): Grep for '^default-key' instead of 'default-key' in
+    	gpg.conf in case it is commented out.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ contrib/git-for-steve.sh | 129 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 83 insertions(+), 46 deletions(-)
+
+commit e6c44735810e22bc17d6a037cb02e19d45b4d855
+Merge: c5b309c c4243d1
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 27 13:28:37 2015 +1000
+
+    Contrib script fix from Horst
+    
+    * merges:
+      fix git-for-steve to work on systems that don't symlink /bin/sh to bash
+
+commit c5b309c7f2640ac5f39ba464688862effffc0b69
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 27 13:13:08 2015 +1000
+
+    Fix portability prob in git-for-steve.sh
+    
+    	* contrib/git-for-steve.sh: Make it a bash script.
+    	(set_myremote): Properly quote $REMOTES
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ contrib/git-for-steve.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit c4243d1330e6f80767dc252a0537096890e59d25
+Author: Horst G. Burkhardt <mc@680x0.com>
+Date:   Sat Jun 27 12:45:24 2015 +1000
+
+    fix git-for-steve to work on systems that don't symlink /bin/sh to bash
+    
+    Signed-off-by: Horst G. Burkhardt <mc@680x0.com>
+
+ contrib/git-for-steve.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a25fa462ffd95d5e9113e7303ac968c90f2963f0
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Jun 26 23:18:42 2015 +1000
+
+    Fix a couple of typos in the formats and aliases in git-for-steve.sh
+    
+    	* contrib/git-for-steve.sh (set_formats, set_aliases): Typo fixes.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ contrib/git-for-steve.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit f99b3c7417506d3aa891d4998841de085672c3a3
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Jun 26 14:10:10 2015 +1000
+
+    Temporarily turn off dbus detection.
+    
+    Lets not build the dbus emodule until it actually does something.
+    
+    	* configure.ac: Disable dbus detection.
+    
+    	* modules/Makefile.am: Comment out DESCEND_DBUS to keep autogen.sh
+    	happy.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configure.ac        | 28 ++++++++++++++--------------
+ modules/Makefile.am |  6 +++---
+ 2 files changed, 17 insertions(+), 17 deletions(-)
+
+commit 9706bcac59a38104b91bbb106e37bc3a6f2ed8e2
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 15 17:37:10 2015 +1000
+
+    Update & fix texi docs to build clean against makeinfo v5.2
+    
+    This seemingly monster changeset is nothing more than simple compile
+    warning fixes.  But now the docs compile clean, and clean is good. :-)
+    
+    	* info/lispref/abbrevs.texi
+    	* info/lispref/annotations.texi
+    	* info/lispref/backups.texi
+    	* info/lispref/buffers.texi
+    	* info/lispref/building.texi
+    	* info/lispref/commands.texi
+    	* info/lispref/compile.texi
+    	* info/lispref/consoles-devices.texi
+    	* info/lispref/control.texi
+    	* info/lispref/databases.texi
+    	* info/lispref/debugging.texi
+    	* info/lispref/dialog.texi
+    	* info/lispref/display.texi
+    	* info/lispref/ent.texi
+    	* info/lispref/eval.texi
+    	* info/lispref/extents.texi
+    	* info/lispref/faces.texi
+    	* info/lispref/files.texi
+    	* info/lispref/frames.texi
+    	* info/lispref/functions.texi
+    	* info/lispref/glyphs.texi
+    	* info/lispref/gutter.texi
+    	* info/lispref/hash-tables.texi
+    	* info/lispref/help.texi
+    	* info/lispref/internationalization.texi
+    	* info/lispref/intro.texi
+    	* info/lispref/keymaps.texi
+    	* info/lispref/ldap.texi
+    	* info/lispref/lispref.texi
+    	* info/lispref/lists.texi
+    	* info/lispref/loading.texi
+    	* info/lispref/macros.texi
+    	* info/lispref/markers.texi
+    	* info/lispref/menus.texi
+    	* info/lispref/minibuf.texi
+    	* info/lispref/modes.texi
+    	* info/lispref/mule.texi
+    	* info/lispref/numbers.texi
+    	* info/lispref/objects.texi
+    	* info/lispref/openssl.texi
+    	* info/lispref/os.texi
+    	* info/lispref/packaging.texi
+    	* info/lispref/positions.texi
+    	* info/lispref/postgresql.texi
+    	* info/lispref/processes.texi
+    	* info/lispref/range-tables.texi
+    	* info/lispref/scrollbars.texi
+    	* info/lispref/searching.texi
+    	* info/lispref/sequences.texi
+    	* info/lispref/specifiers.texi
+    	* info/lispref/streams.texi
+    	* info/lispref/strings.texi
+    	* info/lispref/symbols.texi
+    	* info/lispref/syntax.texi
+    	* info/lispref/text.texi
+    	* info/lispref/tips.texi
+    	* info/lispref/toolbar.texi
+    	* info/lispref/variables.texi
+    	* info/lispref/windows.texi
+    	* info/lispref/x-windows.texi
+    	* info/sxemacs-faq.texi
+    	* info/sxemacs/custom.texi
+    	* info/sxemacs/menus.texi
+    	* info/sxemacs/programs.texi
+    	* info/sxemacs/sxemacs.texi
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ info/lispref/abbrevs.texi              |   4 +-
+ info/lispref/annotations.texi          |  14 +-
+ info/lispref/backups.texi              |  14 +-
+ info/lispref/buffers.texi              |   2 +-
+ info/lispref/building.texi             |   2 +-
+ info/lispref/commands.texi             |  68 ++---
+ info/lispref/compile.texi              |   4 +-
+ info/lispref/consoles-devices.texi     |   2 +-
+ info/lispref/control.texi              |  26 +-
+ info/lispref/databases.texi            |   2 +-
+ info/lispref/debugging.texi            |  26 +-
+ info/lispref/dialog.texi               |   4 +-
+ info/lispref/display.texi              |   4 +-
+ info/lispref/ent.texi                  |   2 +-
+ info/lispref/eval.texi                 |  32 +--
+ info/lispref/extents.texi              |   6 +-
+ info/lispref/faces.texi                |  38 +--
+ info/lispref/files.texi                |  58 ++---
+ info/lispref/frames.texi               |   4 +-
+ info/lispref/functions.texi            |  28 +-
+ info/lispref/glyphs.texi               |  54 ++--
+ info/lispref/gutter.texi               |   2 +-
+ info/lispref/hash-tables.texi          |   6 +-
+ info/lispref/help.texi                 |   2 +-
+ info/lispref/internationalization.texi |   6 +-
+ info/lispref/intro.texi                |  28 +-
+ info/lispref/keymaps.texi              |   4 +-
+ info/lispref/ldap.texi                 |   2 +-
+ info/lispref/lispref.texi              |  11 +-
+ info/lispref/lists.texi                |  38 +--
+ info/lispref/loading.texi              |   2 +-
+ info/lispref/macros.texi               |  20 +-
+ info/lispref/markers.texi              |   4 +-
+ info/lispref/menus.texi                |  22 +-
+ info/lispref/minibuf.texi              |  30 +--
+ info/lispref/modes.texi                |  28 +-
+ info/lispref/mule.texi                 |   2 +-
+ info/lispref/numbers.texi              |   4 +-
+ info/lispref/objects.texi              | 110 ++++----
+ info/lispref/openssl.texi              |  20 +-
+ info/lispref/os.texi                   |  86 +++---
+ info/lispref/packaging.texi            |   4 +-
+ info/lispref/positions.texi            |  22 +-
+ info/lispref/postgresql.texi           |   2 +-
+ info/lispref/processes.texi            |  30 +--
+ info/lispref/range-tables.texi         |   6 +-
+ info/lispref/scrollbars.texi           |   2 +-
+ info/lispref/searching.texi            |  28 +-
+ info/lispref/sequences.texi            |   2 +-
+ info/lispref/specifiers.texi           |   6 +-
+ info/lispref/streams.texi              |   2 +-
+ info/lispref/strings.texi              |   4 +-
+ info/lispref/symbols.texi              |   4 +-
+ info/lispref/syntax.texi               |  18 +-
+ info/lispref/text.texi                 |  80 +++---
+ info/lispref/tips.texi                 |   4 +-
+ info/lispref/toolbar.texi              |   6 +-
+ info/lispref/variables.texi            |  34 +--
+ info/lispref/windows.texi              |   2 +-
+ info/lispref/x-windows.texi            |  12 +-
+ info/sxemacs-faq.texi                  | 464 ++++++++++++++++-----------------
+ info/sxemacs/custom.texi               |  78 +++---
+ info/sxemacs/menus.texi                |   4 +-
+ info/sxemacs/programs.texi             |   2 +-
+ info/sxemacs/sxemacs.texi              |   3 +-
+ 65 files changed, 820 insertions(+), 820 deletions(-)
+
+commit 21e3604bb7ab3d5e64cfbbb90a9b04ed8ca7ad07
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 15 14:34:36 2015 +1000
+
+    Update SPPM
+    
+    	* info/sppm.texi (IRC): JackaLX -> SteveYoungs
+    
+    	* info/sppm.texi (Voting): Votes to be decided by simple majority,
+    	which I think is easier and fairer.
+    
+    	* info/sppm.texi (Sending a patch from a git repo): Update, use
+    	the "for-steve" workflow, encourage GnuPG signing, mention and
+    	recommend git-for-steve.sh.
+    
+    	* info/sppm.texi (Making Releases): Update to bring it inline with
+    	what I actually do on release day.
+    
+    	* info/sppm.texi (Compatibility): Clarify a little.
+    
+    	* info/sppm.texi (Setting up a publicly accessible repo):
+    	Explicitly use `git-for-steve.sh' in the example setup, and
+    	mention it in the text.
+    
+    	* info/sppm.texi (Other Developers' Repositories): Add everyone's
+    	repo that I know of.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ info/sppm.texi | 188 ++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 91 insertions(+), 97 deletions(-)
+
+commit fcfc7afbe817a619561ed91fa591c8ff482a1198
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 14 10:51:47 2015 -0400
+
+    Fix cl-loop-parser.y for bison 2.7
+    
+    	* modules/cl/cl-loop-parser.y: Use double quotes for api.prefix
+
+ modules/cl/cl-loop-parser.y | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8169c5886ae90461017c67b917566d519600f285
+Merge: 74a31d3 82008a1
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 14 10:07:33 2015 -0400
+
+    Merge remote-tracking branch 'origin/master' into for-steve
+
+commit 82008a117980636406a20d417ca5197d003557c8
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jun 14 16:01:39 2015 +1000
+
+    Add 'scan-error' error type.
+    
+    	* src/syntax.c: Add `Qscan_error'.
+    
+    	* src/syntax.c (syms_of_syntax): DEFERROR_STANDARD it.
+    
+    	* src/syntax.c (scan_lists): Use it.
+    
+    	* lisp/subr.el (error): Add it to the docstring.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/subr.el |  1 +
+ src/syntax.c | 24 +++++++++++++++++++-----
+ 2 files changed, 20 insertions(+), 5 deletions(-)
+
+commit 65b1733aae3061ad18529ff38b00ed3e3bc38ea7
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 13 14:10:27 2015 +1000
+
+    Error when callbacks aren't available in curl:download
+    
+    	* lisp/ffi/ffi-curl.el (curl:download): Error when attempting to
+    	dl to a buffer when that can't be done.
+    
+    	* lisp/ffi/ffi-curl.el (curl:download&): Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-curl.el | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+commit 1d6df596fd2a9f316a7b1abaa59a1e390d6db1d1
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 13 11:35:00 2015 +1000
+
+    Update cl-loop-parser grammar file for bison 3.x
+    
+    This allows the cl emodule to build with bison version 3.x, and sets
+    the minimum required version to 2.7
+    
+    	* m4/sxe-bldchain-progs.m4 (SXE_PROG_BISON): Set minimum bison
+    	version needed to v2.7.x,
+    
+    	* modules/cl/cl-loop-parser.y: Use api.prefix, api.pure instead of
+    	name-prefix, pure_parser which are deprecated.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ m4/sxe-bldchain-progs.m4    | 2 +-
+ modules/cl/cl-loop-parser.y | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit 171d5ad3a3a9006d4c03acc2136a0a95047d46e9
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 13 00:22:32 2015 +1000
+
+    Try to gracefully handle not having ffi-callbacks.
+    
+    The change in 3ba78988 (effi.c) meant that ffi-curl.el and ffi-sqlite.el
+    could not be loaded if you weren't on a i386 machine.  This changeset
+    takes care of that.
+    
+    	* lisp/ffi/ffi-curl.el (curl:cb-write-to-buffer): Wrap in
+    	#'ignore-errors because our ffi-callbacks don't work on x86_64.
+    
+    	* lisp/ffi/ffi-curl.el (curl:download): Only attempt dl to a
+    	buffer if curl:cb-write-to-buffer is bound.
+    
+    	* lisp/ffi/ffi-sqlite.el (sqlite-generic-collation): Wrap in
+    	#'ignore-errors because our ffi-callbacks don't work on x86_64.
+    
+    	* lisp/ffi/ffi-sqlite.el (sqlite-create-collation): Error if
+    	sqlite-generic-collation isn't bound.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/ffi/ffi-curl.el   | 22 ++++++++++++----------
+ lisp/ffi/ffi-sqlite.el | 46 ++++++++++++++++++++++++++--------------------
+ 2 files changed, 38 insertions(+), 30 deletions(-)
+
+commit 0d3f550c44818fecad83d7d12f99fbe3457e406f
+Merge: ce7e32b 74a31d3
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Jun 12 10:33:27 2015 +1000
+
+    Rework dirname tests & prevent 2 cores at configure time
+    
+    * merges:
+      Fix configure dirname. Also streamline dirname usage.
+      Fix configure check for realpath and dirname. Also streamline dirname usage.
+
+commit 74a31d33deff58c3b6aa664b3b43ccd53d567426
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Jun 11 15:21:54 2015 -0400
+
+    Fix configure dirname. Also streamline dirname usage.
+    
+    	POSIX 1003.1 states: "The dirname() function may modify the string
+    	pointed to by path, and may return a pointer to static storage
+    	that may then be overwritten by subsequent calls to dirname()."
+    
+    	Source: http://www.unix.com/man-page/POSIX/3posix/dirname/
+    
+    	Because of this the only sane way of using dirname is to allocate
+    	our own copy of the argument, call dirname and then copy to the
+    	result.
+    
+    	The interesting news is we don't call xdirname anywhere in our
+    	code, yes, not even in Ffile_dirname.  In fact the contract as far
+    	as the '/' termination and behavior on "non directory" is
+    	completely different and actually changing it would break
+    	build-autoloads.el and packages.el (easily fixed), and god knows
+    	what other user code.
+    
+    	* m4/sxe-fs-funs.m4: Remove _SXE_CHECK_DIRNAME_SIDE_EFFECT,
+    	_SXE_CHECK_DIRNAME_RETVAL_OWNER and
+    	_SXE_CHECK_DIRNAME_RETVAL_OWNER tests since the change in xdirname
+    	makes these checks not necessary.
+    
+    	* m4/sxe-fs-funs.m4 (SXE_CHECK_BROKEN_DIRNAME): Remove calls to
+    	_SXE_CHECK_DIRNAME_SIDE_EFFECT, _SXE_CHECK_DIRNAME_RETVAL_OWNER
+    	and _SXE_CHECK_DIRNAME_RETVAL_OWNER.
+    
+    	* src/sysdep.h (x__dirname): Provide only a POSIX-aware usage of
+    	dirname.  This means copying the argument to the result buffer
+    	before calling dirname and the result (if not at start of the
+    	result buffer), using xstrncpy if non-overlapping, memmove if
+    	overlapping.
+
+ m4/sxe-fs-funs.m4 | 149 ------------------------------------------------------
+ src/sysdep.h      |  41 ++++++---------
+ 2 files changed, 15 insertions(+), 175 deletions(-)
+
+commit 7a9be1a3ab4af6745629a3b1f7dbce581461d9e6
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Jun 11 14:58:52 2015 -0400
+
+    Fix configure check for realpath and dirname. Also streamline dirname usage.
+    
+    	* m4/sxe-fs-funs.m4 (_SXE_CHECK_REALPATH_RETVAL_OWNER): Add double
+    	call strategy to verify usage of internal memory.
+
+ m4/sxe-fs-funs.m4 | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit ce7e32b3f1157e493ceac23cc56cc9788f55c68e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu Jun 11 23:36:09 2015 +1000
+
+    Typo fix
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ m4/sxe-fs-funs.m4 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 73eaf10ab548bfb1d23914980af54846fe0db29c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu Jun 11 21:47:36 2015 +1000
+
+    git-for-steve tweaks.
+    
+    	* contrib/git-for-steve.sh: Take more of a "git approach" to
+    	testing if we're in a SXEmacs repo.
+    
+    	Save the current branch name in case we move from it and want to
+    	return.
+    
+    	popd _before_ popping the stash.
+    
+    	Give the user a way to bypass the origin check.
+    
+    	(set_branch): Only switch to master if it's not the current
+    	branch.
+    	Ask if the user wants to switch to for-steve, instead of forcing
+    	it.
+    
+    	(set_aliases): Make alias.alias only show aliases, and not every
+    	config containing "alias".
+    	Add a couple of new aliases:
+    	  "cob" -> "checkout -b"
+    	  "prb" -> "pull --rebase"
+    	  "wb" -> "rev-parse --abbrev-ref HEAD".
+    
+    	* contrib/git-for-steve.sh (LETSPOP):
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ contrib/git-for-steve.sh | 76 ++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 57 insertions(+), 19 deletions(-)
+
+commit 3ba78988a2a64e1a8e9770cad11e27abaa424890
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Wed Jun 10 10:29:49 2015 -0400
+
+    Signal error when callbacks are not supported in ffi
+
+ src/effi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit a327fadefa474ec1a26694c7c280bf2fc0c473fb
+Merge: 6ac88d7 5d70e77
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 10 23:10:48 2015 +1000
+
+    Help prevent input method failures in XCreateIC from Nelson
+    
+    * merges:
+      Avoid XCreateIC failures
+      Document LANG and XMODIFIERS in case of XCreateIC failure
+      Document LANG and XMODIFIERS in case of XCreateIC failure
+      Document XCreateIC issue
+
+commit 6ac88d720a08579cae5c5da6e9c222d98b8a32c1
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 10 18:22:08 2015 +1000
+
+    Re-write the git-for-steve.sh script
+    
+    Many thanks and kudos to Nelson for not only writing the original script,
+    but for putting up with my endless questions on IRC.
+    
+    The old script was great, and in fact I referenced it countless times in
+    the past to find out how to do certain git things, but it only went as far
+    as to print suggestions to stdout as to what you should change.  This new
+    improved incarnation goes much further.
+    
+    Here is what it _won't_ do:
+    
+      It won't do anything if you're not in a SXEmacs source tree
+      It won't change anything that is already set without asking
+      It won't mess up a dirty WD, so you could run it right in the middle of
+    	hacking if you wanted to
+      It won't do the wrong thing if you run it a 2nd, 3rd, 4th time (all bets
+    	are off for the 5th run, no I'm kidding, it is safe to run as
+    	often as you like)
+    
+    What it does do is take care of everything SXEmacs-git related that you
+    can think of and probably a few things that you haven't.
+    
+    	* contrib/git-for-steve.sh: Complete re-write.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ contrib/git-for-steve.sh | 671 ++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 575 insertions(+), 96 deletions(-)
+
+commit 5d70e776aa4cb1f0385e3d0e317951853e6d244a
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 16:24:47 2015 -0400
+
+    Avoid XCreateIC failures
+    
+          * src/mule/input-method-xlib.c(XIM_init_frame): Do not specify
+            XNStatusAttributes unless there is a XIMStatusArea.  Some XIM
+            implementations are very sensitive to this (ibus is one
+            example).
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/mule/input-method-xlib.c | 43 ++++++++++++++++++++++++++-----------------
+ 1 file changed, 26 insertions(+), 17 deletions(-)
+
+commit f9b289e253a0a24c5e887dd3f72fc11fb5a0a14b
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 16:08:57 2015 -0400
+
+    Document LANG and XMODIFIERS in case of XCreateIC failure
+    
+    	 * src/mule/input-method-xlib: Add xim_warn2 macro.
+    
+    	 * src/mule/input-method-xlib(XIM_init_frame): Get and output to
+        	 stderr the value of LANG and XMODIFIERS to help
+        	 troubleshooting.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/mule/input-method-xlib.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+commit 2ed3098165fffb3a401b2b439343718466ae4075
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 16:07:35 2015 -0400
+
+    Document LANG and XMODIFIERS in case of XCreateIC failure
+    
+    	 * src/intl.c(init_input): Get and output to stderr the value of
+    	 LANG and XMODIFIERS to help troubleshooting.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/intl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit 4b800457dd3b31c12a667583e68c895e49499fe9
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 16:06:38 2015 -0400
+
+    Document XCreateIC issue
+    
+    	 * PROBLEMS: Add description of XCreateIC failure
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ PROBLEMS | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit 84605ad5745c071f0248e2e24d8b683483b47c47
+Merge: 0ba0b03 79aa021
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 8 01:50:31 2015 +1000
+
+    contrib update from Nelson
+    
+    * merges:
+      Provide guidance on the developer and maintainer key tag
+      GPG key mandatory
+      Provide support contact
+
+commit 0ba0b0341b37c4a0ad0059f7819f018aabd94b98
+Merge: 071ccf6 78172dd
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 8 01:07:27 2015 +1000
+
+    Compiler warning fixes from Nelson
+    
+    * merges:
+      Remove unused variable.
+      Remove unused variable and dead code.
+      Silence variable set but not used in macro expansion.
+      Silence some variable set but not used warnings.
+      Remove unused variable (value already inspectable)
+      Silence some variable set but not used warnings.
+      Silence some variable set but not used warnings.
+
+commit 79aa0217a255dd85b17376fa4b0b07107cba8452
+Merge: 78172dd 4e5298e
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 11:00:53 2015 -0400
+
+    Merge branch 'signing_for_steve' into for-steve
+
+commit 4e5298ea8bc97687708d003eb4b8d8e8a76eea77
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 10:57:26 2015 -0400
+
+    Provide guidance on the developer and maintainer key tag
+    
+    	* contrib/git-for-steve.sh:  Check and provide steps for
+              creating the developer key tag.  Check and provide steps for
+              importing the maintainer key.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ contrib/git-for-steve.sh | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+
+commit 686677a9a9875474d550012c7222d35328288593
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 10:56:01 2015 -0400
+
+    GPG key mandatory
+    
+        * contrib/git-for-steve.sh: Check for gpg installed and make it
+          mandatory.  Also when the signing key is not set provide an
+          educated guess.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ contrib/git-for-steve.sh | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+commit 52ba1ca9eada4c08c9199f529a5974475d0ac9ee
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 10:55:07 2015 -0400
+
+    Provide support contact
+    
+    	* contrib/git-for-steve.sh: Add reference to #sxemacs channel
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ contrib/git-for-steve.sh | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 78172dd9180e566d6ea09a80039f365be75b4d15
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 09:42:56 2015 -0400
+
+    Remove unused variable.
+    
+           * modules/cl/cl-loop.c(cl_loop_dllist_map_return): Remove 'state'
+             because it is only set to one and never read.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ modules/cl/cl-loop.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit 053b107e1d8a11b2233154d528cfeeb47b157712
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 09:41:34 2015 -0400
+
+    Remove unused variable and dead code.
+    
+           * src/ui/redisplay-output.c(compare_display_blocks): Remove
+             'block_end' and the commented code that used it - Commented out
+             since '97 seems like dead and buried...
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ui/redisplay-output.c | 29 ++---------------------------
+ 1 file changed, 2 insertions(+), 27 deletions(-)
+
+commit cf2701895eb01ec2f5b52ccfe121521f29139fd9
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 09:39:46 2015 -0400
+
+    Silence variable set but not used in macro expansion.
+    
+    	* src/lisp.h(GET_EXTERNAL_LIST_LENGTH): Provide usage of
+              'GELL_elt'.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/lisp.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 05a8cbcc0861a78dfae90fa7b213c5363d2fb4c6
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 09:36:16 2015 -0400
+
+    Silence some variable set but not used warnings.
+    
+    	* modules/ase/ase-interval.c(ase-interval): Provide usage for
+              'args'.  Not removed in order to provide an additional stack
+              reference for argument lisp objects.
+    
+    	* modules/cl/cl-loop.c(cl:loop-sentence): Provide usage for
+              'parse_result'.  Could be useful in debug inspection.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ modules/ase/ase-interval.c | 1 +
+ modules/cl/cl-loop.c       | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 4f4fea42295b3bb7f98e9ad3a97a31da7064f7e6
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 09:31:23 2015 -0400
+
+    Remove unused variable (value already inspectable)
+    
+           * src/ui/scrollbar(update_scrollbar_instance): Remove
+           'new_window' as its value can be inspected as 'w'.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ui/scrollbar.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit 0e4a0a8dfcf1a4e15c733df913b56f92652c279e
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 09:22:18 2015 -0400
+
+    Silence some variable set but not used warnings.
+    
+    	* src/ui/redisplay.c(regenerate_window_extents_only_changed,
+          	  regenerate_window_incrementally): Provide 'new_start' usage
+    
+     	* src/ui/specifier.c(specifier_instance): Provide 'tag' usage
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ui/redisplay.c | 4 ++++
+ src/ui/specifier.c | 1 +
+ 2 files changed, 5 insertions(+)
+
+commit b3b44e277cae41063ccedfef923fda6e6bddb1a8
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 7 09:05:38 2015 -0400
+
+    Silence some variable set but not used warnings.
+    
+    * lib-src/etags.c(just_read_file): provide 'dummy' usage.
+    
+    * lib-src/ootags.c(just_read_file): provide 'dummy' usage.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lib-src/etags.c  | 1 +
+ lib-src/ootags.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 071ccf620b24b2ea44a31c33b9c09024e18f06c1
+Merge: f65a669 0fe7a46
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jun 7 10:59:41 2015 +1000
+
+    Path fix for doc-directory from Nelson
+    
+    * merges:
+      Properly handle doc-directory
+
+commit 0fe7a465602563c035aa4c76621d34d71922ca01
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jun 6 11:37:20 2015 -0400
+
+    Properly handle doc-directory
+    
+    	* lisp/setup-paths.el (paths-find-doc-directory): use
+    	exec-directory if configuration-doc-directory is nil as promised
+    	in the documentation for doc-directory.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/setup-paths.el | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit f65a66933fc6a95ea7eae70995545fedc1f26586
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 6 16:11:09 2015 +1000
+
+    Fix cross-reference in lispref/packaging.texi
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ info/lispref/packaging.texi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 858233662e9c12ffe5a4ddcff74ea64845034859
+Merge: 4bf599c 1ae91c6
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 6 15:34:41 2015 +1000
+
+    XDG-compliant location for early-packages
+    
+    * xdg-pkgs:
+      XDG Compliant user package tree -- doc updates.
+      XDG Compliant user (early) packages tree.
+
+commit 1ae91c6195b2f2f8e645dd0774b4efad0fbb8b79
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jun 6 14:04:44 2015 +1000
+
+    XDG Compliant user package tree -- doc updates.
+    
+    This updates the documentation to reflect the new location for user
+    (early) packages.
+    
+    	* PROBLEMS: Add section about early-packages locations.
+    
+    	* README.packages: Update the text relating to user packages.
+    
+    	* etc/sxemacs.1 (FILES): Ditto.
+    
+    	* info/lispref/packaging.texi (The User View): Update.
+    
+    	* info/new-users-guide/custom2.texi (Init File): Typo fix.
+    
+    	* info/sxemacs-faq.texi (Q5.3.3): Ditto.
+    
+    	* info/sxemacs/cmdargs.texi (Command Switches): Add
+    	-user-pkgs-directory.
+    
+    	* info/sxemacs/startup.texi (Startup Paths): Update for current
+    	reality.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ PROBLEMS                          |  13 ++++-
+ README.packages                   |  16 ++++--
+ etc/sxemacs.1                     |  38 ++++++++------
+ info/lispref/packaging.texi       | 104 ++++++++++++++++++++++++--------------
+ info/new-users-guide/custom2.texi |   4 +-
+ info/sxemacs-faq.texi             |   2 +-
+ info/sxemacs/cmdargs.texi         |   6 +++
+ info/sxemacs/startup.texi         |  63 ++++++++++++-----------
+ 8 files changed, 153 insertions(+), 93 deletions(-)
+
+commit 30e80ecbf0baf6d0bed7780ee90cfa1859546f4f
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu Jun 4 23:36:25 2015 +1000
+
+    XDG Compliant user (early) packages tree.
+    
+    With this changeset, the location for a user's local packages, the ones
+    that make up `early-packages', is now under ${XDG_DATA_HOME}/sxemacs.
+    That is normally ~/.local/share/sxemacs, which is the directory used when
+    the XDG environment variable isn't set.
+    
+    If the user has forced use of the old legacy ~/.sxemacs for their init
+    directory, then that is where the early-packages will be instead of the
+    XDG location.  A warning is displayed if package subdirectories are
+    detected in any 2 or more of ~/.sxemacs, ${XDG_CONFIG_HOME}/sxemacs, and
+    ${XDG_DATA_HOME}/sxemacs (symlinked directories are ignored).
+    
+    There is also a new command line switch, `-user-pkgs-directory' to set the
+    early-packages directory to any location.
+    
+    	* lisp/package-admin.el (package-admin-find-top-directory): Use
+    	`user-packages-topdir' instead of `user-init-directory'.
+    	(package-admin-get-install-dir): Ditto.
+    
+    	* lisp/package-get.el (package-get-package-index-file-location):
+    	Default location is now in `user-packages-topdir' instead of
+    	`user-init-directory'.
+    	(package-get-install-to-user-directory): Renamed from
+    	`package-get-install-to-user-init-directory'.  The latter is
+    	defvaralias'd back.
+    	(package-get-maybe-save-index): Use `user-packages-topdir' instead
+    	of `user-init-directory'.
+    
+    	* lisp/packages.el (packages-find-user-topdir): New.  Returns
+    	`user-packages-topdir'.
+    	(packages-compute-package-locations): Rename the arg to
+    	`user-packages-topdir', and update the doc string.
+    
+    	* lisp/startup.el (command-line-do-help): Add `-user-pkgs-directory'.
+    	(command-line-early): For `-user' set an XDG compliant directory
+    	for `user-packages-topdir' if possible, fall back to the legacy
+    	.sxemacs otherwise.
+    	(startup-setup-paths): Use #'packages-find-user-topdir to set
+    	`user-packages-topdir'.
+    
+    	* src/emacs.c (vars_of_emacs): New var, `Vuser_packages_topdir'.
+    	(main_1): Handle new command line arg, `-user-pkgs-directory'. Set
+    	`Vuser_packages_topdir'.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/package-admin.el | 39 +++++++++++---------
+ lisp/package-get.el   | 13 ++++---
+ lisp/packages.el      | 99 ++++++++++++++++++++++++++++++++++++++++++++-------
+ lisp/startup.el       | 17 +++++++--
+ src/emacs.c           | 36 +++++++++++++++++--
+ 5 files changed, 166 insertions(+), 38 deletions(-)
+
+commit 4bf599c548264a82eae767411cb613033dd2273b
+Merge: 01ee95f a41eac1
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon May 11 13:31:46 2015 +1000
+
+    autogen.sh fix.  Closes bug 165 from Horst
+    
+    * merges:
+      Fix autogen.sh to work at Horst's site and on FBSD in general
+
+commit a41eac13d38be52266aa130c459f87b790990b19
+Author: Horst G. Burkhardt <mc@680x0.com>
+Date:   Mon May 11 12:52:59 2015 +1000
+
+    Fix autogen.sh to work at Horst's site and on FBSD in general
+    
+    Signed-off-by: Horst G. Burkhardt <mc@680x0.com>
+
+ autogen.sh | 17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
+
+commit 01ee95f714416d9966727aad1f66a01ff2c3f540
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun May 10 10:17:23 2015 +1000
+
+    Bring some consistency to command line switches
+    
+    We have UNIX style single dash cmdline long-opts, and GNU style double
+    dash cmdline long-opts, but not every single dash long-opt has a
+    corresponding double dash long-opt, and vice verse.  This changeset
+    rectifies that.
+    
+    	* lisp/startup.el (command-line-early): Add missing GNU style
+    	`--long-option' for all `-long-option' that were lacking it.
+    	(startup-setup-paths): ditto.
+    	(command-switch-alist): Add `-h'.
+    
+    	* info/sxemacs/cmdargs.texi: Add missing command switches.
+    
+    	* src/emacs.c (main_1): Add `-show-dump-id', `-terminal',
+    	`-no-dump-file', `-color-terminal', `-no-windows', `-h' command
+    	switches.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ info/sxemacs/cmdargs.texi | 39 ++++++++++++++++++++++++++++++++-------
+ lisp/startup.el           | 29 +++++++++++++++++++----------
+ src/emacs.c               | 27 +++++++++++++++++----------
+ 3 files changed, 68 insertions(+), 27 deletions(-)
+
+commit ccf396e4aaaa572f1a3fe927dc482331dd016ee1
+Merge: 4821f02 b6eed55
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun May 10 07:23:55 2015 +1000
+
+    Merge branch 'xdg-init'
+
+commit b6eed55f4da11386e477920b369b47053ecac8ac
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu May 7 23:23:56 2015 +1000
+
+    XDG init -- Git rid of hack in site-start.el
+    
+    It was wrong to use site-start.el to cope with a dynamic user init
+    directory.  This changeset puts it all into startup.el and removes the
+    site-start.el file.  Admins can breath a sigh of relief. :)
+    
+    user-init-directory and lisp-initd-dir will now also be included in the
+    debugging output when using -debug-paths.
+    
+    	* lisp/Makefile.am (corelispels): Remove site-start.el
+    
+    	* lisp/site-start.el: Removed.
+    
+    	* lisp/startup.el (find-user-init-directory): Actually set
+    	user-init-directory.
+    	Warn if multiple init directories were found.
+    	(forced-user-init-directory): New, non-nil when the
+    	user-init-directory has been set explicitly via the command
+    	line. NOT a user variable, keep ya grubby paws offit.
+    	(command-line-early): Ensure that all paths are correct when using
+    	"-u", "-user", "-user-init-directory", and inlude
+    	user-init-directory and lisp-initd-dir with -debug-paths.
+    	(startup-setup-paths): Use #'find-user-init-directory to maybe
+    	find the user's init directory.  Include user-init-directory, and
+    	lisp-initd-dir in debug output when -debug-paths.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/Makefile.am   |  15 +++----
+ lisp/site-start.el |  58 -------------------------
+ lisp/startup.el    | 122 ++++++++++++++++++++++++++++++++++++++++++-----------
+ 3 files changed, 105 insertions(+), 90 deletions(-)
+
+commit 4821f02fd1a7e818bd11bb68fbc294e087c39892
+Merge: 04168e3 5a2368c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue May 5 13:55:39 2015 +1000
+
+    Support XDG-based init directory
+    
+    * xdg-init:
+      XDG init -- Doc updates.
+      XDG Compliant init directory.
+
+commit 5a2368c9080b7ebf2a1f414c9d4802698c7f6f53
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue May 5 13:49:42 2015 +1000
+
+    XDG init -- Doc updates.
+    
+    Brings all the docs relating to the init file up to date.
+    
+    	* PROBLEMS: Update section on user-init-file
+    
+    	* configure.ac (package-prefix): Use "user's home directory"
+    	instead of "~/.sxemacs".
+    
+    	* etc/sample.init.el: Update comments.
+    
+    	* etc/sxemacs.1: Update Files section regarding init.el.
+    
+    	* info/lispref/os.texi (Start-up Summary): Update locations for
+    	init.el.
+    
+    	* info/lispref/os.texi (Init File): Describe user-init-directory.
+    
+    	* info/new-users-guide/custom1.texi: s/Emacs/SXEmacs/
+    
+    	* info/new-users-guide/custom1.texi (Customization Basics): Cross
+    	reference `Init File'.
+    
+    	* info/lispref/postgresql.texi
+    	(Building SXEmacs with PostgreSQL support): Comment out silly
+    	nonsence about "binary kits" and ftp sites. :)
+    
+    	* info/sxemacs-faq.texi (Q1.0.2): Update.
+    
+    	* info/sxemacs-faq.texi (Q1.0.3): Sources are at
+    	http://downloads.sxemacs.org/, not ftp.  And snapshots are on the
+    	web too.
+    
+    	* info/sxemacs-faq.texi (Q1.4.1): Update and cross-ref `Init
+    	File'.  Remove talk of "migrating old .emacs".  We've never done
+    	that.
+    
+    	* info/sxemacs/cmdargs.texi (Command Switches): Update.
+    	s/Emacs/SXEmacs/
+    
+    	* info/sxemacs/custom.texi (Init File): Update.  Mention
+    	user-init-directory, cross-ref to lispref "Init File".
+    
+    	* info/sxemacs/sxemacs.texi (Distrib): Point folks to
+    	http://downloads.sxemacs.org
+    
+    	* lisp/ffi/ffi-magic.el: doc update example
+    
+    	* lisp/files.el (user-init-file): Update doc.
+    
+    	* lisp/info.el (Info-annotate): Ditto.
+    
+    	* lisp/issue-tracker.el (report-sxemacs-bug-help): Ditto.
+    
+    	* lisp/menubar-items.el (default-menubar): Don't hard-code
+    	"~/.sxemacs/init.el".
+    
+    	* lisp/package-admin.el (package-admin-get-install-dir): comment update.
+    
+    	* info/lispref/display.texi (Warnings): update.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ PROBLEMS                          | 21 +++++++++++---
+ configure.ac                      |  2 +-
+ etc/sample.init.el                | 31 ++++++++++++++------
+ etc/sxemacs.1                     | 15 ++++++----
+ info/lispref/display.texi         |  2 +-
+ info/lispref/os.texi              | 60 ++++++++++++++++++++++++++++++---------
+ info/lispref/postgresql.texi      |  4 ++-
+ info/new-users-guide/custom1.texi | 31 ++++++++++----------
+ info/sxemacs-faq.texi             | 35 +++++++++--------------
+ info/sxemacs/cmdargs.texi         | 55 ++++++++++++++++++-----------------
+ info/sxemacs/custom.texi          | 18 ++++++------
+ info/sxemacs/startup.texi         |  1 +
+ info/sxemacs/sxemacs.texi         |  5 +---
+ lisp/ffi/ffi-magic.el             |  4 +--
+ lisp/files.el                     |  6 ++--
+ lisp/info.el                      |  8 +++---
+ lisp/issue-tracker.el             |  2 +-
+ lisp/menubar-items.el             |  3 +-
+ lisp/package-admin.el             |  3 +-
+ modules/configure.ac              |  2 +-
+ 20 files changed, 183 insertions(+), 125 deletions(-)
+
+commit 1637e28a4d2034d934a1c7e7ea5a70b3fd32a577
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun May 3 01:56:21 2015 +1000
+
+    XDG Compliant init directory.
+    
+    This changeset moves the init directory from ~/.sxemacs to
+    $XDG_CONFIG_HOME/sxemacs, falling back to ~/.config/sxemacs when
+    $XDG_CONFIG_HOME isn't set.
+    
+    SXEmacs will continue to use ~/.sxemacs if that directory exists, unless
+    the XDG-based directory also exists.  In that case, the XDG-based directory
+    will take precedence, unless the user has set $SXE_USE_LEGACY in their
+    environment.
+    
+    If no init directories exist, use the XDG-based directory, unless
+    $SXE_USE_LEGACY has been set.
+    
+    If multiple init directories exist a warning is displayed to the user
+    showing the directories found, and which is the one in use.  This warning
+    can be suppressed by adding the symbol `multi-initd' to
+    `display-warning-suppressed-classes'
+    
+    	* lisp/startup.el (find-user-init-directory): New.
+    	(user-init-directory): Set to empty string.
+    	(user-init-directory-base): Removed.
+    	(command-line-do-help): Warn that using -user may not be the
+    	wisest of choices.
+    	(command-line-early): When using -user set user-init-directory to
+    	~user/.config/sxemacs, or ~user/.sxemacs if that doesn't exist.
+    	(site-start-file): Doc fix.
+    
+    	* lisp/site-start.el: New.  Deals with the consequences of
+    	computing a user-init-directory at run-time.
+    
+    	* lisp/Makefile.am (corelispels): Add site-start.el.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/Makefile.am   | 15 +++++++-------
+ lisp/site-start.el | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ lisp/startup.el    | 61 ++++++++++++++++++++++++++++++++++++++++--------------
+ 3 files changed, 111 insertions(+), 23 deletions(-)
+
+commit 04168e3fa98cd90961d773c5ffda67a6797f8dd7
+Merge: de79373 3c5bbc5
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Mar 17 09:20:29 2014 +1000
+
+    Support user/group lookups from Nelson
+    
+    * merges:
+      Add support for Unix lookup by name to user-uid and user-gid
+      Add support for Unix groups comparable to user id
+
+commit 3c5bbc52f44e2ad0c3426c275a9ec7d5d4c2bae2
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Mar 16 18:57:18 2014 -0400
+
+    Add support for Unix lookup by name to user-uid and user-gid
+    
+    	* src/editfns.c (Fuser_uid): add optional parameter user_name. If
+    	specified the system will lookup the user uid, return nil if that
+    	user does not exist.
+    
+    	* src/editfns.c (Fuser_gid): add optional parameter group_name. If
+    	specified the system will lookup the group gid, return nil if that
+    	group does not exist.
+    
+    	* src/editfns.c (Fuser_real_uid): clarify that the uid returned is
+    	that of the process.
+    
+    	* src/editfns.c (Fuser_real_gid): clarify that the uid returned is
+    	that of the process.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/editfns.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 48 insertions(+), 10 deletions(-)
+
+commit 4b276034ba5da9f3a29d6825fc6f0ccda9f20b7a
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Mar 16 17:35:12 2014 -0400
+
+    Add support for Unix groups comparable to user id
+    
+    	* src/Makefile.am (libsxecore_a_headers):Add new sysgrp.h header.
+    
+    	* src/sysgrp.h: New header
+    
+    	* src/editfns.c: Include sysgrp.h
+    
+    	* src/editfns.c (Fuser_group_name): New defun similar to
+    	Fuser_login_name but for groups.
+    
+    	* src/editfns.c (user_group_name): Actual implementation of
+    	user_group_name. Can be called by other C functions in SXEmacs.
+    
+    	* src/editfns.c (Fuser_gid): Group counterpart to user-uid
+    
+    	* src/editfns.c (Fuser_real_gid): Group counterpart to
+    	user-real-uid
+    
+    	* src/editfns.c (syms_of_editfns): Register new defuns
+    	Fiser_group_name, Fuser_gid, Fuser_real_gid
+    
+    	* src/lisp.h: Add prototype for internal user_group_name
+    
+    	* src/lisp.h: Add declaration of Fuser_group_name
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/Makefile.am |  2 +-
+ src/editfns.c   | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ src/lisp.h      |  2 ++
+ src/sysgrp.h    | 22 +++++++++++++++++++
+ 4 files changed, 87 insertions(+), 4 deletions(-)
+
+commit de793738afb6127055c16c8d8ac6d7042043e914
+Merge: d0e6dd3 c8551e7
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Feb 14 12:09:44 2014 +1000
+
+    Mac OS fixes from Nelson
+    
+    * merges:
+      Fix SEGV while building autoloads for modules in Mac OS X with gcc-4.8.2
+
+commit c8551e77dfdec81a9776d5fdfbd281b8e1eb86c5
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Feb 13 20:32:42 2014 -0500
+
+    Fix SEGV while building autoloads for modules in Mac OS X with gcc-4.8.2
+    
+    	This seems to be a bad interaction between the gcc generated
+    	switch code and with the Mac OS X pthreads stubs, which clear rax
+    	where fun is expected by gcc to reside.
+    
+    	This is the minimal set of changes that fixes the issue, but now I
+    	believe we should comb the codebase for the usage of UNLIKELY and
+    	only keep those that are really useful.
+    
+    	* src/map.c: Refactor the check of NILP(fun) to be outside the
+    	current switch, so there is an additional switch(arity) with just
+    	the NILP(fun) branch of the old one. It was also necessary to
+    	remove the UNLIKELY hint, which was causing the error: Invalid
+    	regexp: "Unmatched ( or \\("
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/map.c | 190 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 94 insertions(+), 96 deletions(-)
+
+commit d0e6dd336c8136eaefc8c6d3b44a59199266305b
+Merge: 3eb639f 4c568a0
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Jan 17 00:03:07 2014 +1000
+
+    #'directory-files fix (Closes 163)
+    
+    * bug-163:
+      XEmacs compatibility fix in #'directory-files (Closes Bug 163)
+
+commit 4c568a08815692f48a7f9ff5559ee759d1da2e9e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu Jan 16 23:58:16 2014 +1000
+
+    XEmacs compatibility fix in #'directory-files (Closes Bug 163)
+    
+    For details see:  http://issues.sxemacs.org/show_bug.cgi?id=163
+    
+    	* src/dired.c (directory_files_resultify): Return an unsorted list
+    	when RESULT-TYPE is `non-nil' or `list'.
+    
+    	* src/dired.c (Fdirectory_files): Update doc string.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/dired.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 3eb639f7ab0b546ab41278799b179ebec54e3cf5
+Merge: c29cb39 48ac31d
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu Dec 26 09:31:54 2013 +1000
+
+    Autoconf warnfix from Nelson
+    
+    * merges:
+      Remove annoying autoconf warning
+
+commit 48ac31db7c535b263cbfc2e69b553ea2351cc278
+Author: Nelson Ferreira <njsf@sxemacs.org>
+Date:   Wed Dec 25 17:41:38 2013 -0500
+
+    Remove annoying autoconf warning
+    
+    Under autoconf 2.64 and newer the current autoconf macros of SXEmacs emit the following
+    warning multiple times:
+    
+    _LT_SYS_DYNAMIC_LINKER was expanded before it was required
+    
+       * m4/sxe-libtool.m4 (_SXE_CHECK_LT2): Add AC_REQUIRE for
+         _LT_SYS_DYNAMIC_LINKER as recommend by
+         http://www.gnu.org/software/autoconf/manual/autoconf.html#Expanded-Before-Required
+    
+    Signed-off-by: Nelson Ferreira <njsf@sxemacs.org>
+
+ m4/sxe-libtool.m4 | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit c29cb39a57d5ab516dbfbd219706ab4392d1b605
+Merge: 6af6e5f f6c5116
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Dec 9 11:31:22 2013 +1000
+
+    Texinfo 5 fixes + warn fixes from Nelson
+    
+    * merges:
+      Avoid warnings of unused parameter.
+      Avoid warning about dangling else
+      Avoid warning about deprecated XKeycodeToKeysym
+      Do not complain in configure when not in git workspace
+      Make texinfo 5.x not break the build
+
+commit f6c5116b1cb279a24c795916de329c7084d319ab
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 8 19:09:59 2013 -0500
+
+    Avoid warnings of unused parameter.
+    
+    	The old way of doing if(parameter); elicits other warnings such as if without a body.
+    	While one could "fix" that in clang with placing the ; on the next line, using
+    	SXE_UNUSED seems much saner, as it coveys intent.
+    
+    	* src/ent/ent-mpc.c: move prototype of mpc_set_ui_fr to ent-mpc.h
+    	* src/ent/ent-mpc.h: declare mpc_set_ui_fr for usage by alloc.c
+    	* src/ent/ent-float.c (mark_float): Removed if, marked as SXE_UNUSED
+    	* src/ent/ent-float.c (float_equal): ditto
+    	* src/ent/ent-float.c (ent_rem_FLOAT_T): ditto
+    	* src/ent/ent-float.c (ent_rem_FLOAT_T_INT_T): ditto
+    	* src/ent/ent-gaussian.c (bigg_equal): ditto.
+    	* src/ent/ent-gaussian.c (bigg_hash): ditto.
+    	* src/ent/ent-gaussian.c (bigg_mark): ditto.
+    	* src/ent/ent-gaussian.c (bigg_finalise): ditto.
+    	* src/ent/ent-indef.c (indef_hash): ditto.
+    	* src/ent/ent-mpc.c (bigc_finalise): ditto.
+    	* src/ent/ent-mpfr.c (bigfr_finalise): ditto.
+    	* src/ent/ent.c (default_real_precision_changed): ditto.
+    	* src/alloc.c: include ent-mpc.h when it is defined so that bigc uses the
+    	proper definitions/prototypes
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/alloc.c            |  1 +
+ src/ent/ent-float.c    | 14 ++++----------
+ src/ent/ent-gaussian.c | 20 ++++----------------
+ src/ent/ent-indef.c    |  5 +----
+ src/ent/ent-mpc.c      |  6 +-----
+ src/ent/ent-mpc.h      |  8 ++++++++
+ src/ent/ent-mpfr.c     |  5 +----
+ src/ent/ent.c          | 11 +++--------
+ 8 files changed, 23 insertions(+), 47 deletions(-)
+
+commit 20e812d1ed069aee8cdb9868b57fafec9197d995
+Merge: a705a97 e045f09
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 8 18:59:15 2013 -0500
+
+    Merge remote-tracking branch 'myremote/for-steve' into for-steve
+
+commit a705a974fb4c585778827d45f19b8c27e0e3bfa9
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 8 18:58:16 2013 -0500
+
+    Avoid warning about dangling else
+    
+    	* lib-src/etags.c (get_language_from_filename): Create block scope on
+    	  outer if
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lib-src/etags.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit e045f09be81787fec1dd6a444d6e0ca25d4b83a0
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 8 16:05:21 2013 -0500
+
+    Avoid warning about deprecated XKeycodeToKeysym
+    
+            * m4/sxe-gui.m4 (SXE_CHECK_XTOOLKITS): Check for XKBlib.h and
+    	  if it exists check for XKbKeycodeToKeysym availability
+    	* src/ui/X11/event-Xt.c: Include XKBlib.h if available
+    	* src/ui/X11/event-Xt.c (whatever): Use XKbKeycodeToKeysym instead
+    	  of XKeycodeToKeysym if available
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ m4/sxe-gui.m4         | 9 +++++++++
+ src/ui/X11/event-Xt.c | 8 ++++++++
+ 2 files changed, 17 insertions(+)
+
+commit f33e320fa18a63107726355deb186c15bd70caed
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 8 14:08:31 2013 -0500
+
+    Do not complain in configure when not in git workspace
+    
+        * configure.ac: redirect to /dev/null the git describe so that git
+          error message is not in output.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 28048c31d319fa17172064ad3d46e2345f381a22
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Dec 8 13:59:33 2013 -0500
+
+    Make texinfo 5.x not break the build
+    
+    	These changes are mostly promoting sections to chapters and subsections to sections.
+    
+    	* info/custom.texi (Declaring Groups): Promote to chapter
+    	* info/custom.texi (Declaring Variables): Ditto.
+    	* info/custom.texi (Declaring Faces): Ditto.
+    	* info/custom.texi (Usage for Package Authors): Ditto.
+    	* info/custom.texi (Utilities): Ditto.
+    	* info/custom.texi (The Init File): Ditto
+    	* info/custom.texi (Wishlist): Ditto
+    	* info/widget.texi (Introduction): Ditto
+    	* info/widget.texi (User Interface): Ditto
+    	* info/widget.texi (Programming Example): Ditto
+    	* info/widget.texi (Setting Up the Buffer): Ditto
+    	* info/widget.texi (Basic Types): Ditto
+    	* info/widget.texi (Sexp Types): Ditto
+    	* info/widget.texi (Widget Properties): Ditto
+    	* info/widget.texi (Defining New Widgets): Ditto
+    	* info/widget.texi (Widget Browser): Ditto
+    	* info/widget.texi (Widget Minor Mode): Ditto
+    	* info/widget.texi (Utilities): Ditto
+    	* info/widget.texi (Widget Wishlist): Ditto
+    	* info/widget.texi (Widget Internals): Ditto
+    
+    	* info/lispref/edebug-inc.texi (Instrumenting Macro Calls): Use
+    	itemize instead of table. Texinfo 5 refuses a table with @bullet.
+    
+    	* info/lispref/faces.texi (Face Properties): Add @item for each paragraph.
+    
+    	* info/sxemacs-faq.texi: Inline tex for removed @hfill
+    	* info/term.texi: remove problematic start @
+    	* info/term.texi: Use {} instead of ()
+    
+    	* info/lispref/packaging.texi (Makefile Targets): Promote to section
+    	* info/sppm.texi (Voting): Ditto
+    	* info/sppm.texi (Coding Style): Ditto.
+    	* info/sppm.texi (Setting up a publicly accessible repo): Ditto
+    	* info/sppm.texi (Setting up a publicly accessible repo): Ditto
+    	* info/widget.texi (Editable text fields): Ditto
+    	* info/widget.texi (The link widget): Ditto
+    	* info/widget.texi (The url-link widget): Ditto
+    	* info/widget.texi (The push-button widget): Ditto
+    	* info/widget.texi (The editable-field widget): Ditto
+    	* info/widget.texi (The menu-choice widget): Ditto
+    	* info/widget.texi (The radio-button-choice widget): Ditto
+    	* info/widget.texi (The item widget): Ditto
+    	* info/widget.texi (The choice-item widget): Ditto
+    	* info/widget.texi (The toggle widget): Ditto
+    	* info/widget.texi (The checkbox widget): Ditto
+    	* info/widget.texi (The checklist widget): Ditto
+    	* info/widget.texi (The editable-list widget): Ditto
+    	* info/widget.texi (The group widget): Ditto
+    	* info/widget.texi (constants): Ditto
+    	* info/widget.texi (generic): Ditto
+    	* info/widget.texi (atoms): Ditto
+    	* info/widget.texi (composite): Ditto
+    	* info/widget.texi (The Widget and Type Structures): Ditto
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ info/custom.texi             | 14 ++++-----
+ info/lispref/edebug-inc.texi |  5 ++--
+ info/lispref/faces.texi      |  4 +++
+ info/lispref/packaging.texi  |  2 +-
+ info/sppm.texi               |  8 +++---
+ info/sxemacs-faq.texi        |  2 +-
+ info/term.texi               |  4 +--
+ info/widget.texi             | 68 ++++++++++++++++++++++----------------------
+ 8 files changed, 56 insertions(+), 51 deletions(-)
+
+commit 6af6e5f341e434e442499168cc26e0c97178fdcd
+Merge: cb118b6 3e9fb87
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Dec 1 15:12:03 2013 +1000
+
+    memory fix from Nelson
+    
+    * merges:
+      Fix heap free in __pntw_1dict
+
+commit 3e9fb8750ab759e49f2f50cf3417d83753b180b2
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Nov 30 20:06:24 2013 -0500
+
+    Fix heap free in __pntw_1dict
+    
+        * src/map.c(__pntw_1dict): when array is allocated in the heap, the primary
+          address is kept in keys, but later vals is freed. This is clearly a bug,
+          which can corrupt the heap in weird ways that are untraceable.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/map.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit cb118b68d6c6e77968c4e663c2e06a3b7c17cce6
+Merge: 3542a3a 2c5153f
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Oct 6 20:24:54 2013 +1000
+
+    Revert my tmp workaround for 162
+    
+    * revert-tmp-fix:
+      Revert the temporary workaround for bug #162
+
+commit 2c5153f2ed84a86570d2a45341f5f06cb9c760c5
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Oct 6 20:22:53 2013 +1000
+
+    Revert the temporary workaround for bug #162
+    
+    	* lisp/build-autoloads.el (find-emod-directories): Revert the
+    	workaround.
+    
+    	* lisp/emod-utils.el (emodule-completions): Ditto.
+    
+    	* lisp/emod-utils.el (list-modules): Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/build-autoloads.el | 22 +++++++---------------
+ lisp/emod-utils.el      | 25 ++++++++-----------------
+ 2 files changed, 15 insertions(+), 32 deletions(-)
+
+commit 3542a3a5f02d6ba21333bc38731491015eb8935e
+Merge: 01dca6f f303f85
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Oct 6 20:11:10 2013 +1000
+
+    Closes bug #162 from Sebastian
+    
+    * merges:
+      Summary: pass decoration triple to mapfam worker routines by value (instead of by-ref) Keywords: fix bug 162
+
+commit f303f85925cb02173488ecc9811599d20325dc98
+Author: Sebastian Freundt <hroptatyr@fresse.org>
+Date:   Sun Oct 6 07:56:53 2013 +0000
+
+    Summary: pass decoration triple to mapfam worker routines by value (instead of by-ref)
+    Keywords: fix bug 162
+    
+    This changeset fixes the issues described in bug 162
+    (http://issues.sxemacs.org/show_bug.cgi?id=162).
+    
+    The mapfam worker routine __pntw_1seq() (operate pointwise on just one sequence)
+    gets its decoration values (the initiator, the separator and the terminator) by
+    value now, i.e. on the stack.  Whereas before it got a pointer to a stack-alloc'd
+    struct in the main mapfam routine.
+    
+    Gcc 4.8.1 probably changed the memory layout or scope rules for pointers to stack
+    alloc'd objects slightly, we will never know, as this hasn't been investigated.
+    
+    Anyway, it's probably good to keep an eye out for similar problems that match
+    this pattern.
+
+ src/map.c | 75 +++++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 35 insertions(+), 40 deletions(-)
+
+commit 01dca6f2f363538734e654e0bc9ed47618aee468
+Merge: b4fc89e bd84934
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Oct 5 12:44:50 2013 +1000
+
+    Temp work-around for bug #162
+    
+    * bldfix:
+      Temporary work-around for bug 162
+
+commit bd84934806706368e5f6349cebc79c6b372f7cf0
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Oct 5 12:36:57 2013 +1000
+
+    Temporary work-around for bug 162
+    
+    http://issues.sxemacs.org/show_bug.cgi?id=162
+    
+    	* lisp/build-autoloads.el (find-emod-directories): Use #'mapconcat
+    	instead of #'mapfam to work-around bug 162
+    
+    	* lisp/emod-utils.el (emodule-completions): Ditto.
+    
+    	* lisp/emod-utils.el (list-modules): Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/build-autoloads.el | 22 +++++++++++++++-------
+ lisp/emod-utils.el      | 25 +++++++++++++++++--------
+ 2 files changed, 32 insertions(+), 15 deletions(-)
+
+commit b4fc89eb4bfa765772f9287573021fb442a71673
+Merge: 57fefb0 57bfdeb
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Sep 3 09:08:37 2013 +1000
+
+    Add logo XCF
+    
+    * logo:
+      Delete XCF's superseded by SXEmacs.xcf
+      Add the GIMP source xcf for SXEmacs logo/banner
+
+commit 57bfdeb5a974980da409c00777051d039f46d6d3
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Sep 3 08:53:39 2013 +1000
+
+    Delete XCF's superseded by SXEmacs.xcf
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ contrib/banner.sxemacs.xcf | Bin 1280460 -> 0 bytes
+ contrib/sxemacs-grid.xcf   | Bin 1246487 -> 0 bytes
+ contrib/sxemacs-nogrid.xcf | Bin 998732 -> 0 bytes
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 789d7570885598dc579b86efbff322e889f7bcb4
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Sep 2 23:20:31 2013 +1000
+
+    Add the GIMP source xcf for SXEmacs logo/banner
+    
+    It is an amalgamation of the 3 xcf files currently in contrib,
+    namely: banner.sxemacs.xcf sxemacs-grid.xcf sxemacs-nogrid.xcf
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ etc/SXEmacs.xcf | Bin 0 -> 1270984 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 57fefb0d58a1b433931bb71379c7540b03686545
+Merge: c4f7e3b f99df2e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Sep 2 11:10:11 2013 +1000
+
+    Add original .xcf logo images
+    
+    * merges:
+      Add SXEmacs logo XCF files
+
+commit f99df2e1a260ff213af626e04e422ebf5ffc2c3e
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Sep 1 18:22:26 2013 -0400
+
+    Add SXEmacs logo XCF files
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ contrib/banner.sxemacs.xcf | Bin 0 -> 1280460 bytes
+ contrib/sxemacs-grid.xcf   | Bin 0 -> 1246487 bytes
+ contrib/sxemacs-nogrid.xcf | Bin 0 -> 998732 bytes
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit c4f7e3be6c7b0b51da4938b9a64d87e17ebd1772
+Merge: 438b9a2 f976b3b
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Aug 30 01:32:19 2013 +1000
+
+    Fix the fix for bug 160 from Nelson
+    
+    * merges:
+      Bug fix: Fix for bug 160 broke -nw
+
+commit f976b3bf3f0e298c91a26ec10bbd3d6eb50f785d
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Aug 29 07:54:46 2013 -0400
+
+    Bug fix: Fix for bug 160 broke -nw
+    
+    	sxemacs -nw would quit right after startup
+    
+    	* src/lread.c (locate_file_in_directory_mapper): Only close
+    	closure->fd if non-zero, which would be the result of the attempt
+    	to check the file using access.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/lread.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+commit 438b9a2456b1d5e16a1f136a5f6799662cbdb7ce
+Merge: adc5b24 289b9d8
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Aug 26 08:00:42 2013 +1000
+
+    Closes Bug 161
+    
+    * merges:
+      Bug fix: 161 etags munges relative filenames (any path containing "..") in TAGS files
+
+commit 289b9d856af2c306368a38cb4771d42063a63894
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 25 14:33:44 2013 -0400
+
+    Bug fix: 161 etags munges relative filenames (any path containing "..") in TAGS files
+    
+    	Two bugs fixed here. One was Coverity induced, but another one,
+    	the strcpy -> memmove change is a real issue regarding copying in
+    	overlapping memory.
+    
+    	* lib-src/etags.c (relative_filename): Correct off-by-1 error in
+    	counting down remaining bytes.
+    
+    	* lib-src/etags.c (absoulte_filename): Change strcpy to memmove
+    	since this is a guaranteed overlapping memory copy, and strcpy is
+    	not guaranteed by POSIX to handle it properly.
+    	http://pubs.opengroup.org/onlinepubs/9699919799/functions/stpcpy.html
+    
+    	"If copying takes place between objects that overlap, the behavior is undefined."
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lib-src/etags.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit adc5b2446a560277cfca12b1fe126473daf78988
+Merge: 9901a2f ffcdeff
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Aug 25 08:34:13 2013 +1000
+
+    Closes Bug 160
+    
+    * merges:
+      Bug-fix: 160 #'package-suppress, `load-suppress-alist' don't suppress anything
+
+commit ffcdefff2cbd1f1ff23bce9264be9131b41b3daf
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Aug 24 17:53:43 2013 -0400
+
+    Bug-fix: 160 #'package-suppress, `load-suppress-alist' don't suppress anything
+    
+    There were 3 different bugs conspiring for this:
+    
+    	* lisp/packages.el (package-suppress): the value for filename
+    	added to load-suppress-alist contained the load-file-name instead
+    	of using it as a basis for the directory of the file to exclude.
+    
+    	* src/lread.c (suppressedp_loop): No file was ever being
+    	considered for exclusion because the check for CONSP was being
+    	made against the acons function pointer instead of the _acons_
+    	iteration variable.
+    
+    	* src/lread.c (locate_file_in_directory_mapper): When a file was
+    	suppressed, the value of fd in the closure was left as is. This
+    	not only leaked file descriptors but also made the search end
+    	because in the end this is was the value considered to whether
+    	there was a valid file to load or not, because closure.fd is the
+    	return value of locate_file_in_directory.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/packages.el | 2 +-
+ src/lread.c      | 5 ++++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 9901a2f6fcebd9f6b9ec3cac19ec415da94196e9
+Merge: 50c1e17 65e6d9e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Aug 12 17:27:17 2013 +1000
+
+    contrib upd from Nelson
+    
+    * merges:
+      Remove unneeded git-to-steve.sh. Use git-for-steve.sh instead
+
+commit 65e6d9e7c52f423328558bd0d7fa1ea9a781ff2c
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 11 15:12:27 2013 -0400
+
+    Remove unneeded git-to-steve.sh. Use git-for-steve.sh instead
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ contrib/git-to-steve.sh | 85 -------------------------------------------------
+ 1 file changed, 85 deletions(-)
+
+commit 50c1e1747db3cee091ba27750d479c5cad8b3915
+Merge: adbbab7 c04986f
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Aug 11 09:12:14 2013 +1000
+
+    Small package-get fix from Nelson
+    
+    * merges:
+      Tiny whitespace cleanup
+      Fix package update from local repository mirror.
+
+commit c04986f95b6fe2733bc057a05b70c8faf1496da9
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Aug 11 09:09:17 2013 +1000
+
+    Tiny whitespace cleanup
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/package-get.el | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 8fde3aee8bbec76a09d6882b8390800a76663ee4
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Aug 3 15:56:27 2013 -0400
+
+    Fix package update from local repository mirror.
+    
+    	When updating packages from a local repository, package-get would
+    	attempt to remove the file.
+    	While this is useful behaviour for files downloaded from an update
+    	site, for local directories it is not a good thing ;)
+    
+    	* lisp/package-get.el (package-get): move host to the uppermost
+    	let. Surround all (delete-file full-package-filename) with (unless
+    	(null host)
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lisp/package-get.el | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+commit adbbab7df114cc3e561d0f0f687b8ccbe978da1e
+Merge: 5e62876 67bef31
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Mar 11 14:41:34 2013 +1000
+
+    A few audio fixes/work-arounds from Nelson
+    
+    * njsf-snd:
+      Whitespace cleanup
+      Fix libao usage
+      Cleanup some jack server interactions
+      Fix typo in semaphore.h
+      Fix SXEmacs semaphores so that they deal with spurius pthreads conditional variable wakeups
+      Fix SoX media replay by closing and reopening stream on rewind because sox_seek is broken
+      Fix some synchronization issues. Improve audio job debug output
+
+commit 67bef3149361de10d38e1aeea6a1aca109930d9e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jan 21 11:52:24 2013 +1000
+
+    Whitespace cleanup
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/media/media-sox.c  | 10 +++++-----
+ src/media/sound-jack.c |  4 ++--
+ src/media/sound.c      |  2 +-
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+commit 70a04894a990df17ad6d43132b501609d3774150
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jan 20 18:44:08 2013 -0500
+
+    Fix libao usage
+    
+    	* src/media/sound-ao.c (sound_ao_create): Zero out sample format
+    	structure. Newer libao add a matrix field, which when non-null
+    	could cause a crash. This will make ao support more future proof
+    	to pointer dereference in future struct changes
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/media/sound-ao.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f70c41c0682f65023f3741058ba362b0913d8924
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jan 20 17:21:40 2013 -0500
+
+    Cleanup some jack server interactions
+    
+    	* src/media/sound-jack.c (sound_jack_subthread_create): Properly
+    	close the client upon failure to complete subthread create.
+    
+    	* src/media/sound-jack.c (sound_jack_play): Improve
+    	logging. Properly return status code of 0 upon success and 1 on
+    	failure. Also cleanup the device data of the job.
+    
+    	* src/media/sound-jack.c (sound_jack_change_state): properly set
+    	the state of the job upon start. Add code to the log of the
+    	unknown event message.
+    
+    	* src/media/sound-jack.c (sound_jack_process): Lock the job while
+    	processing the jack requests. Debug log the play state when draining
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/media/sound-jack.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+commit 08117313a4d872ab08bdcfe033c46c5cb1feea71
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jan 20 17:17:10 2013 -0500
+
+    Fix typo in semaphore.h
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/semaphore.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 42de8526277141d688c3e1da0efd878a5585973b
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jan 20 17:14:31 2013 -0500
+
+    Fix SXEmacs semaphores so that they deal with spurius pthreads conditional variable wakeups
+    
+    	* src/semaphore.h (struct sxe_semaphore_s): add a generation count
+    	* src/semaphore.h (struct sxe_msemaphore_s): ditto
+    
+    	* src/semaphore.h (sxe_msemaphore_init): initialize generation
+    	* src/semaphore.h (sxe_semaphore_init): ditto
+    
+    	* src/semaphore.h (sxe_msemaphore_trigger): increment generation before signal
+    	* src/semaphore.h (sxe_msemaphore_trigger): ditto
+    	* src/semaphore.h (sxe_msemaphore_trigger_all): ditto
+    	* src/semaphore.h (sxe_msemaphore_trigger_all): ditto
+    
+    	* src/semaphore.h (sxe_msemaphore_synchronise): Wait again if
+    	generation is still the same (ie no signal occurred).
+    
+    	* src/semaphore.h (sxe_msemaphore_synchronise): ditto.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/semaphore.h | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
+
+commit 549d757d733682cd019e13c97d2fa1643f6ade2e
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jan 20 16:19:07 2013 -0500
+
+    Fix SoX media replay by closing and reopening stream on rewind because sox_seek is broken
+    
+    	* src/media/media-sox.c (media_sox_rewind): Close and reopen the
+    	media stream if SXE_SOX_CAN_SEEK is not defined or sxe_sox_seek
+    	fails. If reopen fails, cleanup the media to improve handling of
+    	the rest of the media system.
+    
+    	* src/media/media-sox.c (media_sox_read): Improve logging message
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/media/media-sox.c | 48 ++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 44 insertions(+), 4 deletions(-)
+
+commit 65eaba6f51c7e693c09121ab667b8622323cb0ab
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jan 20 16:15:36 2013 -0500
+
+    Fix some synchronization issues. Improve audio job debug output
+    
+    	* src/media/sound.c (make_audio_job): Always initialie the mutex
+    	since some sound backends are multi-threaded and will use the
+    	mutex. Jack and AO are examples.
+    
+    	* src/media/sound.c (make_audio_job): Improve the job log message.
+    
+    	* src/media/sound.c (play-media-stream-synchronously): Improve
+    	play log message to make clear this is synchronous play.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/media/sound.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+commit 5e62876e5927f8745e5a44376dca8bb82e9c9b32
+Merge: 8729eec 1be84da
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jan 20 16:59:34 2013 +1000
+
+    bld-chain fix from Nelson
+    
+    * merges:
+      Only include ent-mpfr.h if HAVE_MPFR to fix build when mpfr is not available
+
+commit 1be84da32f2cba8b5efa4a3ab4a0a7f4370cd853
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 19 17:41:26 2013 -0500
+
+    Only include ent-mpfr.h if HAVE_MPFR to fix build when mpfr is not available
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/ent/ent-gaussian.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 8729eec073cb5652fe84dbc425c350fe4a535d3b
+Merge: bfcc99e 427f4c8
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jan 20 07:40:42 2013 +1000
+
+    autogen.sh update from Nelson
+    
+    * merges:
+      Allow autogen.sh to do the right thing with newer libtool/autoconf
+
+commit 427f4c854808045505589648c94cf1d7c042170e
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jan 19 13:43:40 2013 -0500
+
+    Allow autogen.sh to do the right thing with newer libtool/autoconf
+    
+    	* autogen.sh (libtool_ver): Force the run of libtoolize --copy
+    	--ltdl before autoreconf so that sxe-libtool.m4 does not cause
+    	an autoreconf error (and therefore no configure generated)
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ autogen.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit bfcc99e4afa2313976aec89c4d98a6758d25e942
+Merge: db81b6f fc3b9c3
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Thu Jan 10 09:33:41 2013 +1000
+
+    FFI updates from Evgeny
+    
+    * merges:
+      files.el:    - Check file existance when openning file with      `find-file-magic-files-alist'
+      ffi-wand:   "logo" is unsupported format for read
+      [fix] effi: ffi-slot-offset        - calculate offset correctly
+
+commit db81b6f5a1e41dcae3a587936f4d467b98bd2c1b
+Merge: aa30c7a 1b6e263
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jan 6 12:31:58 2013 +1000
+
+    Fix TTY cursor reset problem
+    
+    * tty-cursor:
+      Fix the age old problem of TTY cursor being reset on exit
+
+commit 1b6e2638f91b3a7a1f30f2791b5434dff7931747
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jan 6 12:21:45 2013 +1000
+
+    Fix the age old problem of TTY cursor being reset on exit
+    
+    This changeset stops SXEmacs from resetting the text cursor to block on
+    exit on a Linux console.  It is actually still reset, but it is reset
+    correctly and now you'll end up with a "normal" cursor instead of a "very
+    visible" one.
+    
+    One side-effect of this change is that SXEmacs on a console will now use a
+    block cursor, but that just adds consistency because that is how things
+    are in X11 and Xterm anyway.
+    
+    	* src/ui/TTY/console-tty.h (struct tty_console): Add
+    	`cursor_invisible_' and `hard_cursor_' for invisible and hard to
+    	see cursors.
+    
+    	* src/ui/TTY/redisplay-tty.c (init_tty_for_redisplay): Set
+    	cursor_visible_ to "vs" and cursor_normal_ to "ve" like they
+    	should be according to terminfo(5).
+    	Also add cursor_invisible_ ("vi"), and hard_cursor_ ("HC").
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/ui/TTY/console-tty.h   |  2 ++
+ src/ui/TTY/redisplay-tty.c | 14 ++++++++------
+ 2 files changed, 10 insertions(+), 6 deletions(-)
+
+commit fc3b9c3c87ae7355045dfad122d953e90f0d1011
+Author: lg <lg@lg-XPS-L521X.(none)>
+Date:   Fri Dec 28 11:01:26 2012 +0400
+
+    files.el:
+       - Check file existance when openning file with
+         `find-file-magic-files-alist'
+
+ lisp/files.el | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 0f8df72dfc57273f4dc5f1c6c4e2647059c03b40
+Author: lg <lg@lg-XPS-L521X.(none)>
+Date:   Fri Dec 28 11:00:12 2012 +0400
+
+    ffi-wand:
+      "logo" is unsupported format for read
+
+ lisp/ffi/ffi-wand.el | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 7b58fd38c765a7730e9685fb631401171affefa4
+Author: lg <lg@lg-XPS-L521X.(none)>
+Date:   Fri Dec 28 10:06:27 2012 +0400
+
+    [fix] effi: ffi-slot-offset
+           - calculate offset correctly
+    
+    [add] effi:
+           - x86_64 alignment support
+
+ src/effi.c | 51 +++++++++++++++++++++------------------------------
+ 1 file changed, 21 insertions(+), 30 deletions(-)
+
+commit aa30c7afddd4939c202f2e46efe10b0b55509a8d
+Merge: 06b081c 093e8af
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Sep 3 08:09:45 2012 +1000
+
+    Docstring and Makefile tweak from Nelson
+    
+    * merges:
+      Fix docstring for insert-string
+      Small cleanup of the recursive make calls
+
+commit 093e8afb746801a64f5aa1f70eb0046bf630fae3
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Aug 12 18:22:15 2012 -0400
+
+    Fix docstring for insert-string
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/editfns.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ad6834da706febb3978e66dd9626b6ad81f4c13a
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Aug 4 22:44:11 2012 -0400
+
+    Small cleanup of the recursive make calls
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ Makefile.am | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 06b081c5e83d3585eadade9d1ab298dc95c1d8a5
+Merge: e44ed11 2451438
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jul 31 17:02:50 2012 +1000
+
+    Fixes bug 158 from Nelson
+    
+    * merges:
+      Fix build failure of cl in newer gcc and bison combinations
+      Fix build process so that subdir failures cause actual failure, even when CFLAGS have a k somewhere...
+
+commit 24514386aa4c47fb13ad69eefaf587b1a1e1341a
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Mon Jul 30 22:51:14 2012 -0400
+
+    Fix build failure of cl in newer gcc and bison combinations
+    
+    	* modules/cl/cl-loop.h: Include cl-loop-parser.h only after
+    	cl_loop_sentence_t is defined.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ modules/cl/cl-loop.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 6cadda014e92b2cb88656d7cfe8e1135a544a7dd
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Mon Jul 30 22:49:52 2012 -0400
+
+    Fix build process so that subdir failures cause actual failure, even when CFLAGS have a k somewhere...
+    
+    	* Makefile.am (beta): Use -w MAKEFLAGS instead of RECURSIVE_MAKE_ARGS
+    	* Makefile.am (time-beta): Ditto.
+    	* Makefile.am (time-all): Ditto.
+    	* Makefile.am (time-check): Ditto.
+    	* Makefile.am (build-report): Ditto.
+    	* Makefile.am (time-build-report): Ditto.
+    	* PROBLEMS:  Add explanation for failure.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ Makefile.am | 18 +++++++++---------
+ PROBLEMS    | 14 +++++++++++++-
+ 2 files changed, 22 insertions(+), 10 deletions(-)
+
+commit e44ed11ee1156f2065d0b221372bea4d11640ef4
+Merge: cd8d598 6d20705
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jul 1 14:23:35 2012 +1000
+
+    Fix xstrncpy usage, also fixes etags. From Nelson
+    
+    * merges:
+      Fix usage of xstrncpy
+      Simple comment reflow to 80 cols
+      Fix etags xstrncpy usage, and some other niceties
+
+commit 6d207059b8f05c444001ce838320b761d4843130
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jun 30 23:03:17 2012 -0400
+
+    Fix usage of xstrncpy
+    
+    	* lib-src/fakemail.c (make_file_preface): make sure the len
+    	argument to xstrcpy is always the available buffer len
+    
+            * lib-src/ootags.c: Only define etags_strchr and etags_strrchr if
+    	configure did not detect the right ones.
+    
+            * lib-src/ootags.c (consider_token): Ditto
+    
+            * lib-src/ootags.c (C_entries): Ditto
+    
+            * lib-src/ootags.c (Pascal_functions): Ditto
+    
+            * lib-src/ootags.c (Prolog_functions): Ditto
+    
+            * lib-src/ootags.c (Erlang_functions): Ditto
+    
+    	* lib-src/ootags.c (savenstr): Ditto.
+    
+            * lib-src/ootags.c (substitute): Properly account for remaining
+    	buffer available.
+    
+    	* lib-src/gnuserv.c (handle_ipc_request): use buffer size instead
+    	of message length for copy. also no need to \0 terminate with
+    	xstrncpy
+    
+    	* lib-src/pop.c (pop_stat): Use xstrncpy here.
+    
+    	* src/dumper.c (pdump_load): No need for \0 termination here.
+    
+    	* src/emacs.c (make_docfile): use remaining size of buffer, not
+    	len of source..
+    
+    	* src/sysdep.h (x__dirname): Use just len. xstrncpy will stop early.
+    
+    	* src/sysdep.h (xdirname): Oops, need +1 for the \0 terminator.
+    
+    	* src/ui/redisplay.c (add_bufbyte_string_runes): Account for the \0 terminator.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lib-src/fakemail.c |  12 +++---
+ lib-src/gnuserv.c  |   4 +-
+ lib-src/ootags.c   | 116 ++++++++++++++++++++++++++++-------------------------
+ lib-src/pop.c      |   4 +-
+ src/dumper.c       |   1 -
+ src/emacs.c        |   6 +--
+ src/sysdep.h       |   6 +--
+ src/ui/redisplay.c |   4 +-
+ 8 files changed, 79 insertions(+), 74 deletions(-)
+
+commit d9bf699fecd471a15a605e119f8d1cfcef71a0d0
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jun 30 22:50:55 2012 -0400
+
+    Simple comment reflow to 80 cols
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ src/extents.h | 41 +++++++++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 18 deletions(-)
+
+commit e3f6b3844a11e8425a5be0e2e82b29021bb3f92f
+Merge: b334efb 73ea3f2
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jun 30 22:28:41 2012 -0400
+
+    Merge remote-tracking branch 'njsf/for-steve' into for-steve
+
+commit b334efbeebb3434fffd6bbcf70ae9979b4fb384e
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sat Jun 30 22:28:19 2012 -0400
+
+    Fix etags xstrncpy usage, and some other niceties
+    
+    	* lib-src/etags.c: Make etags_strchr, etags_strrchr, etags_strcasecmp,
+              etags_strncasecmp only be defined if they were not detected by configure.
+    
+    	* lib-src/etags.c(consider_token): Adjust strncpy and string size.
+    
+    	* lib-src/etags.c(C_entries): Ditto.
+    
+    	* lib-src/etags.c(Pascal_functions): Ditto.
+    
+    	* lib-src/etags.c(HTML_labels): Ditto.
+    
+    	* lib-src/etags.c(Prolog_functions): Ditto.
+    
+    	* lib-src/etags.c(Erlang_functions): Ditto.
+    
+    	* lib-src/etags.c(substitute): Properly account for buffer size to
+    	supply to xstrncpy.
+    
+    	* lib-src/etags.c(readline_internal): Only reallocate after size
+    	is enough. Also correct the buffer available supplied to xstrncpy.
+    
+    	* lib-src/etags.c(savenstr): correct the size of buffer parameter
+    	supplied to xstrncpy.
+    
+    	* lib-src/etags.c(linebuffer_setlen): Only reallocate after size
+    	is enough.
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ lib-src/etags.c | 251 +++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 132 insertions(+), 119 deletions(-)
+
+commit cd8d598153e1713aae9608b20e6928cb74be7a96
+Merge: 547d05c b028ccf
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 27 16:36:37 2012 +1000
+
+    Another peanuthorst to horst rename
+    
+    * quickfix:
+      Rename peanuthorst to horst in etc/Makefile.am
+
+commit b028ccf9889224f8938e1c4ed6b5ffb38fb048e8
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 27 16:36:11 2012 +1000
+
+    Rename peanuthorst to horst in etc/Makefile.am
+    
+    	* etc/Makefile.am (dist_photos_DATA): peanuthorst -> horst
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ etc/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 547d05cc4791bc84538166171281a562b40ddc9d
+Merge: 81c0d7f c45dcc0
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 27 16:17:28 2012 +1000
+
+    PeanutHorst is now Horst
+    
+    * quickfix:
+      Rename PeanutHorst to Horst in about.el
+
+commit c45dcc0b1a78933940b1ca819559658fd84af297
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 27 16:16:31 2012 +1000
+
+    Rename PeanutHorst to Horst in about.el
+    
+    	* lisp/about.el (about-personal-info): PeanutHorst -> Horst.
+    
+    	* lisp/about.el (about-hacker-contribution): Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/about.el | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
+
+commit 81c0d7fc3fd0434e24baa42039cdd0d0bb46f6f5
+Merge: 296b7e0 533f88c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 27 16:09:56 2012 +1000
+
+    Photo optimisation from Horst
+    
+    * merges:
+      optimised steve's photo, updated horst's photo
+
+commit 296b7e0f9372a85c3741488c2129a0225f7fdef9
+Merge: c4d5211 22d8092
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 27 16:05:13 2012 +1000
+
+    Minor SoX updates
+    
+    * bug-141:
+      Minor updates and compiler warning fixes in SoX
+      Fix compiler warnings in media-sox.c
+
+commit 22d8092c0a5f515cc226320d6e29123e90f23881
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 27 15:57:57 2012 +1000
+
+    Minor updates and compiler warning fixes in SoX
+    
+    	* src/media/media-sox.h (sxe_sox_ssize_t): SoX just uses size_t
+    	these days. So set to that if not HAVE_SOX_SSIZE_T.
+    
+    	* src/media/media-sox.c (media_sox_rewind): SEEK_SET ->
+    	SOX_SEEK_SET.
+    
+    	* src/media/media-sox.c (media_sox_close): Fix format spec.
+    
+    	* src/media/media-sox.c (media_sox_read): Ditto.
+    
+    	* src/media/media-sox.c (media_sox_rewind): Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/media/media-sox.c | 10 +++++-----
+ src/media/media-sox.h |  2 +-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+commit 533f88c5dfc75584ca5b7fbe55195e47eb1ef57d
+Author: Horst G. Burkhardt III <horst@sxemacs.org>
+Date:   Wed Jun 27 15:05:20 2012 +1000
+
+    optimised steve's photo, updated horst's photo
+    
+    Signed-off-by: Horst G. Burkhardt III <horst@sxemacs.org>
+
+ etc/photos/horst.png        | Bin 0 -> 36162 bytes
+ etc/photos/horstm.png       | Bin 0 -> 12075 bytes
+ etc/photos/peanuthorst.png  | Bin 32874 -> 0 bytes
+ etc/photos/peanuthorstm.png | Bin 12180 -> 0 bytes
+ etc/photos/steve.png        | Bin 49065 -> 48621 bytes
+ etc/photos/stevem.png       | Bin 24988 -> 16719 bytes
+ lisp/about.el               |   6 +++---
+ 7 files changed, 3 insertions(+), 3 deletions(-)
+
+commit c4d5211d9cd46432ce64e4e92dcc18f3e8a77034
+Merge: d95ba78 9da3276
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 27 00:40:43 2012 +1000
+
+    PROBLEMS update from Horst
+    
+    * merges:
+      Updated PROBLEMS as per last commit
+      Cleaning up PROBLEMS file, now it looks like we've been productive since forking; added PROBLEMS.XEmacs for older issues pertaining to XE
+
+commit bef4a7e11dd057d710809995a1a03332219c735b
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jun 27 00:39:35 2012 +1000
+
+    Fix compiler warnings in media-sox.c
+    
+    	* src/media/media-sox.c (media_sox_open): Shush compiler, give
+    	`file_len' unused attribute.
+    
+    	* src/media/media-sox.c (media_sox_read): Ditto for `framesize'.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/media/media-sox.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 9da3276ce1cc266104079b2e16c6069877b9993e
+Author: Horst G. Burkhardt III <horst@sxemacs.org>
+Date:   Wed Jun 27 00:04:18 2012 +1000
+
+    Updated PROBLEMS as per last commit
+    
+    Signed-off-by: Horst G. Burkhardt III <horst@sxemacs.org>
+
+ PROBLEMS | 2107 +-------------------------------------------------------------
+ 1 file changed, 3 insertions(+), 2104 deletions(-)
+
+commit f8258c0a238e1e6c77e29aaf9ca417e16610e204
+Author: Horst G. Burkhardt III <horst@sxemacs.org>
+Date:   Tue Jun 26 22:49:14 2012 +1000
+
+    Cleaning up PROBLEMS file, now it looks like we've been productive since forking; added PROBLEMS.XEmacs for older issues pertaining to XE
+    
+    Signed-off-by: Horst G. Burkhardt III <horst@sxemacs.org>
+
+ PROBLEMS.XEmacs | 1965 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 1965 insertions(+)
+
+commit d95ba78fecab8fdbc797ecfee3285dd81e0ff451
+Merge: 206a9a4 4145d23
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jun 26 16:49:20 2012 +1000
+
+    Bring back PulseAudio autodetection
+    
+    * pulse:
+      Bring back auto-detection of PulseAudio
+
+commit 4145d238a3c3724627309c22ab95744b734a8e4c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jun 26 16:47:45 2012 +1000
+
+    Bring back auto-detection of PulseAudio
+    
+    	* configure.ac (with-sound): Re-enable PulseAudio.
+    
+    	* configure.ac (with-pulseaudio): Removed.  It is now back in
+    	with-sound.
+    
+    	* configure.ac: Nuke the `pulse_*_version' vars.  They weren't
+    	being used for anything.
+    
+    	* src/media/Makefile.am (libmm_a_CFLAGS): Add MM_CFLAGS.
+    
+    	* src/media/sound-pulse.c (stream_write_callback): Set
+    	`resolution', `real_frm_sz', and `ctx' as unused. Shush compiler.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configure.ac            | 23 +++++------------------
+ m4/sxe-mm.m4            | 17 +----------------
+ m4/sxe-summary.m4       |  1 -
+ src/media/sound-pulse.c |  8 +++++---
+ 4 files changed, 11 insertions(+), 38 deletions(-)
+
+commit 206a9a4cc731ee92f14a52c3543643c3f590f0ec
+Merge: 2fd7982 5fc5cf3
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jun 26 09:55:35 2012 +1000
+
+    Various build related fixes from Rudi
+    
+    * merges:
+      bldchn, fix typo, wrong dbusbind.la variables
+      bldchn, add missing benchmark.el to the dist tarball
+      bldchn, add missing tests to the dist tarball
+
+commit 5fc5cf31ec5c823d4a7358ac32a03353533b8ee9
+Author: Ruediger Meier <ruediger.meier@ga-group.nl>
+Date:   Mon Jun 25 15:57:17 2012 +0200
+
+    bldchn, fix typo, wrong dbusbind.la variables
+    
+    We had such warnings from automake:
+    modules/dbus/Makefile.am:63: variable `dbus_la_SOURCES' is defined but no program or
+    modules/dbus/Makefile.am:63: library has `dbus_la' as canonical name (possible typo)
+    [...]
+
+ modules/dbus/Makefile.am | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit c71af2f8f7c04f50bf86cdf41fa38996a6224695
+Author: Ruediger Meier <ruediger.meier@ga-group.nl>
+Date:   Mon Jun 25 15:53:14 2012 +0200
+
+    bldchn, add missing benchmark.el to the dist tarball
+    
+    Note that this benchmark will not be executed by any make target. Should we add
+    one?
+
+ tests/Makefile.am | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit cc74c1d1c6c9aa558eadd7bac407619ba29abfd5
+Author: Ruediger Meier <ruediger.meier@ga-group.nl>
+Date:   Mon Jun 18 13:16:52 2012 +0200
+
+    bldchn, add missing tests to the dist tarball
+
+ tests/Makefile.am | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 2fd79826efd8f7e09ed733fac37248164f77fae1
+Merge: e1fb520 7fbb85e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 25 22:42:24 2012 +1000
+
+    Fix non-dbus build
+    
+    * dbus-bldfix:
+      Fix build when dbus is not present.
+
+commit 7fbb85ee5b86bf9c7fa5eb792f959ad53301b8c2
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 25 22:41:52 2012 +1000
+
+    Fix build when dbus is not present.
+    
+    	* configure.ac: Put `SXE_EMOD_STATMOD([dbus])' where it can be
+    	called if dbus is present or not.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configure.ac | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit e1fb5209299cf9b85fc5774d514eac100ebf1428
+Merge: 374249e 9114804
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 25 13:43:33 2012 +1000
+
+    PulseAudio roles
+    
+    * pulse-roles:
+      Support "media role" property for PulseAudio devices
+
+commit 9114804da42826c8bfdc8e200786bb0581787324
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 25 13:41:45 2012 +1000
+
+    Support "media role" property for PulseAudio devices
+    
+    With PulseAudio a client can set various properties to tell the server
+    more about the client.  One of these properties is a "media role" which
+    tells the PulseAudio server what type of media the client is supplying.
+    For example a mp3 player might set a role of "music", or a movie player
+    might set a role of "video".
+    
+    You can't do anything in SXEmacs with roles other than set them, but in
+    your PulseAudio config you can then do nifty things based on them.  Like,
+    you can get PulseAudio to mute (cork) your "music" streams when you play a
+    "video" stream.
+    
+    This changeset allows the user to set the media role via the `:role'
+    keyword in #'make-audio-device.
+    
+    	* src/media/sound-pulse.c (sound_pulse_data_s): Add new object,
+    	`role'.
+    
+    	* src/media/sound-pulse.c (sound_pulse_create): Parse :role as
+    	well.
+    
+    	* src/media/sound-pulse.c (sound_pulse_finish):
+    
+    	* src/media/sound-pulse.c (sound_pulse_init_mainloop): Set
+    	PULSE_PROP_media.role with the role.
+    
+    	* src/media/sound.c (Fmake_audio_device): Document PulseAudio
+    	roles.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/media/sound-pulse.c | 15 +++++++++++++++
+ src/media/sound.c       | 10 ++++++++++
+ 2 files changed, 25 insertions(+)
+
+commit 374249e84cebf527df8434478871d019d75d35d5
+Merge: 1491f82 cc3a107
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jun 19 18:20:27 2012 +1000
+
+    Quick typo fix
+    
+    * typo-fix:
+      Typo fix
+
+commit cc3a10746bcc108f8f43159e197b9af83d55aa5f
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jun 19 18:18:52 2012 +1000
+
+    Typo fix
+    
+    	* lisp/lisp-initd.el (lisp-initd-compile): Typo fix.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ lisp/lisp-initd.el | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1491f827270ed0047a12382cd8957589f3110fe3
+Merge: 220e6ce 842ae4c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jun 19 16:51:26 2012 +1000
+
+    Fix SoX
+    
+    * sox-fix:
+      SoX Fix -- Remove deprecated code.
+      SoX Fix -- Configure and build
+
+commit 842ae4c5739873fa89ea1d761716a82d2c6efafb
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jun 19 16:49:51 2012 +1000
+
+    SoX Fix -- Remove deprecated code.
+    
+    This changeset removes all the old cruft in our SoX code that we no longer
+    need to worry about because we enforce a minimum required version.
+    
+    	* src/media/media-sox.h: Remove all the old crusty st_*
+    
+    	* src/media/media-sox.c: Ditto.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ src/media/media-sox.c |  8 ++------
+ src/media/media-sox.h | 26 --------------------------
+ 2 files changed, 2 insertions(+), 32 deletions(-)
+
+commit 57986fcd10ef7e524cae9805825deebbab5a2ae9
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Tue Jun 19 16:17:07 2012 +1000
+
+    SoX Fix -- Configure and build
+    
+    Somewhere along the line our SoX code stopped working.  This changeset
+    brings back SoX support in SXEmacs.
+    
+    Please Note:  There is now a minimum version required for SoX... 14.1.0
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_SOX_LOCATOR): Nuke it.
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_SOX_LOCATIONS): Rewrite using pkg-config
+    	voodoo.
+    
+    	* m4/sxe-mm.m4 (_SXE_CHECK_SOX): Simplify.  No need to check for
+    	that st rubbish anymore.
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_SOX_HEADERS): Don't look for st.h.
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_SOX_LIBS): Remove the st rubbish.
+    
+    	* m4/sxe-mm.m4 (SXE_CHECK_SOX_STRUCTS): Ditto.
+    	Check for struct sox_format_t instead of sox_format.
+    
+    	* src/media/media-sox.c (media_sox_open): HAVE_STRUCT_SOX_FORMAT
+    	-> HAVE_STRUCT_SOX_FORMAT_T
+    
+    	* INSTALL (Packages): Mention that the minimum version of SoX is
+    	now 14.1.0.
+    
+    	* .gitignore: Ignore anything starting with `=' instead of just
+    	`=build'. For us crazy folk who have multiple build directories on
+    	the go at once.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ .gitignore            |   2 +-
+ INSTALL               |   2 +-
+ configure.ac          |   1 -
+ m4/sxe-mm.m4          | 135 ++++++++++----------------------------------------
+ src/media/media-sox.c |   2 +-
+ 5 files changed, 30 insertions(+), 112 deletions(-)
+
+commit 220e6ce846f2ca635d9e3c9ab0d9812ddce4f540
+Merge: 8e74e67 dcab3d7
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 18 09:19:22 2012 +1000
+
+    SXEmacs, meet Dbus. Dbus, meet SXEmacs
+    
+    * dbus:
+      Warning fixes -- dbusbind.
+      Whitespace cleanup in modules/dbus
+      Fix more warnings in dbusbind.c
+      Cosmetic changes to file header/licence
+      Port GNU/Emacs dbusbind.c to SXEmacs -- Warning fixes
+      Port GNU/Emacs dbusbind.c to SXEmacs -- Fix most errors.
+      Port GNU/Emacs dbusbind.c to SXEmacs -- Style changes
+      Improve D-Bus detection.
+      Fix dbus build.
+      True to add files to dbus module makefile
+      Add D-Bus module as option for with-modules
+      Add DESCEND clause for dbus module
+      Initial commit of D-Bus support imported from Emacs trunk revno=106693
+
+commit 8e74e675ad653f932a2792de362bcb155648e79b
+Merge: fe3409c 3930f4d
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 18 09:14:39 2012 +1000
+
+    Add 22.1.15 ChangeLog file
+    
+    * misc:
+      Add last version ChangeLog file
+
+commit 3930f4d37174d819739b3ad22fc6df7f4284113b
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jun 18 09:14:08 2012 +1000
+
+    Add last version ChangeLog file
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ ChangeLog.d/ChangeLog-22.1.15 | 12669 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 12669 insertions(+)
+
+commit 73ea3f2ea863e13978b92c72f0ad7ae69146f492
+Merge: 6cafcf8 fe3409c
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jun 17 10:55:22 2012 -0400
+
+    Merge remote-tracking branch 'njsf/for-steve' into for-steve
+
+commit 6cafcf86ec97cd8f3b87ada387919a608e305610
+Merge: 334f219 b9f23b4
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Jun 15 11:16:25 2012 -0400
+
+    Merge remote-tracking branch 'origin/master' into for-steve
+
+commit 334f219946ae8ddcfdd2a6515d0c44175bda6fe4
+Merge: 1b0c6ff 47a97e4
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Jun 15 11:16:19 2012 -0400
+
+    Merge remote-tracking branch 'njsf/for-steve' into for-steve
+
+commit 1b0c6ff3e0d595f9ac1aed21f43019629d4d77b2
+Merge: b1de4b5 b1aa7ca
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Wed May 30 18:35:19 2012 -0400
+
+    Merge branch 'master' of ssh://dio.dreamhost.com/~/repos.nelsonferreira.com/git/sxemacs into for-steve
+
+commit b1de4b5e61489baec4c1d8172e04d9982f929807
+Merge: 9060f3e ccd489f
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Apr 13 13:32:20 2012 -0400
+
+    Merge remote-tracking branch 'origin/master' into for-steve
+
+commit 9060f3e69bc2f8062b8fde60bc76366d6111ff8c
+Merge: 0714a82 31e8a7f
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Mar 13 20:42:27 2012 -0400
+
+    Merge remote-tracking branch 'njsf/for-steve' into for-steve
+
+commit 0714a826c16084db406d2a7335101ae350a001e3
+Merge: 7d75fa8 42297aa
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Mar 9 19:00:38 2012 -0500
+
+    Merge remote-tracking branch 'origin/master' into for-steve
+
+commit 7d75fa8904eb3b4ed4269423bcd6740a20bb4784
+Merge: dbcba80 e7ee5bd
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Wed Mar 7 11:20:23 2012 -0500
+
+    Merge remote-tracking branch 'njsf/for-steve' into for-steve
+
+commit dbcba80608278b9db3879cf696add1f9dc68523d
+Merge: ddc1be7 67d4837
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Mar 6 08:44:01 2012 -0500
+
+    Merge remote-tracking branch 'njsf/for-steve' into for-steve
+
+commit ddc1be760fa93a9c1e8ab1817f382fcbb95524bb
+Merge: 9a6533b c9752ce
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Mar 6 02:18:37 2012 -0500
+
+    Merge remote-tracking branch 'njsf/for-steve' into for-steve
+
+commit 9a6533bb85fc241ed6ff3040a6404d2fe27c678b
+Merge: 97e22d6 38a15be
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Mar 6 02:18:25 2012 -0500
+
+    Merge branch 'master' of ssh://dio.dreamhost.com/~/repos.nelsonferreira.com/git/sxemacs into for-steve
+
+commit dcab3d791b094b5d7f502d9596937bb427c270e7
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jan 29 17:53:00 2012 +1000
+
+    Warning fixes -- dbusbind.
+    
+    This changeset fixes all but 4 or 5 compiler warnings in dbusbind.  The
+    warnings that are left are some "implicit declaration of function 'foo'"
+    for some GNU/Emacs functions that I don't yet know what to do with.
+    
+    	* modules/dbus/dbusbind.c (xd_find_watch_fd): Don't use
+    	`dbus_watch_get_fd()', it's deprecated.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_init_bus): Initialise busp to
+    	NULL.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_method_return_internal):
+    	Initialise serial to 0.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_method_error_internal): Ditto.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_register_service): If all else
+    	fails, return Qnil.
+    
+    	* modules/dbus/dbusbind.h (SBYTES): No need to call XSTRING as
+    	XSTRING_LENGTH does that for us.
+    
+    	* modules/dbus/dbusbind.h (XD_ERROR): Correctly cast mess to work
+    	right for our make_string().
+    
+    	* modules/dbus/dbusbind.h (syms_of_dbusbind): Add.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ modules/dbus/dbusbind.c | 25 ++++++++++---------------
+ modules/dbus/dbusbind.h | 15 +++++++++------
+ 2 files changed, 19 insertions(+), 21 deletions(-)
+
+commit c4270d307c554c3626740158ae0c5af204d7d5cf
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jan 29 00:11:08 2012 +1000
+
+    Whitespace cleanup in modules/dbus
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ modules/dbus/Makefile.am |  1 -
+ modules/dbus/dbus.el     | 50 ++++++++++++++++++++++++------------------------
+ modules/dbus/dbusbind.c  |  4 ++--
+ modules/dbus/dbusbind.h  | 16 ++++++++--------
+ 4 files changed, 35 insertions(+), 36 deletions(-)
+
+commit f922deb15970dbe7a23b7d0a4d313a56a6a7005d
+Merge: 571fb34 a17da6c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jan 28 23:56:28 2012 +1000
+
+    Merge branch 'master' into dbus
+    
+    Conflicts:
+    	modules/dbus/Makefile.am  Trivial, resolved.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+commit 571fb34cc9594d364a3a92c30568f3643cc95f6e
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jan 25 14:27:41 2012 +1000
+
+    Fix more warnings in dbusbind.c
+    
+    	* modules/dbus/dbusbind.c (Fdbus_call_method_asynchronously): Use
+    	CHECK_FUNCTION instead of GNU's FUNCTIONP
+    
+    	* modules/dbus/dbusbind.c (Fdbus_register_signal): Ditto.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_register_method): Ditto.
+    
+    	* modules/dbus/dbusbind.h (SBYTES): Use XSTRING_LENGTH
+    
+    	* modules/dbus/dbusbind.c (syms_of_dbusbind): Use build_string
+    	instead of GNU's make_pure_c_string.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ modules/dbus/dbusbind.c | 25 ++++++++++++-------------
+ modules/dbus/dbusbind.h |  4 ++--
+ 2 files changed, 14 insertions(+), 15 deletions(-)
+
+commit 72d1562400900a972a6eb36ba97ab921f1d7f63c
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Wed Jan 25 13:33:34 2012 +1000
+
+    Cosmetic changes to file header/licence
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ modules/dbus/dbusbind.c | 48 ++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 14 deletions(-)
+
+commit a1363efe6978f0b8139c5c72f3984a2fd952e02d
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Mon Jan 23 02:37:07 2012 +1000
+
+    Port GNU/Emacs dbusbind.c to SXEmacs -- Warning fixes
+    
+    This changeset fixes a good deal of compiler warnings.  We're not there
+    yet, but at least it does build now.  Working?  Nah, but it builds. :-)
+    
+    	* modules/dbus/dbusbind.c Moved all the stuff that belongs in a
+    	header to new dbusbind.h.
+    	Added a bunch of stuff from GNU/Emacs just to get it to build
+    	cleanly.
+    	(xd_read_message_1): #if 0'd out just to
+    	get this pig to compile.  Need to revisit this to actually make it
+    	work.
+    
+    	* modules/dbus/dbusbind.h: New.  Aside from the obvious, I'm also
+    	putting some GNU/Emacs things in here that we don't have yet and
+    	are needed for dbus until we do it our own way.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ modules/dbus/Makefile.am |   2 +-
+ modules/dbus/dbusbind.c  | 255 +++++++++----------------------------
+ modules/dbus/dbusbind.h  | 325 +++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 384 insertions(+), 198 deletions(-)
+
+commit 920f94f62143e04975fd50a5548880e61f79d66f
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sun Jan 22 02:06:16 2012 +1000
+
+    Port GNU/Emacs dbusbind.c to SXEmacs -- Fix most errors.
+    
+    This changeset continues the work in porting GNU/Emacs' dbusbind.c.  It is
+    still not finished.  The build is still badly broken.
+    
+    	* src/elhash.c: Make Q_test not static.
+    
+    	* modules/dbus/dbusbind.c (CHECK_DBUS_SERIAL_GET_SERIAL): We call
+    	`MOST_POSITIVE_FIXNUM' a `EMACS_INT_MAX'.
+    
+    	* modules/dbus/dbusbind.c (xd_signature_cat): ptrdiff_t's -> int's
+    
+    	* modules/dbus/dbusbind.c (Fdbus_call_method): Ditto.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_call_method_asynchronously): Ditto.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_method_return_internal): Ditto.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_method_error_internal): Ditto.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_send_signal): Ditto.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_register_service): Ditto.
+    
+    	* modules/dbus/dbusbind.c (Fdbus_register_signal): Ditto.
+    
+    	* modules/dbus/dbusbind.c (xd_read_queued_messages): Add missing
+    	arg to internal_catch().
+    
+    	* modules/dbus/dbusbind.c (syms_of_dbusbind): Change GNU DEFSYM's
+    	and defsubr's to our defsymbol and DEFSUBR respectively.
+    
+    	* modules/dbus/dbusbind.c (syms_of_dbusbind): SXEmacs-erise the
+    	Fprovide().
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ modules/dbus/dbusbind.c | 146 +++++++++++++++++++++++++-----------------------
+ src/elhash.c            |   3 +-
+ 2 files changed, 78 insertions(+), 71 deletions(-)
+
+commit d94bd7a6fd8bff465efc0345624d8c0af43ec64d
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jan 21 23:30:11 2012 +1000
+
+    Port GNU/Emacs dbusbind.c to SXEmacs -- Style changes
+    
+    This changeset begins the process of porting GNU/Emacs' dbusbind.c to
+    SXEmacs.  So far this is mostly just indentation changes and reformating
+    of DEFUN's.
+    
+    Build is currently severely broken with this.
+    
+    	* modules/dbus/dbusbind.c: Reformat to SXEmacs style, and begin
+    	porting.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ modules/dbus/dbusbind.c | 3499 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 1754 insertions(+), 1745 deletions(-)
+
+commit e05a963faba21e99dcae14f245c13b7d0584fe5a
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Sat Jan 21 22:04:03 2012 +1000
+
+    Improve D-Bus detection.
+    
+    	* m4/sxe-emodffi.m4 (SXE_CHECK_DBUS): New to check for D-Bus.
+    
+    	* configure.ac: Use it.
+    
+    	* modules/dbus/Makefile.am (AM_CFLAGS): Add DBUS_CFLAGS.
+    
+    	* modules/dbus/Makefile.am (AM_LDFLAGS): Add DBUS_LIBS.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configure.ac             | 18 +++++++++++-------
+ m4/sxe-emodffi.m4        | 11 +++++++++++
+ modules/dbus/Makefile.am |  5 +++--
+ 3 files changed, 25 insertions(+), 9 deletions(-)
+
+commit eabfdb7d71968d5aa41c7403c0de7237f0f9a1ae
+Author: Steve Youngs <steve@sxemacs.org>
+Date:   Fri Jan 20 22:04:00 2012 +1000
+
+    Fix dbus build.
+    
+    This changeset does just enough to get the new dbus emodule built.  Please
+    note that this doesn't mean dbus in SXEmacs is now done.  There is more to
+    come.  This JUST puts a bandaid on the build chain so it will build.
+    
+    	* modules/dbus/Makefile.am (module_LTLIBRARIES): Set to `dbusbind.la'
+    
+    	* modules/dbus/Makefile.am (BUILT_SOURCES): Remove non-generated
+    	sources.
+    
+    	* modules/dbus/Makefile.am (dbus_la_SOURCES): Renamed from
+    	`sxe_dbus_la_SOURCES'.
+    
+    	* modules/dbus/Makefile.am (nodist_dbus_la_SOURCES): Renamed from
+    	`nodist_sxe_dbus_la_SOURCES'.
+    
+    	* modules/dbus/Makefile.am (dbus_la_CFLAGS): Renamed from
+    	`sxe_dbus_la_CFLAGS'.
+    
+    	* configure.ac: Set have_modules_dbus and have_static_modules_dbus
+    	accordingly.
+    
+    Signed-off-by: Steve Youngs <steve@sxemacs.org>
+
+ configure.ac             | 10 ++++++++++
+ modules/dbus/Makefile.am | 16 +++++-----------
+ 2 files changed, 15 insertions(+), 11 deletions(-)
+
+commit 81dd3117efce019fc5956143896f1c5d375f55a0
+Merge: 0a5d16d 910cd5f
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Fri Jan 20 00:05:18 2012 -0500
+
+    Merge branch 'for-steve' into njsf-dbus
+
+commit 0a5d16d2e1625d69fc24f24b843e39fa6a252efc
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Thu Jan 19 21:40:40 2012 -0500
+
+    True to add files to dbus module makefile
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ modules/dbus/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3197b6ea8a0ff24ff7e24e468e6eaad5487c3289
+Merge: 3ae1f7d 280ebe6
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Sun Jan 15 21:31:46 2012 -0500
+
+    Merge remote-tracking branch 'njsf/for-steve' into njsf-dbus
+
+commit 3ae1f7deee97eec9d1473922ec91dcba1d5503cb
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Jan 3 01:38:53 2012 -0500
+
+    Add D-Bus module as option for with-modules
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ configure.ac | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 2fe2b4ddc8aa56863967d40422a3ea46013e0b9b
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Jan 3 01:24:11 2012 -0500
+
+    Add DESCEND clause for dbus module
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ modules/Makefile.am | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 8ee0e2009cf6f05e03f1b57ac72b716c3fe28df3
+Author: Nelson Ferreira <nelson.ferreira@ieee.org>
+Date:   Tue Jan 3 01:19:05 2012 -0500
+
+    Initial commit of D-Bus support imported from Emacs trunk revno=106693
+    
+    Signed-off-by: Nelson Ferreira <nelson.ferreira@ieee.org>
+
+ modules/dbus/Makefile.am |   17 +
+ modules/dbus/dbus.el     | 1055 +++++++++++++++++++++
+ modules/dbus/dbusbind.c  | 2347 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 3419 insertions(+)
